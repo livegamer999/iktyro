@@ -1,308 +1,102 @@
 [
-  {
-    "name": "Utility Cutter",
-    "category": "Tools",
-    "description": "Compact powered cutting tool for general maintenance and fabrication.",
-    "quantity": 1
-  },
-  {
-    "name": "Multi-Tool",
-    "category": "Tools",
-    "description": "Portable engineering tool containing drivers, cutters, probes and connectors.",
-    "quantity": 1
-  },
-  {
-    "name": "Diagnostic Scanner",
-    "category": "Electronics",
-    "description": "Handheld scanner for detecting faults in machinery and electronic systems.",
-    "quantity": 1
-  },
-  {
-    "name": "Portable Computer",
-    "category": "Electronics",
-    "description": "Rugged personal computer suitable for field operations.",
-    "quantity": 1
-  },
-  {
-    "name": "Data Tablet",
-    "category": "Electronics",
-    "description": "Thin tablet used for documents, maps, records and technical manuals.",
-    "quantity": 1
-  },
-  {
-    "name": "Encrypted Communicator",
-    "category": "Communications",
-    "description": "Secure short-range communications device.",
-    "quantity": 1
-  },
-  {
-    "name": "Long-Range Communicator",
-    "category": "Communications",
-    "description": "Portable communications unit designed for extended-range transmissions.",
-    "quantity": 1
-  },
-  {
-    "name": "Emergency Beacon",
-    "category": "Communications",
-    "description": "Emergency transmitter broadcasting a distress signal.",
-    "quantity": 1
-  },
-  {
-    "name": "Navigation Unit",
-    "category": "Navigation",
-    "description": "Portable navigation computer with mapping and positioning functions.",
-    "quantity": 1
-  },
-  {
-    "name": "Survey Scanner",
-    "category": "Science",
-    "description": "Portable scanner for geological, environmental and biological surveys.",
-    "quantity": 1
-  },
-  {
-    "name": "Scientific Analyzer",
-    "category": "Science",
-    "description": "Field laboratory capable of performing basic chemical and material analysis.",
-    "quantity": 1
-  },
-  {
-    "name": "Medical Scanner",
-    "category": "Medical",
-    "description": "Portable diagnostic scanner for assessing injuries and biological conditions.",
-    "quantity": 1
-  },
-  {
-    "name": "Medical Kit",
-    "category": "Medical",
-    "description": "Compact field kit containing medical supplies and basic surgical instruments.",
-    "quantity": 1
-  },
-  {
-    "name": "Trauma Kit",
-    "category": "Medical",
-    "description": "Emergency medical kit intended for severe injuries.",
-    "quantity": 1
-  },
-  {
-    "name": "Stimulant Injector",
-    "category": "Medical",
-    "description": "Emergency pharmaceutical injector intended to temporarily increase alertness.",
-    "quantity": 1
-  },
-  {
-    "name": "Pressure Suit",
-    "category": "EVA",
-    "description": "Protective suit designed for vacuum exposure and hostile environments.",
-    "quantity": 1
-  },
-  {
-    "name": "EVA Helmet",
-    "category": "EVA",
-    "description": "Sealed helmet with communications, visor and environmental monitoring.",
-    "quantity": 1
-  },
-  {
-    "name": "Oxygen Tank",
-    "category": "EVA",
-    "description": "Portable oxygen supply for emergency or EVA operations.",
-    "quantity": 1
-  },
-  {
-    "name": "Magnetic Boots",
-    "category": "EVA",
-    "description": "Boots equipped with magnetic soles for use on compatible spacecraft surfaces.",
-    "quantity": 1
-  },
-  {
-    "name": "Climbing Harness",
-    "category": "Equipment",
-    "description": "Safety harness and tether system for climbing and EVA work.",
-    "quantity": 1
-  },
-  {
-    "name": "Flashlight",
-    "category": "Equipment",
-    "description": "High-intensity rechargeable flashlight.",
-    "quantity": 1
-  },
-  {
-    "name": "Headlamp",
-    "category": "Equipment",
-    "description": "Hands-free adjustable light mounted to a helmet or head strap.",
-    "quantity": 1
-  },
-  {
-    "name": "Breaching Kit",
-    "category": "Tools",
-    "description": "Specialized tools for opening damaged or locked mechanical access points.",
-    "quantity": 1
-  },
-  {
-    "name": "Repair Kit",
-    "category": "Tools",
-    "description": "Portable collection of tools and components for emergency repairs.",
-    "quantity": 1
-  },
-  {
-    "name": "Electronics Kit",
-    "category": "Electronics",
-    "description": "Portable diagnostic and repair equipment for electronic systems.",
-    "quantity": 1
-  },
-  {
-    "name": "Mechanical Toolkit",
-    "category": "Tools",
-    "description": "Heavy-duty toolkit for mechanical maintenance and repair.",
-    "quantity": 1
-  },
-  {
-    "name": "Field Generator",
-    "category": "Power",
-    "description": "Portable electrical generator for temporary field power.",
-    "quantity": 1
-  },
-  {
-    "name": "Power Cell",
-    "category": "Power",
-    "description": "Rechargeable standardized power cell for compatible equipment.",
-    "quantity": 2
-  },
-  {
-    "name": "Portable Battery",
-    "category": "Power",
-    "description": "High-capacity rechargeable battery pack.",
-    "quantity": 1
-  },
-  {
-    "name": "Rope",
-    "category": "Equipment",
-    "description": "Durable multipurpose synthetic rope.",
-    "quantity": 20
-  },
-  {
-    "name": "Utility Tape",
-    "category": "Equipment",
-    "description": "Strong multipurpose adhesive repair tape.",
-    "quantity": 1
-  },
-  {
-    "name": "Breathing Mask",
-    "category": "Protection",
-    "description": "Protective mask with replaceable filtration cartridges.",
-    "quantity": 1
-  },
-  {
-    "name": "Environmental Sensor",
-    "category": "Science",
-    "description": "Portable sensor measuring atmospheric and environmental conditions.",
-    "quantity": 1
-  },
-  {
-    "name": "Motion Sensor",
-    "category": "Security",
-    "description": "Portable detector capable of detecting movement in a limited area.",
-    "quantity": 1
-  },
-  {
-    "name": "Security Scanner",
-    "category": "Security",
-    "description": "Portable device for detecting common security systems and electronic locks.",
-    "quantity": 1
-  },
-  {
-    "name": "Protective Vest",
-    "category": "Protection",
-    "description": "Light protective vest intended for hazardous work environments.",
-    "quantity": 1
-  },
-  {
-    "name": "Utility Backpack",
-    "category": "Equipment",
-    "description": "Durable backpack designed for field equipment and supplies.",
-    "quantity": 1
-  },
-  {
-    "name": "Cargo Case",
-    "category": "Equipment",
-    "description": "Rigid protective storage case for sensitive equipment.",
-    "quantity": 1
-  },
-  {
-    "name": "Sample Containers",
-    "category": "Science",
-    "description": "Sterile containers for collecting biological, chemical or geological samples.",
-    "quantity": 6
-  },
-  {
-    "name": "Portable Laboratory",
-    "category": "Science",
-    "description": "Compact field laboratory for scientific analysis.",
-    "quantity": 1
-  },
-  {
-    "name": "Camera",
-    "category": "Electronics",
-    "description": "High-resolution digital camera for documentation and investigation.",
-    "quantity": 1
-  },
-  {
-    "name": "Recording Device",
-    "category": "Electronics",
-    "description": "Portable audio and video recording device.",
-    "quantity": 1
-  },
-  {
-    "name": "Translation Device",
-    "category": "Communications",
-    "description": "Portable computerized translation and language-assistance device.",
-    "quantity": 1
-  },
-  {
-    "name": "Personal Locator",
-    "category": "Navigation",
-    "description": "Small device broadcasting the user's position to compatible navigation systems.",
-    "quantity": 1
-  },
-  {
-    "name": "Identification Badge",
-    "category": "Documents",
-    "description": "Official identification and access credential.",
-    "quantity": 1
-  },
-  {
-    "name": "Access Card",
-    "category": "Security",
-    "description": "Programmable access credential for secured facilities.",
-    "quantity": 1
-  },
-  {
-    "name": "Credit Chip",
-    "category": "Currency",
-    "description": "Portable electronic payment device.",
-    "quantity": 1
-  },
-  {
-    "name": "Personal Quarters Kit",
-    "category": "Personal",
-    "description": "Basic hygiene and personal-use equipment.",
-    "quantity": 1
-  },
-  {
-    "name": "Rations",
-    "category": "Supplies",
-    "description": "Compact long-duration food supplies.",
-    "quantity": 5
-  },
-  {
-    "name": "Water Recycler",
-    "category": "Survival",
-    "description": "Compact device for filtering and recycling drinking water.",
-    "quantity": 1
-  },
-  {
-    "name": "Emergency Shelter",
-    "category": "Survival",
-    "description": "Compact deployable shelter for temporary field survival.",
-    "quantity": 1
-  }
+    {
+        "name": "Lampe tactique",
+        "category": "Outils",
+        "description": "Lampe portable à forte autonomie."
+    },
+    {
+        "name": "Kit de premiers secours",
+        "category": "Médical",
+        "description": "Trousse médicale de terrain."
+    },
+    {
+        "name": "Combinaison EVA",
+        "category": "Survie",
+        "description": "Combinaison pressurisée pour opérations extravéhiculaires."
+    },
+    {
+        "name": "Casque EVA",
+        "category": "Survie",
+        "description": "Casque pressurisé avec communications intégrées."
+    },
+    {
+        "name": "Kit de réparation",
+        "category": "Outils",
+        "description": "Outils mécaniques et électroniques de dépannage."
+    },
+    {
+        "name": "Multimètre",
+        "category": "Électronique",
+        "description": "Appareil portable de mesure électrique."
+    },
+    {
+        "name": "Terminal portable",
+        "category": "Informatique",
+        "description": "Terminal informatique personnel."
+    },
+    {
+        "name": "Tablette de données",
+        "category": "Informatique",
+        "description": "Tablette robuste pour consultation et stockage de données."
+    },
+    {
+        "name": "Comlink",
+        "category": "Communication",
+        "description": "Appareil de communication longue portée."
+    },
+    {
+        "name": "Balise de détresse",
+        "category": "Communication",
+        "description": "Émetteur d'urgence avec positionnement."
+    },
+    {
+        "name": "Scanner portable",
+        "category": "Capteurs",
+        "description": "Scanner généraliste pour analyse de l'environnement."
+    },
+    {
+        "name": "Kit de navigation",
+        "category": "Navigation",
+        "description": "Instruments et cartes numériques de navigation."
+    },
+    {
+        "name": "Rations de survie",
+        "category": "Survie",
+        "description": "Rations compactes longue conservation."
+    },
+    {
+        "name": "Gourde filtrante",
+        "category": "Survie",
+        "description": "Système portable de filtration d'eau."
+    },
+    {
+        "name": "Corde synthétique",
+        "category": "Survie",
+        "description": "Corde légère haute résistance."
+    },
+    {
+        "name": "Lampe frontale",
+        "category": "Outils",
+        "description": "Éclairage mains libres."
+    },
+    {
+        "name": "Outil multifonction",
+        "category": "Outils",
+        "description": "Petit outil polyvalent."
+    },
+    {
+        "name": "Combinaison de travail",
+        "category": "Vêtement",
+        "description": "Tenue robuste adaptée au travail technique."
+    },
+    {
+        "name": "Badge d'accès",
+        "category": "Administration",
+        "description": "Badge d'identification et d'accès."
+    },
+    {
+        "name": "Carnet de notes",
+        "category": "Divers",
+        "description": "Carnet papier pour notes manuscrites."
+    }
 ]
