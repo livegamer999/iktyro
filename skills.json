@@ -1,0 +1,147 @@
+[
+    {
+        "id": "anthropologie",
+        "name": "Anthropologie",
+        "base": "1"
+    },
+    {
+        "id": "histoire",
+        "name": "Histoire",
+        "base": "10"
+    },
+    {
+        "id": "bricolage",
+        "name": "Bricolage",
+        "base": "10"
+    },
+    {
+        "id": "mecanique",
+        "name": "Mécanique",
+        "base": "1"
+    },
+    {
+        "id": "baratin",
+        "name": "Baratin",
+        "base": "5"
+    },
+    {
+        "id": "charme",
+        "name": "Charme",
+        "base": "15"
+    },
+    {
+        "id": "armes_a_feu",
+        "name": "Armes à feu",
+        "base": "DEX/4"
+    },
+    {
+        "id": "lancer",
+        "name": "Lancer",
+        "base": "DEX/2"
+    },
+    {
+        "id": "combat_rapproche",
+        "name": "Combat rapproché",
+        "base": "FOR/2"
+    },
+    {
+        "id": "pilotage",
+        "name": "Pilotage",
+        "base": "10"
+    },
+    {
+        "id": "conduite",
+        "name": "Conduite",
+        "base": "20"
+    },
+    {
+        "id": "conduite_engins_lourds",
+        "name": "Conduite engins lourds",
+        "base": "1"
+    },
+    {
+        "id": "crochetage",
+        "name": "Crochetage",
+        "base": "1"
+    },
+    {
+        "id": "discretion",
+        "name": "Discrétion",
+        "base": "20"
+    },
+    {
+        "id": "droit",
+        "name": "Droit",
+        "base": "20"
+    },
+    {
+        "id": "ecouter",
+        "name": "Écouter",
+        "base": "20"
+    },
+    {
+        "id": "physique",
+        "name": "Physique",
+        "base": "5"
+    },
+    {
+        "id": "biologie",
+        "name": "Biologie",
+        "base": "5"
+    },
+    {
+        "id": "chimie",
+        "name": "Chimie",
+        "base": "5"
+    },
+    {
+        "id": "electronique",
+        "name": "Électronique",
+        "base": "5"
+    },
+    {
+        "id": "medecine",
+        "name": "Médecine",
+        "base": "5"
+    },
+    {
+        "id": "natation",
+        "name": "Natation",
+        "base": "20"
+    },
+    {
+        "id": "orientation",
+        "name": "Orientation",
+        "base": "10"
+    },
+    {
+        "id": "pick_pocket",
+        "name": "Pick pocket",
+        "base": "10"
+    },
+    {
+        "id": "premiers_soins",
+        "name": "Premiers soins",
+        "base": "30"
+    },
+    {
+        "id": "trouver_objets_caches",
+        "name": "Trouver objet cachés",
+        "base": "25"
+    },
+    {
+        "id": "langue_maternelle",
+        "name": "Langue maternelle",
+        "base": "EDU"
+    },
+    {
+        "id": "langue_etrangere",
+        "name": "Langue étrangère",
+        "base": "1"
+    },
+    {
+        "id": "esquive",
+        "name": "Esquive",
+        "base": "DEX/2"
+    }
+]
