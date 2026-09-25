@@ -1,0 +1,4593 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VOID//OPS — Character Sheet</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg:#05080b;
+    --panel:#0b1218;
+    --panel2:#0e1921;
+    --line:#263943;
+    --cyan:#42e7ff;
+    --cyan2:#176875;
+    --green:#71ff9c;
+    --yellow:#ffe66d;
+    --red:#ff5268;
+    --text:#d9e5ea;
+    --muted:#708590;
+}
+
+* {
+    box-sizing:border-box;
+}
+
+body {
+    margin:0;
+    background:
+        radial-gradient(circle at 15% 5%,rgba(66,231,255,.08),transparent 30%),
+        radial-gradient(circle at 90% 90%,rgba(113,255,156,.04),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:"Rajdhani",sans-serif;
+}
+
+body:before {
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.35;
+    background:
+        linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+    background-size:40px 40px;
+}
+
+button,
+input,
+select,
+textarea {
+    font:inherit;
+}
+
+button {
+    cursor:pointer;
+}
+
+.sheet {
+    width:min(1400px,96%);
+    margin:24px auto;
+}
+
+.header {
+    position:relative;
+    padding:24px;
+    border:1px solid var(--line);
+    background:linear-gradient(135deg,#0d1921,#071017);
+}
+
+.logo {
+    color:var(--cyan);
+    font:600 clamp(30px,5vw,55px) "Orbitron",sans-serif;
+    letter-spacing:5px;
+    text-shadow:0 0 18px rgba(66,231,255,.35);
+}
+
+.subtitle {
+    color:var(--muted);
+    letter-spacing:3px;
+    font-size:12px;
+}
+
+.header-right {
+    position:absolute;
+    right:20px;
+    top:20px;
+    color:var(--green);
+    font:10px "Orbitron",sans-serif;
+    text-align:right;
+    letter-spacing:2px;
+}
+
+.create-button {
+    margin-top:18px;
+    padding:13px 22px;
+    border:1px solid var(--cyan);
+    background:rgba(66,231,255,.08);
+    color:var(--cyan);
+    font:11px "Orbitron",sans-serif;
+    letter-spacing:2px;
+}
+
+.create-button:hover {
+    background:rgba(66,231,255,.18);
+    box-shadow:0 0 20px rgba(66,231,255,.18);
+}
+
+.grid {
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:12px;
+    margin-top:12px;
+}
+
+.panel {
+    position:relative;
+    padding:14px;
+    border:1px solid var(--line);
+    background:linear-gradient(145deg,var(--panel),var(--panel2));
+    break-inside:avoid;
+}
+
+.panel:before {
+    content:"";
+    position:absolute;
+    top:-1px;
+    left:-1px;
+    width:28px;
+    height:3px;
+    background:var(--cyan);
+}
+
+.span-12 {grid-column:span 12}
+.span-9 {grid-column:span 9}
+.span-8 {grid-column:span 8}
+.span-7 {grid-column:span 7}
+.span-6 {grid-column:span 6}
+.span-5 {grid-column:span 5}
+.span-4 {grid-column:span 4}
+.span-3 {grid-column:span 3}
+
+.title {
+    color:var(--cyan);
+    border-bottom:1px solid var(--line);
+    padding-bottom:8px;
+    margin-bottom:12px;
+    font:10px "Orbitron",sans-serif;
+    letter-spacing:2px;
+}
+
+.fields {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.field {
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.field label {
+    color:var(--muted);
+    font-size:9px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+}
+
+input,
+select,
+textarea {
+    width:100%;
+    border:1px solid #263a44;
+    background:#071017;
+    color:var(--text);
+    padding:7px;
+    outline:none;
+    border-radius:0;
+}
+
+textarea {
+    min-height:100px;
+    resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color:var(--cyan);
+}
+
+.profile-empty {
+    border-color:var(--red) !important;
+    box-shadow:0 0 8px rgba(255,82,104,.12);
+}
+
+.stats {
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    gap:7px;
+}
+
+.stat {
+    border:1px solid var(--line);
+    background:#081118;
+    padding:7px 4px;
+    text-align:center;
+}
+
+.stat-name {
+    color:var(--muted);
+    font:9px "Orbitron",sans-serif;
+}
+
+.stat input {
+    margin-top:5px;
+    text-align:center;
+    color:var(--cyan);
+    font:18px "Orbitron",sans-serif;
+    padding:4px;
+}
+
+.half-fifth {
+    margin-top:3px;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.half-fifth b {
+    color:var(--green);
+}
+
+.derived {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+}
+
+.derived-box {
+    border:1px solid var(--line);
+    text-align:center;
+    padding:7px;
+}
+
+.derived-box label {
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    text-transform:uppercase;
+}
+
+.derived-box input {
+    border:0;
+    background:transparent;
+    color:var(--green);
+    text-align:center;
+    font:17px "Orbitron",sans-serif;
+}
+
+.skills {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:2px 16px;
+}
+
+.skill {
+    display:grid;
+    grid-template-columns:1fr 60px 68px;
+    align-items:center;
+    gap:5px;
+    padding:4px 0;
+    border-bottom:1px dotted #1d2b33;
+}
+
+.skill-name {
+    font-size:13px;
+}
+
+.skill input {
+    text-align:center;
+    padding:3px;
+    color:var(--cyan);
+    font:12px "Orbitron",sans-serif;
+}
+
+.skill-reference {
+    color:var(--muted);
+    font-size:9px;
+    text-align:right;
+}
+
+.skill-reference b {
+    color:var(--green);
+}
+
+.points-box {
+    display:flex;
+    justify-content:space-between;
+    border:1px solid var(--line);
+    padding:8px;
+    margin-bottom:9px;
+    color:var(--muted);
+}
+
+.points-box strong {
+    color:var(--green);
+    font-family:"Orbitron",sans-serif;
+}
+
+.inventory {
+    width:100%;
+    border-collapse:collapse;
+}
+
+.inventory th {
+    color:var(--muted);
+    font-size:8px;
+    text-align:left;
+    letter-spacing:1px;
+}
+
+.inventory td,
+.inventory th {
+    padding:4px;
+    border-bottom:1px solid #1b2930;
+}
+
+.inventory input {
+    border:0;
+    background:transparent;
+    padding:3px;
+}
+
+.equipment-add {
+    margin-top:8px;
+    padding:7px 10px;
+    border:1px solid var(--cyan2);
+    background:#08141b;
+    color:var(--cyan);
+    font:9px "Orbitron",sans-serif;
+}
+
+.tag {
+    display:inline-block;
+    padding:4px 6px;
+    margin:2px;
+    border:1px solid var(--cyan2);
+    color:var(--cyan);
+    font-size:9px;
+}
+
+.save-bar {
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.action {
+    padding:8px 13px;
+    border:1px solid var(--cyan2);
+    background:#08141b;
+    color:var(--cyan);
+    font:9px "Orbitron",sans-serif;
+    letter-spacing:1px;
+}
+
+/* =========================================================
+   CHARACTER CREATOR MODAL
+   ========================================================= */
+
+.modal {
+    display:none;
+    position:fixed;
+    z-index:1000;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(5px);
+    padding:20px;
+}
+
+.modal.open {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.creator {
+    width:min(1000px,100%);
+    max-height:94vh;
+    overflow:auto;
+    border:1px solid var(--cyan2);
+    background:#071017;
+    box-shadow:0 0 50px rgba(0,0,0,.8);
+}
+
+.creator-header {
+    position:sticky;
+    top:0;
+    z-index:2;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 18px;
+    border-bottom:1px solid var(--line);
+    background:#081219;
+}
+
+.creator-title {
+    color:var(--cyan);
+    font:13px "Orbitron",sans-serif;
+    letter-spacing:2px;
+}
+
+.close {
+    border:0;
+    background:none;
+    color:var(--red);
+    font-size:20px;
+}
+
+.steps {
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:4px;
+    padding:10px;
+    border-bottom:1px solid var(--line);
+}
+
+.step {
+    padding:8px 4px;
+    text-align:center;
+    border:1px solid var(--line);
+    color:var(--muted);
+    font:8px "Orbitron",sans-serif;
+}
+
+.step.active {
+    color:var(--cyan);
+    border-color:var(--cyan2);
+    background:rgba(66,231,255,.07);
+}
+
+.step-content {
+    padding:20px;
+}
+
+.creator-footer {
+    display:flex;
+    justify-content:space-between;
+    padding:12px 20px;
+    border-top:1px solid var(--line);
+}
+
+.creator-footer button {
+    padding:9px 16px;
+    border:1px solid var(--cyan2);
+    background:#09151c;
+    color:var(--cyan);
+    font:9px "Orbitron",sans-serif;
+}
+
+.creator-footer .finish {
+    border-color:var(--green);
+    color:var(--green);
+}
+
+.creation-help {
+    margin-bottom:15px;
+    padding:10px;
+    border-left:2px solid var(--cyan);
+    background:rgba(66,231,255,.04);
+    color:var(--muted);
+    font-size:13px;
+}
+
+.buy-summary {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+    padding:12px;
+    border:1px solid var(--line);
+}
+
+.buy-summary strong {
+    color:var(--cyan);
+    font-family:"Orbitron",sans-serif;
+}
+
+.point-controls {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+}
+
+.point-row {
+    display:grid;
+    grid-template-columns:1fr 100px 40px;
+    align-items:center;
+    gap:8px;
+    padding:7px;
+    border:1px solid var(--line);
+}
+
+.point-row span:first-child {
+    color:var(--text);
+}
+
+.point-row input {
+    text-align:center;
+}
+
+.ref {
+    color:var(--muted);
+    font-size:9px;
+}
+
+.age-options {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+}
+
+.age-option {
+    padding:12px;
+    border:1px solid var(--line);
+    background:#081118;
+    cursor:pointer;
+}
+
+.age-option:hover,
+.age-option.selected {
+    border-color:var(--cyan);
+    background:rgba(66,231,255,.06);
+}
+
+.age-option strong {
+    display:block;
+    color:var(--cyan);
+    font-family:"Orbitron",sans-serif;
+    font-size:11px;
+}
+
+.age-option small {
+    display:block;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.adjustments {
+    margin-top:15px;
+    display:none;
+}
+
+.adjustment-row {
+    display:grid;
+    grid-template-columns:1fr 90px;
+    gap:8px;
+    margin-bottom:6px;
+}
+
+.roll-result {
+    margin-top:12px;
+    padding:12px;
+    border:1px solid var(--cyan2);
+    color:var(--green);
+    font-family:"Orbitron",sans-serif;
+}
+
+.occupation-list {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+}
+
+.job-option {
+    padding:10px;
+    border:1px solid var(--line);
+    cursor:pointer;
+}
+
+.job-option:hover,
+.job-option.selected {
+    border-color:var(--cyan);
+    background:rgba(66,231,255,.06);
+}
+
+.job-option strong {
+    color:var(--cyan);
+}
+
+.job-option small {
+    display:block;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.job-skills {
+    margin-top:12px;
+    padding:10px;
+    border:1px solid var(--line);
+}
+
+.skill-allocation {
+    max-height:400px;
+    overflow:auto;
+}
+
+.alloc-row {
+    display:grid;
+    grid-template-columns:1fr 65px 80px;
+    gap:6px;
+    align-items:center;
+    padding:4px 0;
+    border-bottom:1px dotted #1b2b33;
+}
+
+.alloc-row input {
+    text-align:center;
+}
+
+.alloc-base {
+    color:var(--muted);
+    font-size:9px;
+}
+
+@media(max-width:850px) {
+
+    .span-3,
+    .span-4,
+    .span-5,
+    .span-6,
+    .span-7,
+    .span-8,
+    .span-9 {
+        grid-column:span 12;
+    }
+
+    .stats {
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .fields {
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px) {
+
+    .skills,
+    .point-controls,
+    .occupation-list,
+    .age-options {
+        grid-template-columns:1fr;
+    }
+
+    .steps {
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .stats {
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+
+/* =========================================================
+   PRINT — EXACTLY TWO A4 PORTRAIT PAGES
+   ========================================================= */
+
+@page {
+    size:A4 portrait;
+    margin:7mm;
+}
+
+@media print {
+
+    html,
+    body {
+        width:210mm;
+        background:white !important;
+        color:#111 !important;
+    }
+
+    body:before {
+        display:none;
+    }
+
+    .sheet {
+        width:196mm;
+        margin:0 auto;
+    }
+
+    .header {
+        padding:4mm;
+        background:white;
+        border:1px solid #555;
+        color:#111;
+    }
+
+    .logo {
+        color:#111;
+        text-shadow:none;
+        font-size:24px;
+    }
+
+    .subtitle,
+    .header-right {
+        color:#555;
+    }
+
+    .create-button,
+    .modal,
+    .save-bar,
+    .equipment-add {
+        display:none !important;
+    }
+
+    .grid {
+        gap:2mm;
+        margin-top:2mm;
+    }
+
+    .panel {
+        padding:2.5mm;
+        background:white;
+        color:#111;
+        border:1px solid #888;
+        box-shadow:none;
+    }
+
+    .panel:before {
+        background:#222;
+    }
+
+    .title {
+        color:#111;
+        border-color:#888;
+        padding-bottom:1.2mm;
+        margin-bottom:1.5mm;
+        font-size:7px;
+    }
+
+    .fields {
+        gap:1.5mm;
+    }
+
+    .field label,
+    .stat-name,
+    .derived-box label,
+    .skill-reference,
+    .inventory th {
+        color:#555;
+    }
+
+    input,
+    select,
+    textarea {
+        color:#111;
+        background:white;
+        border:0;
+        border-bottom:1px solid #999;
+        padding:1px 2px;
+        font-size:9px;
+        box-shadow:none;
+    }
+
+    textarea {
+        min-height:28px;
+    }
+
+    .stats {
+        gap:2mm;
+    }
+
+    .stat {
+        padding:2mm 1mm;
+        background:#fafafa;
+        border-color:#999;
+    }
+
+    .stat input {
+        color:#111;
+        font-size:12px;
+    }
+
+    .half-fifth {
+        color:#555;
+        font-size:7px;
+    }
+
+    .half-fifth b {
+        color:#111;
+    }
+
+    .derived {
+        gap:1mm;
+    }
+
+    .derived-box {
+        padding:1mm;
+        border-color:#999;
+    }
+
+    .derived-box input {
+        color:#111;
+        font-size:11px;
+    }
+
+    .skills {
+        gap:0 5mm;
+    }
+
+    .skill {
+        padding:1px 0;
+    }
+
+    .skill-name {
+        font-size:8px;
+    }
+
+    .skill input {
+        color:#111;
+        font-size:8px;
+    }
+
+    .skill-reference {
+        font-size:7px;
+    }
+
+    .inventory th,
+    .inventory td {
+        padding:1px;
+        border-color:#aaa;
+    }
+
+    .inventory input {
+        font-size:8px;
+    }
+
+    .print-page-1 {
+        page-break-after:always;
+        break-after:page;
+    }
+
+    .print-page-2 {
+        page-break-before:always;
+        break-before:page;
+    }
+
+    .profile-empty {
+        border-color:#ff5268 !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sheet">
+
+<header class="header">
+
+    <div class="logo">VOID//OPS</div>
+
+    <div class="subtitle">
+        SCI-FI INVESTIGATION // CREW PERSONNEL DOSSIER
+    </div>
+
+    <div class="header-right">
+        PERSONNEL DATABASE<br>
+        SYSTEM ONLINE
+    </div>
+
+    <button class="create-button"
+            onclick="openCreator()">
+        + CREATE CHARACTER
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     PRINT PAGE 1
+     ===================================================== -->
+
+<div class="print-page-1">
+
+<div class="grid">
+
+<section class="panel span-12">
+
+    <div class="title">
+        01 // PERSONNEL IDENTIFICATION
+    </div>
+
+    <div class="fields">
+
+        <div class="field">
+            <label>Character Name</label>
+            <input id="characterName"
+                   class="profile"
+                   data-profile
+                   placeholder="NAME">
+        </div>
+
+        <div class="field">
+            <label>Callsign</label>
+            <input id="callsign"
+                   class="profile"
+                   data-profile
+                   placeholder="CALLSIGN">
+        </div>
+
+        <div class="field">
+            <label>Age</label>
+            <input id="sheetAge"
+                   class="profile"
+                   data-profile>
+        </div>
+
+        <div class="field">
+            <label>Occupation</label>
+            <input id="sheetOccupation"
+                   class="profile"
+                   data-profile>
+        </div>
+
+        <div class="field">
+            <label>Origin</label>
+            <input id="origin"
+                   class="profile"
+                   data-profile>
+        </div>
+
+        <div class="field">
+            <label>Affiliation</label>
+            <input id="affiliation"
+                   class="profile"
+                   data-profile>
+        </div>
+
+        <div class="field">
+            <label>Clearance</label>
+            <input id="clearance"
+                   class="profile"
+                   data-profile>
+        </div>
+
+        <div class="field">
+            <label>Player</label>
+            <input id="player"
+                   class="profile"
+                   data-profile>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="panel span-8">
+
+    <div class="title">
+        02 // CORE CHARACTERISTICS
+    </div>
+
+    <div class="stats">
+
+        <script>
+        const CORE_STATS = [
+            ["STR","Strength"],
+            ["CON","Constitution"],
+            ["DEX","Dexterity"],
+            ["INT","Intelligence"],
+            ["POW","Power"],
+            ["EDU","Education"],
+            ["APP","Appearance"],
+            ["SIZ","Size"]
+        ];
+
+        CORE_STATS.forEach(([id,name]) => {
+
+            document.write(`
+                <div class="stat">
+
+                    <div class="stat-name">
+                        ${id}
+                    </div>
+
+                    <input
+                        id="stat_${id}"
+                        type="number"
+                        min="0"
+                        max="99"
+                        oninput="refreshAll()">
+
+                    <div class="half-fifth">
+                        /2 <b id="half_${id}">—</b>
+                        &nbsp;
+                        /5 <b id="fifth_${id}">—</b>
+                    </div>
+
+                </div>
+            `);
+
+        });
+        </script>
+
+    </div>
+
+</section>
+
+
+<section class="panel span-4">
+
+    <div class="title">
+        03 // DERIVED ATTRIBUTES
+    </div>
+
+    <div class="derived">
+
+        <div class="derived-box">
+            <label>Hit Points</label>
+            <input id="derivedHP">
+        </div>
+
+        <div class="derived-box">
+            <label>Stamina</label>
+            <input id="derivedStamina">
+        </div>
+
+        <div class="derived-box">
+            <label>Luck</label>
+            <input id="derivedLuck">
+        </div>
+
+        <div class="derived-box">
+            <label>Dodge</label>
+            <input id="derivedDodge">
+        </div>
+
+        <div class="derived-box">
+            <label>Move</label>
+            <input id="derivedMove">
+        </div>
+
+        <div class="derived-box">
+            <label>Build</label>
+            <input id="derivedBuild">
+        </div>
+
+        <div class="derived-box">
+            <label>Damage Bonus</label>
+            <input id="derivedDB">
+        </div>
+
+        <div class="derived-box">
+            <label>Willpower</label>
+            <input id="derivedWillpower">
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="panel span-12">
+
+    <div class="title">
+        04 // SKILLS
+    </div>
+
+    <div class="skills"
+         id="sheetSkills">
+    </div>
+
+</section>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PRINT PAGE 2
+     ===================================================== -->
+
+<div class="print-page-2">
+
+<div class="grid">
+
+<section class="panel span-6">
+
+    <div class="title">
+        05 // BACKGROUND
+    </div>
+
+    <div class="fields">
+
+        <div class="field">
+            <label>Birthplace</label>
+            <input class="profile"
+                   data-profile
+                   id="birthplace">
+        </div>
+
+        <div class="field">
+            <label>Personal Goal</label>
+            <input class="profile"
+                   data-profile
+                   id="personalGoal">
+        </div>
+
+        <div class="field">
+            <label>Core Belief</label>
+            <input class="profile"
+                   data-profile
+                   id="coreBelief">
+        </div>
+
+        <div class="field">
+            <label>Important Person</label>
+            <input class="profile"
+                   data-profile
+                   id="importantPerson">
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="field">
+
+        <label>Background</label>
+
+        <textarea class="profile"
+                  data-profile
+                  id="background"></textarea>
+
+    </div>
+
+</section>
+
+
+<section class="panel span-6">
+
+    <div class="title">
+        06 // PERSONAL PROFILE
+    </div>
+
+    <div class="field">
+
+        <label>Defining Event</label>
+
+        <textarea class="profile"
+                  data-profile
+                  id="definingEvent"></textarea>
+
+    </div>
+
+    <br>
+
+    <div class="field">
+
+        <label>Fears / Stress Responses</label>
+
+        <textarea class="profile"
+                  data-profile
+                  id="fears"></textarea>
+
+    </div>
+
+</section>
+
+
+<section class="panel span-4">
+
+    <div class="title">
+        07 // RIVAL / ADVERSARY
+    </div>
+
+    <div class="field">
+        <label>Name / Organization</label>
+        <input class="profile"
+               data-profile
+               id="rival">
+    </div>
+
+    <br>
+
+    <div class="field">
+        <label>Reason for Conflict</label>
+        <textarea class="profile"
+                  data-profile
+                  id="rivalReason"></textarea>
+    </div>
+
+</section>
+
+
+<section class="panel span-4">
+
+    <div class="title">
+        08 // SPECIALIZATION
+    </div>
+
+    <div class="field">
+        <label>Primary Specialty</label>
+        <input class="profile"
+               data-profile
+               id="specialty">
+    </div>
+
+    <br>
+
+    <div class="field">
+        <label>Certification</label>
+        <input class="profile"
+               data-profile
+               id="certification">
+    </div>
+
+    <br>
+
+    <div class="field">
+        <label>Additional Training</label>
+        <textarea class="profile"
+                  data-profile
+                  id="training"></textarea>
+    </div>
+
+</section>
+
+
+<section class="panel span-4">
+
+    <div class="title">
+        09 // MEDICAL STATUS
+    </div>
+
+    <div class="field">
+        <label>Current HP</label>
+        <input id="currentHP"
+               class="variable-stat">
+    </div>
+
+    <br>
+
+    <div class="field">
+        <label>Current Luck</label>
+        <input id="currentLuck"
+               class="variable-stat">
+    </div>
+
+    <br>
+
+    <div class="field">
+        <label>Current Condition</label>
+        <textarea class="profile"
+                  data-profile
+                  id="injuries"></textarea>
+    </div>
+
+</section>
+
+
+<section class="panel span-8">
+
+    <div class="title">
+        10 // EQUIPMENT & LOADOUT
+    </div>
+
+    <table class="inventory">
+
+        <thead>
+            <tr>
+                <th>ITEM</th>
+                <th>QTY</th>
+                <th>WEIGHT</th>
+                <th>CONDITION</th>
+                <th>NOTES</th>
+            </tr>
+        </thead>
+
+        <tbody id="equipmentRows">
+
+            <script>
+            for(let i=0;i<8;i++) {
+
+                document.write(`
+                    <tr>
+                        <td><input class="equipment-item"></td>
+                        <td><input></td>
+                        <td><input></td>
+                        <td><input value="OPERATIONAL"></td>
+                        <td><input></td>
+                    </tr>
+                `);
+
+            }
+            </script>
+
+        </tbody>
+
+    </table>
+
+    <button class="equipment-add"
+            onclick="openEquipmentPicker()">
+        + SELECT EQUIPMENT
+    </button>
+
+</section>
+
+
+<section class="panel span-4">
+
+    <div class="title">
+        11 // COMBAT
+    </div>
+
+    <div class="field">
+        <label>Initiative</label>
+        <input id="initiative">
+    </div>
+
+    <br>
+
+    <div class="field">
+        <label>Armor</label>
+        <input id="combatArmor">
+    </div>
+
+    <br>
+
+    <div class="field">
+        <label>Weapon Notes</label>
+        <textarea></textarea>
+    </div>
+
+</section>
+
+
+<section class="panel span-7">
+
+    <div class="title">
+        12 // CONTACTS
+    </div>
+
+    <table class="inventory">
+
+        <thead>
+            <tr>
+                <th>CONTACT</th>
+                <th>ROLE</th>
+                <th>RELATIONSHIP</th>
+                <th>LOCATION</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        <script>
+        for(let i=0;i<4;i++) {
+            document.write(`
+                <tr>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                </tr>
+            `);
+        }
+        </script>
+
+        </tbody>
+
+    </table>
+
+</section>
+
+
+<section class="panel span-5">
+
+    <div class="title">
+        13 // MISSION LOG
+    </div>
+
+    <textarea
+        style="min-height:105px;"
+        placeholder="Mission notes, coordinates, discoveries, evidence..."></textarea>
+
+</section>
+
+
+<section class="panel span-12">
+
+    <div class="title">
+        14 // NOTES
+    </div>
+
+    <textarea
+        class="profile"
+        data-profile
+        id="notes"
+        style="min-height:75px;"></textarea>
+
+</section>
+
+
+</div>
+
+</div>
+
+
+<div class="save-bar">
+
+    <button class="action"
+            onclick="saveSheet()">
+        SAVE
+    </button>
+
+    <button class="action"
+            onclick="loadSheet()">
+        LOAD
+    </button>
+
+    <button class="action"
+            onclick="window.print()">
+        PRINT RECTO / VERSO
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CHARACTER CREATOR MODAL
+     ===================================================== -->
+
+<div class="modal"
+     id="creatorModal">
+
+<div class="creator">
+
+    <div class="creator-header">
+
+        <div class="creator-title">
+            CHARACTER CREATION // INTAKE PROTOCOL
+        </div>
+
+        <button class="close"
+                onclick="closeCreator()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step active" data-step="1">
+            01<br>POINT BUY
+        </div>
+
+        <div class="step" data-step="2">
+            02<br>AGE
+        </div>
+
+        <div class="step" data-step="3">
+            03<br>DERIVED
+        </div>
+
+        <div class="step" data-step="4">
+            04<br>OCCUPATION
+        </div>
+
+        <div class="step" data-step="5">
+            05<br>SKILLS
+        </div>
+
+        <div class="step" data-step="6">
+            06<br>FINALIZE
+        </div>
+
+    </div>
+
+
+    <div class="step-content"
+         id="creatorContent">
+    </div>
+
+
+    <div class="creator-footer">
+
+        <button onclick="previousStep()">
+            ← BACK
+        </button>
+
+        <button onclick="nextStep()">
+            NEXT →
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     EQUIPMENT MODAL
+     ===================================================== -->
+
+<div class="modal"
+     id="equipmentModal">
+
+<div class="creator">
+
+    <div class="creator-header">
+
+        <div class="creator-title">
+            EQUIPMENT DATABASE
+        </div>
+
+        <button class="close"
+                onclick="closeEquipmentPicker()">
+            ×
+        </button>
+
+    </div>
+
+    <div class="step-content">
+
+        <input id="equipmentSearch"
+               placeholder="SEARCH EQUIPMENT..."
+               oninput="filterEquipment()">
+
+        <br><br>
+
+        <div class="occupation-list"
+             id="equipmentList">
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIGURATION
+   ========================================================= */
+
+const JOBS_URL = "jobs.json";
+const EQUIPMENT_URL = "equipment.json";
+
+const TOTAL_POINTS = 460;
+const MIN_STAT = 15;
+const MAX_STAT = 90;
+
+let creatorStep = 1;
+
+let selectedAge = null;
+let selectedJob = null;
+
+let jobs = [];
+let equipment = [];
+
+let skillDefinitions = [
+
+    {
+        name:"Accounting",
+        base:5,
+        characteristic:null
+    },
+
+    {
+        name:"Anthropology",
+        base:1,
+        characteristic:null
+    },
+
+    {
+        name:"Appraise",
+        base:5,
+        characteristic:null
+    },
+
+    {
+        name:"Biology",
+        base:1,
+        characteristic:null
+    },
+
+    {
+        name:"Computer Use",
+        base:5,
+        characteristic:null
+    },
+
+    {
+        name:"Drive",
+        base:20,
+        characteristic:null
+    },
+
+    {
+        name:"Dodge",
+        base:"DEX/2",
+        characteristic:"DEX"
+    },
+
+    {
+        name:"Electronics",
+        base:1,
+        characteristic:null
+    },
+
+    {
+        name:"Engineering",
+        base:1,
+        characteristic:null
+    },
+
+    {
+        name:"Firearms",
+        base:20,
+        characteristic:null
+    },
+
+    {
+        name:"First Aid",
+        base:30,
+        characteristic:null
+    },
+
+    {
+        name:"Investigation",
+        base:25,
+        characteristic:null
+    },
+
+    {
+        name:"Mechanical Repair",
+        base:20,
+        characteristic:null
+    },
+
+    {
+        name:"Medicine",
+        base:1,
+        characteristic:null
+    },
+
+    {
+        name:"Navigation",
+        base:10,
+        characteristic:null
+    },
+
+    {
+        name:"Persuade",
+        base:10,
+        characteristic:null
+    },
+
+    {
+        name:"Pilot",
+        base:1,
+        characteristic:null
+    },
+
+    {
+        name:"Psychology",
+        base:10,
+        characteristic:null
+    },
+
+    {
+        name:"Research",
+        base:10,
+        characteristic:null
+    },
+
+    {
+        name:"Science",
+        base:1,
+        characteristic:null
+    },
+
+    {
+        name:"Stealth",
+        base:20,
+        characteristic:null
+    },
+
+    {
+        name:"Survival",
+        base:10,
+        characteristic:null
+    },
+
+    {
+        name:"Technology",
+        base:5,
+        characteristic:null
+    },
+
+    {
+        name:"Unarmed Combat",
+        base:25,
+        characteristic:null
+    },
+
+    {
+        name:"Zero-G Operations",
+        base:1,
+        characteristic:null
+    }
+
+];
+
+
+/* =========================================================
+   LOAD JSON DATABASES
+   ========================================================= */
+
+async function loadDatabases() {
+
+    try {
+
+        const response =
+            await fetch(JOBS_URL);
+
+        jobs =
+            await response.json();
+
+    } catch(error) {
+
+        console.warn(
+            "Could not load jobs.json",
+            error
+        );
+
+        /*
+         * This keeps the application usable if the
+         * JSON file isn't present yet.
+         */
+
+        jobs = [
+
+            {
+                id:"engineer",
+                name:"Systems Engineer",
+                category:"intellectual",
+                skills:[
+                    "Engineering",
+                    "Electronics",
+                    "Mechanical Repair",
+                    "Computer Use",
+                    "Technology",
+                    "Science",
+                    "Research",
+                    "Zero-G Operations",
+                    "Appraise"
+                ]
+            }
+
+        ];
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(EQUIPMENT_URL);
+
+        equipment =
+            await response.json();
+
+    } catch(error) {
+
+        console.warn(
+            "Could not load equipment.json",
+            error
+        );
+
+        equipment = [];
+
+    }
+
+}
+
+loadDatabases();
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+function openCreator() {
+
+    creatorStep = 1;
+
+    renderCreator();
+
+    document
+        .getElementById("creatorModal")
+        .classList.add("open");
+
+}
+
+function closeCreator() {
+
+    document
+        .getElementById("creatorModal")
+        .classList.remove("open");
+
+}
+
+
+/* =========================================================
+   CREATOR NAVIGATION
+   ========================================================= */
+
+function nextStep() {
+
+    if(!validateStep(creatorStep)) {
+        return;
+    }
+
+    if(creatorStep < 6) {
+
+        creatorStep++;
+
+        renderCreator();
+
+    } else {
+
+        finishCharacter();
+
+    }
+
+}
+
+
+function previousStep() {
+
+    if(creatorStep > 1) {
+
+        creatorStep--;
+
+        renderCreator();
+
+    }
+
+}
+
+
+function validateStep(step) {
+
+    if(step === 1) {
+
+        const total =
+            getPointBuyTotal();
+
+        if(total !== TOTAL_POINTS) {
+
+            alert(
+                `You must spend exactly ${TOTAL_POINTS} points.`
+            );
+
+            return false;
+
+        }
+
+    }
+
+    if(step === 2 && !selectedAge) {
+
+        alert(
+            "Select an age range."
+        );
+
+        return false;
+
+    }
+
+    if(step === 4 && !selectedJob) {
+
+        alert(
+            "Select an occupation."
+        );
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
+/* =========================================================
+   CREATOR RENDER
+   ========================================================= */
+
+function renderCreator() {
+
+    document
+        .querySelectorAll(".step")
+        .forEach(element => {
+
+            element.classList.toggle(
+                "active",
+                Number(element.dataset.step) === creatorStep
+            );
+
+        });
+
+
+    const content =
+        document.getElementById(
+            "creatorContent"
+        );
+
+
+    if(creatorStep === 1) {
+
+        renderPointBuy(content);
+
+    }
+
+    if(creatorStep === 2) {
+
+        renderAge(content);
+
+    }
+
+    if(creatorStep === 3) {
+
+        renderDerived(content);
+
+    }
+
+    if(creatorStep === 4) {
+
+        renderOccupation(content);
+
+    }
+
+    if(creatorStep === 5) {
+
+        renderSkills(content);
+
+    }
+
+    if(creatorStep === 6) {
+
+        renderFinalize(content);
+
+    }
+
+}
+
+
+/* =========================================================
+   STEP 1 — POINT BUY
+   ========================================================= */
+
+function getPointBuyTotal() {
+
+    return CORE_STATS.reduce(
+        (total,[id]) => {
+
+            const value =
+                Number(
+                    document.getElementById(
+                        "creator_" + id
+                    )?.value
+                ) || 0;
+
+            return total + value;
+
+        },
+        0
+    );
+
+}
+
+
+function renderPointBuy(content) {
+
+    content.innerHTML = `
+
+        <div class="creation-help">
+
+            Divide exactly <strong>460 points</strong>
+            amongst the eight core characteristics.
+            Every characteristic must be between
+            <strong>15</strong> and <strong>90</strong>.
+
+        </div>
+
+        <div class="buy-summary">
+
+            <span>
+                POINTS REMAINING
+            </span>
+
+            <strong id="pointsRemaining">
+                ${TOTAL_POINTS - getPointBuyTotal()}
+            </strong>
+
+        </div>
+
+        <div class="point-controls">
+
+            ${CORE_STATS.map(
+                ([id,name]) => {
+
+                    const existing =
+                        document.getElementById(
+                            "stat_" + id
+                        )?.value || 50;
+
+                    return `
+
+                    <div class="point-row">
+
+                        <span>
+                            ${name}
+                            <small class="ref">
+                                ${id}
+                            </small>
+                        </span>
+
+                        <input
+                            id="creator_${id}"
+                            type="number"
+                            min="${MIN_STAT}"
+                            max="${MAX_STAT}"
+                            value="${existing}"
+                            oninput="updatePointBuy()">
+
+                        <span class="ref">
+                            /2 /5
+                        </span>
+
+                    </div>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </div>
+
+    `;
+
+    updatePointBuy();
+
+}
+
+
+function updatePointBuy() {
+
+    const remaining =
+        TOTAL_POINTS -
+        getPointBuyTotal();
+
+    const element =
+        document.getElementById(
+            "pointsRemaining"
+        );
+
+    if(!element) return;
+
+    element.textContent =
+        remaining;
+
+    element.style.color =
+        remaining === 0
+            ? "var(--green)"
+            : "var(--red)";
+
+}
+
+
+/* =========================================================
+   STEP 2 — AGE
+   ========================================================= */
+
+function renderAge(content) {
+
+    const ranges = [
+
+        ["15-19",
+         "STR + SIZ: remove 5 total<br>EDU −5"],
+
+        ["20-39",
+         "1 EDU improvement roll"],
+
+        ["40-49",
+         "2 EDU rolls<br>STR/CON/DEX −5 total<br>APP −5<br>Move −1"],
+
+        ["50-59",
+         "3 EDU rolls<br>STR/CON/DEX −10 total<br>APP −10<br>Move −2"],
+
+        ["60-69",
+         "4 EDU rolls<br>STR/CON/DEX −20 total<br>APP −15<br>Move −3"],
+
+        ["70-79",
+         "4 EDU rolls<br>STR/CON/DEX −40 total<br>APP −20<br>Move −4"],
+
+        ["80-89",
+         "4 EDU rolls<br>STR/CON/DEX −80 total<br>APP −25<br>Move −5"]
+
+    ];
+
+    content.innerHTML = `
+
+        <div class="creation-help">
+
+            Select the character's age bracket.
+            Age modifications are applied after the
+            initial 460-point allocation.
+
+        </div>
+
+        <div class="age-options">
+
+            ${ranges.map(
+                ([age,description]) => `
+
+                <div
+                    class="age-option ${
+                        selectedAge === age
+                        ? "selected"
+                        : ""
+                    }"
+                    onclick="selectAge('${age}')">
+
+                    <strong>
+                        ${age}
+                    </strong>
+
+                    <small>
+                        ${description}
+                    </small>
+
+                </div>
+
+                `
+            ).join("")}
+
+        </div>
+
+        <div id="ageAdjustments"
+             class="adjustments">
+
+        </div>
+
+    `;
+
+
+    if(selectedAge) {
+
+        renderAgeAdjustments();
+
+    }
+
+}
+
+
+function selectAge(age) {
+
+    selectedAge = age;
+
+    renderCreator();
+
+}
+
+
+function renderAgeAdjustments() {
+
+    const container =
+        document.getElementById(
+            "ageAdjustments"
+        );
+
+    if(!container) return;
+
+    const numericAge =
+        Number(
+            selectedAge.split("-")[0]
+        );
+
+    const reduction =
+        numericAge >= 80 ? 80 :
+        numericAge >= 70 ? 40 :
+        numericAge >= 60 ? 20 :
+        numericAge >= 50 ? 10 :
+        numericAge >= 40 ? 5 :
+        0;
+
+    const eduRolls =
+        numericAge <= 19 ? 0 :
+        numericAge <= 39 ? 1 :
+        numericAge <= 59 ? numericAge >= 50 ? 3 : 2 :
+        4;
+
+    const appReduction =
+        numericAge >= 80 ? 25 :
+        numericAge >= 70 ? 20 :
+        numericAge >= 60 ? 15 :
+        numericAge >= 50 ? 10 :
+        numericAge >= 40 ? 5 :
+        0;
+
+
+    let html = `
+        <div class="creation-help">
+            Age adjustment: ${
+                reduction || "none"
+            } points must be removed from the
+            designated physical characteristics.
+        </div>
+    `;
+
+
+    if(selectedAge === "15-19") {
+
+        html += `
+            <div class="adjustment-row">
+                <label>
+                    STR points removed
+                </label>
+                <input id="ageSTR"
+                       type="number"
+                       min="0"
+                       max="5"
+                       value="2">
+            </div>
+
+            <div class="adjustment-row">
+                <label>
+                    SIZ points removed
+                </label>
+                <input id="ageSIZ"
+                       type="number"
+                       min="0"
+                       max="5"
+                       value="3">
+            </div>
+
+            <div class="creation-help">
+                Total STR + SIZ reduction must equal 5.
+                EDU is reduced by 5.
+            </div>
+        `;
+
+    }
+
+    else if(reduction > 0) {
+
+        html += `
+            <div class="adjustment-row">
+                <label>
+                    STR reduction
+                </label>
+                <input id="ageSTR"
+                       type="number"
+                       min="0"
+                       max="${reduction}"
+                       value="0">
+            </div>
+
+            <div class="adjustment-row">
+                <label>
+                    CON reduction
+                </label>
+                <input id="ageCON"
+                       type="number"
+                       min="0"
+                       max="${reduction}"
+                       value="0">
+            </div>
+
+            <div class="adjustment-row">
+                <label>
+                    DEX reduction
+                </label>
+                <input id="ageDEX"
+                       type="number"
+                       min="0"
+                       max="${reduction}"
+                       value="${reduction}">
+            </div>
+
+            <div class="creation-help">
+                STR + CON + DEX reduction must equal
+                ${reduction}.
+                APP automatically loses ${appReduction}.
+            </div>
+        `;
+
+    }
+
+    if(eduRolls > 0) {
+
+        html += `
+
+            <button
+                class="create-button"
+                onclick="rollEducation()">
+
+                ROLL ${eduRolls}
+                EDUCATION BONUS
+                ${eduRolls === 1 ? "THROW" : "THROWS"}
+
+            </button>
+
+            <div
+                id="educationResults"
+                class="roll-result">
+
+                Education rolls have not been made.
+
+            </div>
+
+        `;
+
+    }
+
+    if(selectedAge === "15-19") {
+
+        html += `
+            <div class="creation-help">
+                Young characters do not make an education
+                improvement roll. EDU is reduced by 5.
+            </div>
+        `;
+
+    }
+
+    container.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   EDUCATION ROLLS
+   ========================================================= */
+
+function rollD100() {
+
+    return Math.floor(
+        Math.random() * 100
+    ) + 1;
+
+}
+
+
+function rollD10() {
+
+    return Math.floor(
+        Math.random() * 10
+    ) + 1;
+
+}
+
+
+function rollEducation() {
+
+    const eduInput =
+        document.getElementById(
+            "creator_EDU"
+        );
+
+    let edu =
+        Number(eduInput.value);
+
+    const numericAge =
+        Number(
+            selectedAge.split("-")[0]
+        );
+
+    const throws =
+        numericAge <= 39 ? 1 : 4;
+
+    let results = [];
+
+    /*
+     * 40-49 = 2
+     * 50-59 = 3
+     * 60+   = 4
+     */
+
+    let actualThrows = throws;
+
+    if(numericAge >= 40 &&
+       numericAge <= 49) {
+
+        actualThrows = 2;
+
+    } else if(numericAge >= 50 &&
+              numericAge <= 59) {
+
+        actualThrows = 3;
+
+    }
+
+    for(let i=0;i<actualThrows;i++) {
+
+        const d100 =
+            rollD100();
+
+        if(d100 > edu) {
+
+            const gain =
+                rollD10();
+
+            edu =
+                Math.min(
+                    99,
+                    edu + gain
+                );
+
+            results.push(
+                `D100 ${d100} > EDU: +${gain}`
+            );
+
+        } else {
+
+            results.push(
+                `D100 ${d100} ≤ EDU: no increase`
+            );
+
+        }
+
+    }
+
+    eduInput.value =
+        edu;
+
+    document.getElementById(
+        "educationResults"
+    ).innerHTML =
+        results.join("<br>") +
+        `<br><strong>Final EDU: ${edu}</strong>`;
+
+}
+
+
+/* =========================================================
+   STEP 3 — LUCK & DERIVED
+   ========================================================= */
+
+function renderDerived(content) {
+
+    content.innerHTML = `
+
+        <div class="creation-help">
+
+            Your characteristics now determine your
+            derived attributes. This stage also performs
+            the Luck roll.
+
+        </div>
+
+        <div class="roll-result"
+             id="luckResult">
+
+            Luck has not yet been rolled.
+
+        </div>
+
+        <br>
+
+        <button class="create-button"
+                onclick="rollLuck()">
+
+            ROLL LUCK
+
+        </button>
+
+        <br><br>
+
+        <div id="derivedPreview"></div>
+
+    `;
+
+    calculateCreatorDerived();
+
+}
+
+
+function rollLuck() {
+
+    const first =
+        roll3d6() * 5;
+
+    let result =
+        first;
+
+    const age =
+        Number(
+            selectedAge.split("-")[0]
+        );
+
+    let text =
+        `First Luck roll: ${first}`;
+
+    if(age >= 15 && age <= 19) {
+
+        const second =
+            roll3d6() * 5;
+
+        result =
+            Math.max(first,second);
+
+        text +=
+            `<br>Second Luck roll: ${second}` +
+            `<br><strong>Keep highest: ${result}</strong>`;
+
+    } else {
+
+        text +=
+            `<br><strong>Luck: ${result}</strong>`;
+
+    }
+
+    document.getElementById(
+        "luckResult"
+    ).innerHTML =
+        text;
+
+    document.getElementById(
+        "derivedLuck"
+    ).value =
+        result;
+
+}
+
+
+function roll3d6() {
+
+    return (
+        rollD6() +
+        rollD6() +
+        rollD6()
+    );
+
+}
+
+
+function rollD6() {
+
+    return Math.floor(
+        Math.random() * 6
+    ) + 1;
+
+}
+
+
+function getCreatorStat(id) {
+
+    return Number(
+        document.getElementById(
+            "creator_" + id
+        )?.value
+    ) || 0;
+
+}
+
+
+function calculateCreatorDerived() {
+
+    const STR = getCreatorStat("STR");
+    const CON = getCreatorStat("CON");
+    const DEX = getCreatorStat("DEX");
+    const SIZ = getCreatorStat("SIZ");
+    const POW = getCreatorStat("POW");
+
+    const hp =
+        Math.floor(
+            (CON + SIZ) / 10
+        );
+
+    let db = "0";
+    let build = 0;
+
+    const total =
+        STR + SIZ;
+
+    if(total <= 64) {
+        db = "-2";
+        build = -2;
+    }
+    else if(total <= 84) {
+        db = "-1";
+        build = -1;
+    }
+    else if(total <= 124) {
+        db = "0";
+        build = 0;
+    }
+    else if(total <= 164) {
+        db = "+1d4";
+        build = 1;
+    }
+    else {
+        db = "+1d6";
+        build = 2;
+    }
+
+
+    let move = 7;
+
+    if(DEX >= SIZ ||
+       STR >= SIZ) {
+
+        move = 8;
+
+    }
+
+    if(DEX > SIZ &&
+       STR > SIZ) {
+
+        move = 9;
+
+    }
+
+
+    const age =
+        selectedAge
+        ? Number(
+            selectedAge.split("-")[0]
+          )
+        : 20;
+
+    if(age >= 40) move--;
+    if(age >= 50) move--;
+    if(age >= 60) move--;
+    if(age >= 70) move--;
+    if(age >= 80) move--;
+
+
+    const dodge =
+        Math.floor(
+            DEX / 2
+        );
+
+
+    document.getElementById(
+        "derivedHP"
+    ).value =
+        hp;
+
+    document.getElementById(
+        "derivedStamina"
+    ).value =
+        Math.floor(CON / 10);
+
+    document.getElementById(
+        "derivedDodge"
+    ).value =
+        dodge;
+
+    document.getElementById(
+        "derivedMove"
+    ).value =
+        move;
+
+    document.getElementById(
+        "derivedBuild"
+    ).value =
+        build;
+
+    document.getElementById(
+        "derivedDB"
+    ).value =
+        db;
+
+    document.getElementById(
+        "derivedWillpower"
+    ).value =
+        Math.floor(POW / 10);
+
+    const preview =
+        document.getElementById(
+            "derivedPreview"
+        );
+
+    if(preview) {
+
+        preview.innerHTML = `
+
+            <div class="buy-summary">
+
+                <span>HIT POINTS</span>
+                <strong>${hp}</strong>
+
+            </div>
+
+            <div class="buy-summary">
+
+                <span>DAMAGE BONUS / BUILD</span>
+                <strong>${db} / ${build}</strong>
+
+            </div>
+
+            <div class="buy-summary">
+
+                <span>MOVEMENT RATE</span>
+                <strong>${move}</strong>
+
+            </div>
+
+            <div class="buy-summary">
+
+                <span>DODGE BASE</span>
+                <strong>${dodge}</strong>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   STEP 4 — OCCUPATION
+   ========================================================= */
+
+function renderOccupation(content) {
+
+    content.innerHTML = `
+
+        <div class="creation-help">
+
+            Select the character's main occupation.
+            The occupation database is loaded from
+            <strong>jobs.json</strong>.
+
+            Each occupation provides nine professional
+            skills and determines how many professional
+            skill credits are available.
+
+        </div>
+
+        <div class="occupation-list">
+
+            ${
+                jobs.map(
+                    job => `
+
+                    <div
+                        class="job-option ${
+                            selectedJob?.id === job.id
+                            ? "selected"
+                            : ""
+                        }"
+                        onclick='selectJob(${JSON.stringify(job)})'>
+
+                        <strong>
+                            ${job.name}
+                        </strong>
+
+                        <small>
+                            ${job.category}
+                        </small>
+
+                    </div>
+
+                    `
+                ).join("")
+            }
+
+        </div>
+
+        <div
+            id="selectedJobDetails"
+            class="job-skills">
+
+            Select an occupation to see its
+            nine professional skills.
+
+        </div>
+
+    `;
+
+
+    if(selectedJob) {
+
+        renderJobDetails();
+
+    }
+
+}
+
+
+function selectJob(job) {
+
+    selectedJob =
+        job;
+
+    renderCreator();
+
+}
+
+
+function renderJobDetails() {
+
+    const container =
+        document.getElementById(
+            "selectedJobDetails"
+        );
+
+    if(!container ||
+       !selectedJob) return;
+
+    const EDU =
+        getCreatorStat("EDU");
+
+    const STR =
+        getCreatorStat("STR");
+
+    const DEX =
+        getCreatorStat("DEX");
+
+    const APP =
+        getCreatorStat("APP");
+
+
+    let credits = 0;
+
+    if(selectedJob.category === "intellectual") {
+
+        credits =
+            4 * EDU;
+
+    }
+
+    else if(selectedJob.category === "manual") {
+
+        credits =
+            (2 * EDU) +
+            (2 * Math.max(STR,DEX));
+
+    }
+
+    else if(selectedJob.category === "social") {
+
+        credits =
+            (2 * EDU) +
+            (2 * APP);
+
+    }
+
+
+    container.innerHTML = `
+
+        <strong style="color:var(--cyan)">
+            ${selectedJob.name}
+        </strong>
+
+        <p>
+            Category:
+            <strong>
+                ${selectedJob.category}
+            </strong>
+        </p>
+
+        <p>
+            Professional skill credits:
+            <strong style="color:var(--green)">
+                ${credits}
+            </strong>
+        </p>
+
+        <div class="tags">
+
+            ${
+                selectedJob.skills.map(
+                    skill =>
+                    `<span class="tag">${skill}</span>`
+                ).join("")
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   STEP 5 — SKILLS
+   ========================================================= */
+
+function getSkillBase(skill) {
+
+    if(skill.base === "DEX/2") {
+
+        return Math.floor(
+            getCreatorStat("DEX") / 2
+        );
+
+    }
+
+    if(skill.base === "APP/2") {
+
+        return Math.floor(
+            getCreatorStat("APP") / 2
+        );
+
+    }
+
+    return Number(skill.base);
+
+}
+
+
+function getProfessionalCredits() {
+
+    if(!selectedJob) return 0;
+
+    const EDU =
+        getCreatorStat("EDU");
+
+    const STR =
+        getCreatorStat("STR");
+
+    const DEX =
+        getCreatorStat("DEX");
+
+    const APP =
+        getCreatorStat("APP");
+
+    if(selectedJob.category === "intellectual") {
+
+        return 4 * EDU;
+
+    }
+
+    if(selectedJob.category === "manual") {
+
+        return (
+            2 * EDU +
+            2 * Math.max(STR,DEX)
+        );
+
+    }
+
+    if(selectedJob.category === "social") {
+
+        return (
+            2 * EDU +
+            2 * APP
+        );
+
+    }
+
+    return 0;
+
+}
+
+
+function renderSkills(content) {
+
+    if(!selectedJob) {
+
+        content.innerHTML =
+            "Select an occupation first.";
+
+        return;
+
+    }
+
+    const professional =
+        getProfessionalCredits();
+
+    const personal =
+        getCreatorStat("INT") * 2;
+
+
+    content.innerHTML = `
+
+        <div class="creation-help">
+
+            Spend your <strong>${professional}</strong>
+            professional credits only on your occupation's
+            nine listed skills.
+
+            <br><br>
+
+            Then spend
+            <strong>${personal}</strong>
+            personal-interest credits freely among all
+            skills.
+
+            Skill credits are added on top of the
+            skill's baseline value.
+
+        </div>
+
+        <div class="points-box">
+
+            <span>
+                PROFESSIONAL CREDITS REMAINING
+            </span>
+
+            <strong id="professionalRemaining">
+                ${professional}
+            </strong>
+
+        </div>
+
+        <div class="skill-allocation"
+             id="professionalSkills">
+        </div>
+
+        <br>
+
+        <div class="points-box">
+
+            <span>
+                PERSONAL INTEREST CREDITS REMAINING
+            </span>
+
+            <strong id="personalRemaining">
+                ${personal}
+            </strong>
+
+        </div>
+
+        <div class="skill-allocation"
+             id="personalSkills">
+        </div>
+
+    `;
+
+
+    renderAllocationTables();
+
+}
+
+
+function renderAllocationTables() {
+
+    const professionalContainer =
+        document.getElementById(
+            "professionalSkills"
+        );
+
+    const personalContainer =
+        document.getElementById(
+            "personalSkills"
+        );
+
+
+    professionalContainer.innerHTML =
+        selectedJob.skills.map(
+            skillName => {
+
+                const definition =
+                    skillDefinitions.find(
+                        skill =>
+                        skill.name === skillName
+                    );
+
+                const base =
+                    definition
+                    ? getSkillBase(definition)
+                    : 0;
+
+                return `
+
+                    <div class="alloc-row">
+
+                        <span>
+                            ${skillName}
+                        </span>
+
+                        <input
+                            type="number"
+                            min="0"
+                            max="${99-base}"
+                            value="0"
+                            data-professional="${skillName}"
+                            oninput="updateSkillCredits()">
+
+                        <span class="alloc-base">
+                            BASE ${base}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+
+    personalContainer.innerHTML =
+        skillDefinitions.map(
+            definition => {
+
+                const base =
+                    getSkillBase(
+                        definition
+                    );
+
+                return `
+
+                    <div class="alloc-row">
+
+                        <span>
+                            ${definition.name}
+                        </span>
+
+                        <input
+                            type="number"
+                            min="0"
+                            max="${99-base}"
+                            value="0"
+                            data-personal="${definition.name}"
+                            oninput="updateSkillCredits()">
+
+                        <span class="alloc-base">
+                            BASE ${base}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+function updateSkillCredits() {
+
+    let professionalUsed = 0;
+
+    document
+        .querySelectorAll(
+            "[data-professional]"
+        )
+        .forEach(
+            input => {
+
+                professionalUsed +=
+                    Number(input.value) || 0;
+
+            }
+        );
+
+
+    let personalUsed = 0;
+
+    document
+        .querySelectorAll(
+            "[data-personal]"
+        )
+        .forEach(
+            input => {
+
+                personalUsed +=
+                    Number(input.value) || 0;
+
+            }
+        );
+
+
+    const professional =
+        getProfessionalCredits();
+
+    const personal =
+        getCreatorStat("INT") * 2;
+
+
+    document.getElementById(
+        "professionalRemaining"
+    ).textContent =
+        professional -
+        professionalUsed;
+
+    document.getElementById(
+        "personalRemaining"
+    ).textContent =
+        personal -
+        personalUsed;
+
+
+    document.getElementById(
+        "professionalRemaining"
+    ).style.color =
+        professionalUsed > professional
+        ? "var(--red)"
+        : "var(--green)";
+
+    document.getElementById(
+        "personalRemaining"
+    ).style.color =
+        personalUsed > personal
+        ? "var(--red)"
+        : "var(--green)";
+
+}
+
+
+function validateSkills() {
+
+    let professionalUsed = 0;
+
+    document
+        .querySelectorAll(
+            "[data-professional]"
+        )
+        .forEach(
+            input => {
+
+                professionalUsed +=
+                    Number(input.value) || 0;
+
+            }
+        );
+
+
+    let personalUsed = 0;
+
+    document
+        .querySelectorAll(
+            "[data-personal]"
+        )
+        .forEach(
+            input => {
+
+                personalUsed +=
+                    Number(input.value) || 0;
+
+            }
+        );
+
+
+    if(
+        professionalUsed >
+        getProfessionalCredits()
+    ) {
+
+        alert(
+            "Too many professional skill credits spent."
+        );
+
+        return false;
+
+    }
+
+
+    if(
+        personalUsed >
+        getCreatorStat("INT") * 2
+    ) {
+
+        alert(
+            "Too many personal-interest credits spent."
+        );
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
+/* =========================================================
+   STEP 6 — FINALIZE
+   ========================================================= */
+
+function renderFinalize(content) {
+
+    content.innerHTML = `
+
+        <div class="creation-help">
+
+            Review the generated character.
+            The full character sheet will remain editable
+            after creation.
+
+        </div>
+
+        <div class="buy-summary">
+            <span>OCCUPATION</span>
+            <strong>
+                ${selectedJob?.name || "—"}
+            </strong>
+        </div>
+
+        <div class="buy-summary">
+            <span>AGE</span>
+            <strong>
+                ${selectedAge || "—"}
+            </strong>
+        </div>
+
+        <div class="buy-summary">
+            <span>PROFESSIONAL CREDITS</span>
+            <strong>
+                ${getProfessionalCredits()}
+            </strong>
+        </div>
+
+        <div class="buy-summary">
+            <span>PERSONAL CREDITS</span>
+            <strong>
+                ${getCreatorStat("INT") * 2}
+            </strong>
+        </div>
+
+        <p style="color:var(--muted)">
+            Click FINISH to transfer the character
+            to the personnel dossier.
+        </p>
+
+    `;
+
+}
+
+
+/* =========================================================
+   FINAL CHARACTER CREATION
+   ========================================================= */
+
+function finishCharacter() {
+
+    if(!validateSkills()) {
+
+        return;
+
+    }
+
+
+    /*
+     * Copy characteristics
+     */
+
+    CORE_STATS.forEach(
+        ([id]) => {
+
+            document.getElementById(
+                "stat_" + id
+            ).value =
+                getCreatorStat(id);
+
+        }
+    );
+
+
+    /*
+     * Apply age adjustments.
+     */
+
+    applyAgeAdjustments();
+
+
+    /*
+     * Transfer identity
+     */
+
+    document.getElementById(
+        "sheetOccupation"
+    ).value =
+        selectedJob?.name || "";
+
+    document.getElementById(
+        "sheetAge"
+    ).value =
+        selectedAge || "";
+
+
+    /*
+     * Luck
+     */
+
+    if(!document.getElementById(
+        "derivedLuck"
+    ).value) {
+
+        rollLuck();
+
+    }
+
+
+    /*
+     * Transfer skills.
+     */
+
+    applySkillAllocations();
+
+
+    /*
+     * Recalculate everything.
+     */
+
+    refreshAll();
+
+    /*
+     * Highlight empty profile fields.
+     */
+
+    highlightEmptyFields();
+
+    /*
+     * Close creator.
+     */
+
+    closeCreator();
+
+}
+
+
+/* =========================================================
+   AGE APPLICATION
+   ========================================================= */
+
+function applyAgeAdjustments() {
+
+    const age =
+        Number(
+            selectedAge.split("-")[0]
+        );
+
+
+    if(age <= 19) {
+
+        const str =
+            Number(
+                document.getElementById(
+                    "ageSTR"
+                )?.value
+            ) || 0;
+
+        const siz =
+            Number(
+                document.getElementById(
+                    "ageSIZ"
+                )?.value
+            ) || 0;
+
+        if(str + siz !== 5) {
+
+            alert(
+                "For age 15-19, STR + SIZ reduction must equal 5."
+            );
+
+            return;
+
+        }
+
+        changeCreatorStat(
+            "STR",
+            -str
+        );
+
+        changeCreatorStat(
+            "SIZ",
+            -siz
+        );
+
+        changeCreatorStat(
+            "EDU",
+            -5
+        );
+
+        return;
+
+    }
+
+
+    if(age >= 40) {
+
+        let reduction =
+            age >= 80 ? 80 :
+            age >= 70 ? 40 :
+            age >= 60 ? 20 :
+            age >= 50 ? 10 :
+            5;
+
+
+        const str =
+            Number(
+                document.getElementById(
+                    "ageSTR"
+                )?.value
+            ) || 0;
+
+        const con =
+            Number(
+                document.getElementById(
+                    "ageCON"
+                )?.value
+            ) || 0;
+
+        const dex =
+            Number(
+                document.getElementById(
+                    "ageDEX"
+                )?.value
+            ) || 0;
+
+
+        if(str + con + dex !== reduction) {
+
+            alert(
+                `STR + CON + DEX reduction must equal ${reduction}.`
+            );
+
+            return;
+
+        }
+
+
+        changeCreatorStat(
+            "STR",
+            -str
+        );
+
+        changeCreatorStat(
+            "CON",
+            -con
+        );
+
+        changeCreatorStat(
+            "DEX",
+            -dex
+        );
+
+
+        const appReduction =
+            age >= 80 ? 25 :
+            age >= 70 ? 20 :
+            age >= 60 ? 15 :
+            age >= 50 ? 10 :
+            5;
+
+
+        changeCreatorStat(
+            "APP",
+            -appReduction
+        );
+
+    }
+
+}
+
+
+function changeCreatorStat(
+    id,
+    amount
+) {
+
+    const input =
+        document.getElementById(
+            "creator_" + id
+        );
+
+    if(!input) return;
+
+    input.value =
+        Math.max(
+            1,
+            Number(input.value) +
+            amount
+        );
+
+}
+
+
+/* =========================================================
+   APPLY SKILLS
+   ========================================================= */
+
+function applySkillAllocations() {
+
+    /*
+     * Reset to bases.
+     */
+
+    skillDefinitions.forEach(
+        definition => {
+
+            const input =
+                document.querySelector(
+                    `[data-sheet-skill="${definition.name}"]`
+                );
+
+            if(input) {
+
+                input.value =
+                    getSkillBase(
+                        definition
+                    );
+
+            }
+
+        }
+    );
+
+
+    /*
+     * Professional additions.
+     */
+
+    document
+        .querySelectorAll(
+            "[data-professional]"
+        )
+        .forEach(
+            allocation => {
+
+                const skill =
+                    allocation.dataset.professional;
+
+                const target =
+                    document.querySelector(
+                        `[data-sheet-skill="${skill}"]`
+                    );
+
+                if(target) {
+
+                    target.value =
+                        Number(target.value) +
+                        Number(allocation.value || 0);
+
+                }
+
+            }
+        );
+
+
+    /*
+     * Personal additions.
+     */
+
+    document
+        .querySelectorAll(
+            "[data-personal]"
+        )
+        .forEach(
+            allocation => {
+
+                const skill =
+                    allocation.dataset.personal;
+
+                const target =
+                    document.querySelector(
+                        `[data-sheet-skill="${skill}"]`
+                    );
+
+                if(target) {
+
+                    target.value =
+                        Number(target.value) +
+                        Number(allocation.value || 0);
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   BUILD SHEET SKILLS
+   ========================================================= */
+
+function buildSheetSkills() {
+
+    const container =
+        document.getElementById(
+            "sheetSkills"
+        );
+
+    container.innerHTML = "";
+
+
+    skillDefinitions.forEach(
+        definition => {
+
+            const base =
+                definition.base;
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "skill";
+
+
+            row.innerHTML = `
+
+                <span class="skill-name">
+                    ${definition.name}
+                </span>
+
+                <input
+                    type="number"
+                    min="0"
+                    max="99"
+                    data-sheet-skill="${definition.name}"
+                    oninput="refreshAll()">
+
+                <span class="skill-reference">
+
+                    /2
+                    <b
+                        data-half-skill="${definition.name}">
+                        —
+                    </b>
+
+                    &nbsp;
+
+                    /5
+                    <b
+                        data-fifth-skill="${definition.name}">
+                        —
+                    </b>
+
+                </span>
+
+            `;
+
+
+            container.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   REFRESH SHEET
+   ========================================================= */
+
+function refreshAll() {
+
+    CORE_STATS.forEach(
+        ([id]) => {
+
+            const value =
+                Number(
+                    document.getElementById(
+                        "stat_" + id
+                    ).value
+                ) || 0;
+
+            document.getElementById(
+                "half_" + id
+            ).textContent =
+                Math.floor(value / 2);
+
+            document.getElementById(
+                "fifth_" + id
+            ).textContent =
+                Math.floor(value / 5);
+
+        }
+    );
+
+
+    document
+        .querySelectorAll(
+            "[data-sheet-skill]"
+        )
+        .forEach(
+            input => {
+
+                const value =
+                    Number(input.value) || 0;
+
+                const name =
+                    input.dataset.sheetSkill;
+
+                const half =
+                    document.querySelector(
+                        `[data-half-skill="${name}"]`
+                    );
+
+                const fifth =
+                    document.querySelector(
+                        `[data-fifth-skill="${name}"]`
+                    );
+
+                half.textContent =
+                    Math.floor(value / 2);
+
+                fifth.textContent =
+                    Math.floor(value / 5);
+
+            }
+        );
+
+
+    /*
+     * Recalculate derived values from sheet stats.
+     */
+
+    const STR =
+        Number(
+            document.getElementById(
+                "stat_STR"
+            ).value
+        ) || 0;
+
+    const CON =
+        Number(
+            document.getElementById(
+                "stat_CON"
+            ).value
+        ) || 0;
+
+    const DEX =
+        Number(
+            document.getElementById(
+                "stat_DEX"
+            ).value
+        ) || 0;
+
+    const SIZ =
+        Number(
+            document.getElementById(
+                "stat_SIZ"
+            ).value
+        ) || 0;
+
+    const POW =
+        Number(
+            document.getElementById(
+                "stat_POW"
+            ).value
+        ) || 0;
+
+
+    document.getElementById(
+        "derivedHP"
+    ).value =
+        Math.floor(
+            (CON + SIZ) / 10
+        );
+
+
+    document.getElementById(
+        "derivedStamina"
+    ).value =
+        Math.floor(CON / 10);
+
+
+    document.getElementById(
+        "derivedWillpower"
+    ).value =
+        Math.floor(POW / 10);
+
+
+    /*
+     * Dodge is a skill and can therefore be modified.
+     */
+
+    const dodgeInput =
+        document.querySelector(
+            '[data-sheet-skill="Dodge"]'
+        );
+
+    if(dodgeInput &&
+       !dodgeInput.dataset.userModified) {
+
+        dodgeInput.value =
+            Math.floor(
+                DEX / 2
+            );
+
+    }
+
+
+    const total =
+        STR + SIZ;
+
+    let db = "0";
+    let build = 0;
+
+    if(total <= 64) {
+        db = "-2";
+        build = -2;
+    }
+    else if(total <= 84) {
+        db = "-1";
+        build = -1;
+    }
+    else if(total <= 124) {
+        db = "0";
+        build = 0;
+    }
+    else if(total <= 164) {
+        db = "+1d4";
+        build = 1;
+    }
+    else {
+        db = "+1d6";
+        build = 2;
+    }
+
+
+    let move = 7;
+
+    if(DEX >= SIZ ||
+       STR >= SIZ) {
+
+        move = 8;
+
+    }
+
+    if(DEX > SIZ &&
+       STR > SIZ) {
+
+        move = 9;
+
+    }
+
+
+    const age =
+        Number(
+            document.getElementById(
+                "sheetAge"
+            ).value
+        ) || 20;
+
+
+    if(age >= 40) move--;
+    if(age >= 50) move--;
+    if(age >= 60) move--;
+    if(age >= 70) move--;
+    if(age >= 80) move--;
+
+
+    document.getElementById(
+        "derivedMove"
+    ).value =
+        move;
+
+    document.getElementById(
+        "derivedBuild"
+    ).value =
+        build;
+
+    document.getElementById(
+        "derivedDB"
+    ).value =
+        db;
+
+
+    /*
+     * If the user changes a skill manually,
+     * mark it as manually modified.
+     */
+
+    document
+        .querySelectorAll(
+            "[data-sheet-skill]"
+        )
+        .forEach(
+            input => {
+
+                input.addEventListener(
+                    "input",
+                    () => {
+
+                        input.dataset.userModified =
+                            "true";
+
+                    },
+                    {once:true}
+                );
+
+            }
+        );
+
+
+    highlightEmptyFields();
+
+}
+
+
+/* =========================================================
+   EMPTY PROFILE HIGHLIGHTING
+   ========================================================= */
+
+function highlightEmptyFields() {
+
+    document
+        .querySelectorAll(
+            "[data-profile]"
+        )
+        .forEach(
+            field => {
+
+                field.classList.toggle(
+                    "profile-empty",
+                    field.value.trim() === ""
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   EQUIPMENT DATABASE
+   ========================================================= */
+
+function openEquipmentPicker() {
+
+    document
+        .getElementById(
+            "equipmentModal"
+        )
+        .classList.add("open");
+
+    renderEquipmentList();
+
+}
+
+
+function closeEquipmentPicker() {
+
+    document
+        .getElementById(
+            "equipmentModal"
+        )
+        .classList.remove("open");
+
+}
+
+
+function renderEquipmentList(
+    search = ""
+) {
+
+    const container =
+        document.getElementById(
+            "equipmentList"
+        );
+
+    const filtered =
+        equipment.filter(
+            item =>
+                item.name
+                    .toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    )
+        );
+
+
+    container.innerHTML =
+        filtered.map(
+            item => `
+
+                <div
+                    class="job-option"
+                    onclick='addEquipment(${JSON.stringify(item)})'>
+
+                    <strong>
+                        ${item.name}
+                    </strong>
+
+                    <small>
+                        ${
+                            item.category || ""
+                        }
+                        ${
+                            item.weight
+                            ? " • " + item.weight
+                            : ""
+                        }
+                    </small>
+
+                </div>
+
+            `
+        ).join("");
+
+
+    if(!filtered.length) {
+
+        container.innerHTML =
+            `<div style="color:var(--muted)">
+                No equipment found.
+             </div>`;
+
+    }
+
+}
+
+
+function filterEquipment() {
+
+    renderEquipmentList(
+        document.getElementById(
+            "equipmentSearch"
+        ).value
+    );
+
+}
+
+
+function addEquipment(item) {
+
+    const rows =
+        document.querySelectorAll(
+            "#equipmentRows tr"
+        );
+
+    let target = null;
+
+    for(const row of rows) {
+
+        const input =
+            row.querySelector(
+                ".equipment-item"
+            );
+
+        if(input &&
+           input.value.trim() === "") {
+
+            target = row;
+
+            break;
+
+        }
+
+    }
+
+
+    if(!target) {
+
+        alert(
+            "All equipment slots are occupied."
+        );
+
+        return;
+
+    }
+
+
+    const inputs =
+        target.querySelectorAll(
+            "input"
+        );
+
+    inputs[0].value =
+        item.name || "";
+
+    inputs[1].value =
+        item.quantity || 1;
+
+    inputs[2].value =
+        item.weight || "";
+
+    inputs[3].value =
+        item.condition || "OPERATIONAL";
+
+    inputs[4].value =
+        item.notes || "";
+
+    closeEquipmentPicker();
+
+}
+
+
+/* =========================================================
+   SAVE / LOAD
+   ========================================================= */
+
+function saveSheet() {
+
+    const fields =
+        document.querySelectorAll(
+            "input,textarea,select"
+        );
+
+    const data = [];
+
+    fields.forEach(
+        (field,index) => {
+
+            data.push({
+                index,
+                value:field.value
+            });
+
+        }
+    );
+
+    localStorage.setItem(
+        "void_ops_character",
+        JSON.stringify(data)
+    );
+
+    alert(
+        "CHARACTER DATA SAVED."
+    );
+
+}
+
+
+function loadSheet() {
+
+    const saved =
+        localStorage.getItem(
+            "void_ops_character"
+        );
+
+    if(!saved) {
+
+        alert(
+            "No saved character found."
+        );
+
+        return;
+
+    }
+
+    const data =
+        JSON.parse(saved);
+
+    const fields =
+        document.querySelectorAll(
+            "input,textarea,select"
+        );
+
+    data.forEach(
+        item => {
+
+            if(fields[item.index]) {
+
+                fields[item.index].value =
+                    item.value;
+
+            }
+
+        }
+    );
+
+    refreshAll();
+
+    alert(
+        "CHARACTER DATA LOADED."
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+buildSheetSkills();
+
+refreshAll();
+
+document
+    .querySelectorAll(
+        "[data-profile]"
+    )
+    .forEach(
+        field => {
+
+            field.addEventListener(
+                "input",
+                highlightEmptyFields
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
+```
+
+### `jobs.json`
+
+The important part here is that occupations are **data rather than hard-coded into the character creator**. You can add as many as you want without changing the HTML.
+
+```json
+[
+    {
+        "id": "systems-engineer",
+        "name": "Systems Engineer",
+        "category": "intellectual",
+        "skills": [
+            "Engineering",
+            "Electronics",
+            "Mechanical Repair",
+            "Computer Use",
+            "Technology",
+            "Science",
+            "Research",
+            "Zero-G Operations",
+            "Appraise"
+        ]
+    },
+
+    {
+        "id": "pilot",
+        "name": "Spacecraft Pilot",
+        "category": "manual",
+        "skills": [
+            "Pilot",
+            "Navigation",
+            "Computer Use",
+            "Mechanical Repair",
+            "Drive",
+            "Zero-G Operations",
+            "Survival",
+            "Firearms",
+            "Technology"
+        ]
+    },
+
+    {
+        "id": "scientist",
+        "name": "Research Scientist",
+        "category": "intellectual",
+        "skills": [
+            "Science",
+            "Research",
+            "Biology",
+            "Computer Use",
+            "Medicine",
+            "Psychology",
+            "Anthropology",
+            "Appraise",
+            "Technology"
+        ]
+    },
+
+    {
+        "id": "marine",
+        "name": "Colonial Marine",
+        "category": "manual",
+        "skills": [
+            "Firearms",
+            "Unarmed Combat",
+            "Survival",
+            "First Aid",
+            "Drive",
+            "Navigation",
+            "Stealth",
+            "Zero-G Operations",
+            "Mechanical Repair"
+        ]
+    },
+
+    {
+        "id": "investigator",
+        "name": "Independent Investigator",
+        "category": "social",
+        "skills": [
+            "Investigation",
+            "Psychology",
+            "Research",
+            "Persuade",
+            "Computer Use",
+            "Stealth",
+            "Appraise",
+            "Drive",
+            "Firearms"
+        ]
+    },
+
+    {
+        "id": "medic",
+        "name": "Field Medic",
+        "category": "intellectual",
+        "skills": [
+            "Medicine",
+            "First Aid",
+            "Biology",
+            "Psychology",
+            "Science",
+            "Research",
+            "Survival",
+            "Computer Use",
+            "Drive"
+        ]
+    },
+
+    {
+        "id": "corporate-agent",
+        "name": "Corporate Operative",
+        "category": "social",
+        "skills": [
+            "Persuade",
+            "Accounting",
+            "Investigation",
+            "Computer Use",
+            "Psychology",
+            "Appraise",
+            "Research",
+            "Stealth",
+            "Technology"
+        ]
+    },
+
+    {
+        "id": "prospector",
+        "name": "Frontier Prospector",
+        "category": "manual",
+        "skills": [
+            "Survival",
+            "Navigation",
+            "Appraise",
+            "Drive",
+            "Mechanical Repair",
+            "Science",
+            "Firearms",
+            "Investigation",
+            "Technology"
+        ]
+    }
+]
+```
+
+### `equipment.json`
+
+The equipment selector works the same way: add entries to this file and they automatically appear in the **SELECT EQUIPMENT** window.
+
+```json
+[
+    {
+        "name": "Compact Medkit",
+        "category": "Medical",
+        "weight": "2 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": "Emergency medical supplies"
+    },
+
+    {
+        "name": "Pressure Suit",
+        "category": "Environmental",
+        "weight": "8 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": "Vacuum-rated"
+    },
+
+    {
+        "name": "Emergency Oxygen Tank",
+        "category": "Environmental",
+        "weight": "5 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": "120 minutes nominal supply"
+    },
+
+    {
+        "name": "Portable Computer",
+        "category": "Electronics",
+        "weight": "2 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": ""
+    },
+
+    {
+        "name": "Multitool",
+        "category": "Tools",
+        "weight": "1 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": "Engineering toolkit"
+    },
+
+    {
+        "name": "Flashlight",
+        "category": "Utility",
+        "weight": "0.5 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": ""
+    },
+
+    {
+        "name": "Communications Unit",
+        "category": "Electronics",
+        "weight": "1 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": "Encrypted short-range comms"
+    },
+
+    {
+        "name": "Survey Scanner",
+        "category": "Scientific",
+        "weight": "3 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": ""
+    },
+
+    {
+        "name": "Utility Drone",
+        "category": "Robotics",
+        "weight": "6 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": "Remote operated"
+    },
+
+    {
+        "name": "Cutting Torch",
+        "category": "Tools",
+        "weight": "4 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": "Industrial cutting tool"
+    },
+
+    {
+        "name": "Motion Sensor",
+        "category": "Sensors",
+        "weight": "1 kg",
+        "quantity": 1,
+        "condition": "OPERATIONAL",
+        "notes": ""
+    },
+
+    {
+        "name": "Rations",
+        "category": "Supplies",
+        "weight": "0.5 kg",
+        "quantity": 5,
+        "condition": "SEALED",
+        "notes": "One day per unit"
+    }
+]
+```
+
+### One important implementation detail
+
+Because the browser's `fetch()` security rules generally prevent a page opened directly as `file://...` from requesting `jobs.json` and `equipment.json`, run the three files through a small local web server rather than double-clicking `index.html`.
+
+For example, with Python:
+
+```bash
+python -m http.server 8000
+```
+
+Then open:
+
+```text
+http://localhost:8000/
+```
+
+The resulting creator now works as a proper **six-stage modal character-generation workflow**, while the sheet itself remains editable afterward. The JSON separation also means you can build a much larger occupation/equipment database independently of the UI.

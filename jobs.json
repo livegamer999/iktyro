@@ -1,0 +1,287 @@
+[
+  {
+    "name": "Astrophysicist",
+    "category": "intellectual",
+    "skills": [
+      "Astronomy",
+      "Physics",
+      "Mathematics",
+      "Computer Use",
+      "Research",
+      "Science",
+      "Navigation",
+      "Library Use",
+      "Sensors"
+    ]
+  },
+  {
+    "name": "Xenobiologist",
+    "category": "intellectual",
+    "skills": [
+      "Biology",
+      "Chemistry",
+      "Medicine",
+      "Science",
+      "Research",
+      "First Aid",
+      "Survival",
+      "Computer Use",
+      "Spot Hidden"
+    ]
+  },
+  {
+    "name": "Systems Engineer",
+    "category": "intellectual",
+    "skills": [
+      "Engineering",
+      "Electronics",
+      "Computer Use",
+      "Repair",
+      "Physics",
+      "Mathematics",
+      "Research",
+      "Science",
+      "Sensors"
+    ]
+  },
+  {
+    "name": "Data Analyst",
+    "category": "intellectual",
+    "skills": [
+      "Computer Use",
+      "Mathematics",
+      "Research",
+      "Statistics",
+      "Library Use",
+      "Psychology",
+      "Accounting",
+      "Science",
+      "Language (Other)"
+    ]
+  },
+  {
+    "name": "Doctor",
+    "category": "intellectual",
+    "skills": [
+      "Medicine",
+      "First Aid",
+      "Biology",
+      "Chemistry",
+      "Psychology",
+      "Research",
+      "Science",
+      "Computer Use",
+      "Spot Hidden"
+    ]
+  },
+  {
+    "name": "Journalist",
+    "category": "social",
+    "skills": [
+      "Persuade",
+      "Fast Talk",
+      "Psychology",
+      "Research",
+      "Library Use",
+      "Spot Hidden",
+      "Photography",
+      "Language (Other)",
+      "Computer Use"
+    ]
+  },
+  {
+    "name": "Diplomat",
+    "category": "social",
+    "skills": [
+      "Charm",
+      "Persuade",
+      "Psychology",
+      "Language (Other)",
+      "Law",
+      "History",
+      "Credit Rating",
+      "Fast Talk",
+      "Intimidate"
+    ]
+  },
+  {
+    "name": "Corporate Liaison",
+    "category": "social",
+    "skills": [
+      "Charm",
+      "Persuade",
+      "Fast Talk",
+      "Accounting",
+      "Law",
+      "Credit Rating",
+      "Psychology",
+      "Computer Use",
+      "Language (Other)"
+    ]
+  },
+  {
+    "name": "Negotiator",
+    "category": "social",
+    "skills": [
+      "Persuade",
+      "Charm",
+      "Psychology",
+      "Fast Talk",
+      "Intimidate",
+      "Law",
+      "Credit Rating",
+      "Language (Other)",
+      "Spot Hidden"
+    ]
+  },
+  {
+    "name": "Mechanic",
+    "category": "manual",
+    "skills": [
+      "Repair",
+      "Engineering",
+      "Electronics",
+      "Drive",
+      "Heavy Machinery",
+      "Computer Use",
+      "Mechanical Operation",
+      "Spot Hidden",
+      "Physics"
+    ]
+  },
+  {
+    "name": "EVA Technician",
+    "category": "manual",
+    "skills": [
+      "EVA",
+      "Repair",
+      "Engineering",
+      "Electronics",
+      "Athletics",
+      "Navigation",
+      "Survival",
+      "Sensors",
+      "First Aid"
+    ]
+  },
+  {
+    "name": "Miner",
+    "category": "manual",
+    "skills": [
+      "Heavy Machinery",
+      "Mechanical Operation",
+      "Repair",
+      "Engineering",
+      "Survival",
+      "Athletics",
+      "Navigation",
+      "Spot Hidden",
+      "First Aid"
+    ]
+  },
+  {
+    "name": "Spacecraft Pilot",
+    "category": "manual",
+    "skills": [
+      "Piloting",
+      "Navigation",
+      "Sensors",
+      "Computer Use",
+      "Electronics",
+      "Repair",
+      "Astronomy",
+      "EVA",
+      "Drive"
+    ]
+  },
+  {
+    "name": "Security Officer",
+    "category": "manual",
+    "skills": [
+      "Firearms",
+      "Melee",
+      "Dodge",
+      "Athletics",
+      "Intimidate",
+      "Spot Hidden",
+      "Listen",
+      "First Aid",
+      "Survival"
+    ]
+  },
+  {
+    "name": "Marine",
+    "category": "manual",
+    "skills": [
+      "Firearms",
+      "Melee",
+      "Dodge",
+      "Athletics",
+      "Survival",
+      "Navigation",
+      "First Aid",
+      "Stealth",
+      "Intimidate"
+    ]
+  },
+  {
+    "name": "Salvage Specialist",
+    "category": "manual",
+    "skills": [
+      "Repair",
+      "Engineering",
+      "Electronics",
+      "EVA",
+      "Navigation",
+      "Spot Hidden",
+      "Mechanical Operation",
+      "Survival",
+      "Computer Use"
+    ]
+  },
+  {
+    "name": "Ship Captain",
+    "category": "social",
+    "skills": [
+      "Piloting",
+      "Navigation",
+      "Leadership",
+      "Persuade",
+      "Intimidate",
+      "Psychology",
+      "Sensors",
+      "Computer Use",
+      "Credit Rating"
+    ]
+  },
+  {
+    "name": "Explorer",
+    "category": "manual",
+    "skills": [
+      "Navigation",
+      "Survival",
+      "Athletics",
+      "Spot Hidden",
+      "Track",
+      "EVA",
+      "First Aid",
+      "Stealth",
+      "Astronomy"
+    ]
+  },
+  {
+    "name": "Security Consultant",
+    "category": "social",
+    "skills": [
+      "Firearms",
+      "Melee",
+      "Security Systems",
+      "Computer Use",
+      "Spot Hidden",
+      "Psychology",
+      "Intimidate",
+      "Stealth",
+      "Law"
+    ]
+  }
+]
