@@ -4,127 +4,95 @@
         "name": "Astrophysicien",
         "category": "intellectual",
         "skills": [
-            "astronomy",
-            "physics",
-            "research",
-            "computer",
-            "sensors",
-            "navigation",
-            "library",
-            "mathematics",
-            "english"
+            "physique",
+            "biologie",
+            "electronique",
+            "orientation",
+            "histoire",
+            "anthropologie",
+            "langue_etrangere",
+            "ecouter",
+            "trouver_objets_caches"
         ]
     },
     {
-        "id": "xenobiologiste",
-        "name": "Xénobiologiste",
+        "id": "ingenieur",
+        "name": "Ingénieur spatial",
         "category": "intellectual",
         "skills": [
-            "biology",
-            "chemistry",
-            "medicine",
-            "research",
-            "spot_hidden",
-            "library",
-            "psychology",
-            "science",
-            "first_aid"
+            "mecanique",
+            "electronique",
+            "bricolage",
+            "physique",
+            "conduite",
+            "conduite_engins_lourds",
+            "orientation",
+            "langue_etrangere",
+            "trouver_objets_caches"
         ]
     },
     {
-        "id": "ingenieur_systemes",
-        "name": "Ingénieur systèmes",
+        "id": "medecin",
+        "name": "Médecin",
         "category": "intellectual",
         "skills": [
-            "engineering",
-            "electronics",
-            "computer",
-            "repair",
-            "physics",
-            "research",
-            "sensors",
-            "science",
-            "mathematics"
-        ]
-    },
-    {
-        "id": "analyste_donnees",
-        "name": "Analyste de données",
-        "category": "intellectual",
-        "skills": [
-            "computer",
-            "research",
-            "library",
-            "accounting",
-            "psychology",
-            "mathematics",
-            "english",
-            "spot_hidden",
-            "science"
+            "medecine",
+            "premiers_soins",
+            "biologie",
+            "chimie",
+            "ecouter",
+            "anthropologie",
+            "histoire",
+            "langue_etrangere",
+            "trouver_objets_caches"
         ]
     },
     {
         "id": "mecanicien",
-        "name": "Mécanicien spatial",
+        "name": "Mécanicien",
         "category": "manual",
         "skills": [
-            "repair",
-            "engineering",
-            "electronics",
-            "drive",
-            "eva",
-            "athletics",
-            "sensors",
-            "spot_hidden",
-            "survival"
-        ]
-    },
-    {
-        "id": "technicien_eva",
-        "name": "Technicien EVA",
-        "category": "manual",
-        "skills": [
-            "eva",
-            "repair",
-            "electronics",
-            "survival",
-            "athletics",
-            "climb",
-            "navigation",
-            "sensors",
-            "first_aid"
-        ]
-    },
-    {
-        "id": "mineur",
-        "name": "Mineur d'astéroïdes",
-        "category": "manual",
-        "skills": [
-            "survival",
-            "athletics",
-            "repair",
-            "navigation",
-            "spot_hidden",
-            "listen",
-            "drive",
-            "throw",
-            "first_aid"
+            "mecanique",
+            "bricolage",
+            "electronique",
+            "conduite",
+            "conduite_engins_lourds",
+            "orientation",
+            "esquive",
+            "natation",
+            "premiers_soins"
         ]
     },
     {
         "id": "pilote",
-        "name": "Pilote spatial",
+        "name": "Pilote",
         "category": "manual",
         "skills": [
-            "piloting",
-            "navigation",
-            "sensors",
-            "drive",
-            "eva",
-            "dodge",
-            "listen",
-            "spot_hidden",
-            "repair"
+            "pilotage",
+            "conduite",
+            "conduite_engins_lourds",
+            "orientation",
+            "esquive",
+            "ecouter",
+            "lancer",
+            "bricolage",
+            "premiers_soins"
+        ]
+    },
+    {
+        "id": "explorateur",
+        "name": "Explorateur",
+        "category": "manual",
+        "skills": [
+            "orientation",
+            "natation",
+            "esquive",
+            "lancer",
+            "ecouter",
+            "trouver_objets_caches",
+            "premiers_soins",
+            "bricolage",
+            "anthropologie"
         ]
     },
     {
@@ -132,47 +100,15 @@
         "name": "Diplomate",
         "category": "social",
         "skills": [
-            "charm",
-            "persuade",
-            "fast_talk",
-            "psychology",
-            "foreign_language",
-            "law",
-            "history",
-            "listen",
-            "credit"
-        ]
-    },
-    {
-        "id": "journaliste",
-        "name": "Journaliste",
-        "category": "social",
-        "skills": [
-            "persuade",
-            "fast_talk",
-            "research",
-            "library",
-            "spot_hidden",
-            "listen",
-            "photography",
-            "history",
-            "foreign_language"
-        ]
-    },
-    {
-        "id": "negociateur",
-        "name": "Négociateur corporatif",
-        "category": "social",
-        "skills": [
-            "persuade",
-            "charm",
-            "intimidate",
-            "credit",
-            "law",
-            "psychology",
-            "accounting",
-            "fast_talk",
-            "foreign_language"
+            "charme",
+            "baratin",
+            "droit",
+            "histoire",
+            "anthropologie",
+            "ecouter",
+            "langue_etrangere",
+            "langue_maternelle",
+            "trouver_objets_caches"
         ]
     },
     {
@@ -180,15 +116,15 @@
         "name": "Agent de sécurité",
         "category": "social",
         "skills": [
-            "firearms",
-            "melee",
-            "intimidate",
-            "spot_hidden",
-            "listen",
-            "dodge",
-            "athletics",
-            "psychology",
-            "law"
+            "armes_a_feu",
+            "combat_rapproche",
+            "esquive",
+            "ecouter",
+            "trouver_objets_caches",
+            "droit",
+            "discretion",
+            "lancer",
+            "premiers_soins"
         ]
     }
 ]
