@@ -1,62 +1,50 @@
 [
     {
-        "id": "kit-outils",
+        "id": "kit_outils",
         "name": "Kit d'outils",
         "category": "Outils",
-        "description": "Kit polyvalent de maintenance et réparation."
+        "description": "Outillage technique polyvalent."
     },
     {
         "id": "lampe",
         "name": "Lampe tactique",
         "category": "Survie",
-        "description": "Lampe compacte à forte autonomie."
-    },
-    {
-        "id": "combinaison-eva",
-        "name": "Combinaison EVA",
-        "category": "EVA",
-        "description": "Combinaison spatiale pour activité extravéhiculaire."
+        "description": "Lampe robuste à longue autonomie."
     },
     {
         "id": "ordinateur",
         "name": "Ordinateur portable",
         "category": "Électronique",
-        "description": "Terminal informatique personnel."
+        "description": "Terminal informatique portable."
     },
     {
         "id": "radio",
         "name": "Radio longue portée",
         "category": "Communication",
-        "description": "Émetteur-récepteur longue portée."
+        "description": "Système de communication longue distance."
     },
     {
         "id": "scanner",
         "name": "Scanner portatif",
         "category": "Capteurs",
-        "description": "Scanner polyvalent pour environnement et matériel."
+        "description": "Scanner généraliste."
     },
     {
-        "id": "medkit",
+        "id": "trousse_medicale",
         "name": "Trousse médicale",
         "category": "Médical",
-        "description": "Matériel médical de terrain."
+        "description": "Matériel de premiers soins."
+    },
+    {
+        "id": "combinaison_eva",
+        "name": "Combinaison EVA",
+        "category": "EVA",
+        "description": "Combinaison pour activité extravéhiculaire."
     },
     {
         "id": "cable",
         "name": "Câble multifonction",
         "category": "Outils",
-        "description": "Câble renforcé avec connecteurs universels."
-    },
-    {
-        "id": "protection",
-        "name": "Combinaison de protection",
-        "category": "Protection",
-        "description": "Protection légère contre les environnements hostiles."
-    },
-    {
-        "id": "rations",
-        "name": "Rations de survie",
-        "category": "Survie",
-        "description": "Rations compactes longue conservation."
+        "description": "Câble technique polyvalent."
     }
 ]
