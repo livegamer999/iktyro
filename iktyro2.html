@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iktyro — Encyclopedia Galactica</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f8f9fa;
+            color: #202122;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #36c;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Barre supérieure */
+
+        .topbar {
+            height: 50px;
+            background: #ffffff;
+            border-bottom: 1px solid #a2a9b1;
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 25px;
+            color: #202122;
+            font-weight: normal;
+        }
+
+        .logo span {
+            font-size: 12px;
+            display: block;
+            margin-top: -7px;
+            text-align: center;
+            color: #54595d;
+        }
+
+        .search {
+            margin-left: auto;
+            display: flex;
+            height: 32px;
+        }
+
+        .search input {
+            width: 240px;
+            border: 1px solid #a2a9b1;
+            padding: 6px 10px;
+            font-size: 13px;
+        }
+
+        .search button {
+            border: 1px solid #a2a9b1;
+            border-left: none;
+            background: #f8f9fa;
+            padding: 0 14px;
+            cursor: pointer;
+        }
+
+        /* Structure */
+
+        .page {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 25px 35px 60px;
+            background: #fff;
+            min-height: calc(100vh - 50px);
+        }
+
+        .page-header {
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 34px;
+            font-weight: normal;
+            margin: 0 0 8px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        .tabs-left,
+        .tabs-right {
+            display: flex;
+            gap: 18px;
+        }
+
+        .active {
+            font-weight: bold;
+            border-bottom: 2px solid #202122;
+            padding-bottom: 7px;
+        }
+
+        /* Infobox */
+
+        .infobox {
+            float: right;
+            width: 310px;
+            margin: 0 0 20px 25px;
+            border: 1px solid #a2a9b1;
+            background: #f8f9fa;
+            font-size: 13px;
+        }
+
+        .infobox-title {
+            background: #eaecf0;
+            text-align: center;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 21px;
+            font-weight: bold;
+            padding: 8px;
+            border-bottom: 1px solid #a2a9b1;
+        }
+
+        .infobox-subtitle {
+            text-align: center;
+            font-style: italic;
+            padding: 7px 8px;
+            border-bottom: 1px solid #a2a9b1;
+        }
+
+        .infobox table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .infobox th,
+        .infobox td {
+            padding: 7px 9px;
+            vertical-align: top;
+            border-bottom: 1px solid #eaecf0;
+        }
+
+        .infobox th {
+            width: 43%;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .infobox td {
+            background: #fff;
+        }
+
+        /* Contenu */
+
+        .content {
+            max-width: 1050px;
+        }
+
+        .intro {
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 24px;
+            font-weight: normal;
+            border-bottom: 1px solid #a2a9b1;
+            margin: 30px 0 12px;
+            padding-bottom: 3px;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        .lead {
+            font-weight: normal;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #54595d;
+        }
+
+        sup {
+            font-size: 10px;
+        }
+
+        /* Sommaire */
+
+        .toc {
+            display: inline-block;
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 10px 25px 12px 15px;
+            margin: 5px 0 20px;
+            min-width: 220px;
+        }
+
+        .toc-title {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 22px;
+        }
+
+        .toc li {
+            margin: 2px 0;
+        }
+
+        /* Encadré */
+
+        .quote-box {
+            border-left: 4px solid #a2a9b1;
+            padding: 10px 15px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            color: #54595d;
+        }
+        
+        .references {
+            padding-left: 30px;
+            font-size: 13px;
+        }
+
+        .references li {
+            margin-bottom: 8px;
+        }
+
+        .references li:target {
+            background: #eaecf0;
+        }
+
+        /* Footer */
+
+        .footer {
+            clear: both;
+            border-top: 1px solid #a2a9b1;
+            margin-top: 50px;
+            padding-top: 15px;
+            font-size: 12px;
+            color: #54595d;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 750px) {
+            .page {
+                padding: 20px;
+            }
+
+            .infobox {
+                float: none;
+                width: 100%;
+                margin: 0 0 20px;
+            }
+
+            .search input {
+                width: 140px;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .tabs {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Barre supérieure -->
+<header class="topbar">
+
+    <div class="logo">
+        Encyclopedia
+        <span>GALACTICA</span>
+    </div>
+
+    <div class="search">
+        <input type="text" placeholder="Rechercher dans l'encyclopédie">
+        <button>Rechercher</button>
+    </div>
+
+</header>
+
+
+<!-- Page -->
+<main class="page">
+
+    <!-- En-tête -->
+    <div class="page-header">
+
+        <h1>Iktyro</h1>
+
+        <div class="tabs">
+            <div class="tabs-left">
+                <span class="active">Article</span>
+                <a href="#">Discussion</a>
+            </div>
+
+            <div class="tabs-right">
+                <a href="#">Lire</a>
+                <a href="#">Modifier</a>
+                <a href="#">Historique</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="content">
+
+        <!-- Infobox -->
+        <aside class="infobox">
+
+            <div class="infobox-title">
+                Iktyro
+            </div>
+
+            <div class="infobox-subtitle">
+                <img src="iktyro.jpg" />
+                Lune minière
+            </div>
+
+            <table>
+
+                <tr>
+                    <th>Pays</th>
+                    <td>
+                        <a href="#">Consortium Icarien</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Population</th>
+                    <td>60 000 habitants</td>
+                </tr>
+
+                <tr>
+                    <th>Diamètre</th>
+                    <td>2 900 km</td>
+                </tr>
+
+                <tr>
+                    <th>Gravité</th>
+                    <td>0,094 g</td>
+                </tr>
+
+                <tr>
+                    <th>Capitale</th>
+                    <td>
+                        <a href="#">Lanthine</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Statut</th>
+                    <td>Lune minière</td>
+                </tr>
+
+                <tr>
+                    <th>Affiliation</th>
+                    <td>
+                        <a href="#">Fédération Commerciale Galactique</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Découverte</th>
+                    <td>9723 AE</td>
+                </tr>
+
+            </table>
+
+        </aside>
+
+
+        <!-- Introduction -->
+
+        <p class="intro">
+            <strong>Iktyro</strong> est une lune minière de la
+            <a href="#">Fédération Commerciale Galactique</a> (FCG).
+            Riche en ressources minérales et en terres rares, elle constitue
+            l'un des principaux centres d'extraction de scandium de la galaxie.
+            Malgré l'importance stratégique et économique de ses ressources,
+            la majeure partie de sa population vit dans des conditions précaires.
+        </p>
+
+
+        <!-- Sommaire -->
+
+        <div class="toc">
+
+            <div class="toc-title">Sommaire</div>
+
+            <ol>
+                <li>
+                    <a href="#histoire">histoire</a>
+                </li>
+
+                <li>
+                    <a href="#economie">Économie</a>
+                </li>
+
+                <li>
+                    <a href="#population">Population et société</a>
+                </li>
+
+                <li>
+                    <a href="#controverses">controverses</a>
+                </li>
+
+                <li>
+                    <a href="#sources">Sources</a>
+                </li>
+
+                
+                
+            </ol>
+
+            
+
+        </div>
+
+        <!-- HISTOIRE -->
+
+        <section id="histoire">
+
+            <h2>Histoire</h2>
+
+            <!-- DÉCOUVERTE ET PREMIÈRES EXPLOITATIONS -->
+
+            <h3 id="decouverte">Découverte et premières exploitations</h3>
+
+            <p>
+                Iktyro est découverte par la
+                <a href="#">Fédération Commerciale Galactique</a> (FCG) en
+                <strong>9723 AE</strong> (<em>Après l'Expansion</em>), au cours
+                d'une campagne d'exploration et de prospection menée dans les
+                régions périphériques du <a href="#">Consortium Icarien</a>.
+                Les premières analyses géologiques révèlent rapidement l'existence
+                d'importants gisements de chrome, de cuivre et de titane, ainsi que
+                de vastes concentrations de terres rares, notamment de scandium,
+                de terbium et de béryllium.
+            </p>
+
+            <p>
+                La découverte des gisements de scandium transforme rapidement
+                l'importance d'Iktyro. La FCG établit les premières installations
+                minières permanentes et entreprend l'exploitation industrielle de
+                la lune. Sa faible gravité facilite notamment l'extraction, la
+                manutention et l'acheminement de grandes quantités de minerai vers
+                l'orbite, rendant les opérations particulièrement rentables.
+            </p>
+
+            <p>
+                Les premières installations restent toutefois limitées et la
+                population permanente d'Iktyro demeure faible. Pour accélérer le
+                développement des exploitations, le
+                <a href="#">Consortium Icarien</a> commence à transférer sur la lune
+                des <strong>prisonniers condamnés aux travaux forcés</strong>.
+                Ceux-ci sont employés dans les mines, les raffineries ainsi que dans
+                la construction des infrastructures nécessaires au développement
+                de la colonie.
+            </p>
+
+
+            <!-- TROISIÈME GUERRE ICARIO-ROVÉENNE -->
+
+            <h3 id="guerre">La Troisième Guerre Icario-Rovéenne</h3>
+
+            <p>
+                Le recours massif au travail pénitentiaire prend une importance
+                particulière avec le déclenchement de la
+                <strong>Troisième Guerre Icario-Rovéenne</strong>. Face à
+                l'augmentation rapide de la demande en matériaux destinés à
+                l'industrie militaire, le Consortium accroît considérablement
+                la production d'Iktyro.
+            </p>
+
+            <p>
+                Les prisonniers constituent alors une part importante de la
+                main-d'œuvre affectée aux exploitations minières et aux
+                infrastructures industrielles de la lune. Les installations
+                d'Iktyro sont progressivement agrandies afin de répondre aux
+                besoins croissants de l'industrie militaire icariote.
+            </p>
+
+            <p>
+                Au début du conflit, Iktyro n'est pas considérée comme l'un des
+                principaux théâtres d'opérations militaires. Sa position éloignée
+                des fronts permet aux exploitations de fonctionner relativement
+                normalement, tandis que les ressources extraites sont acheminées
+                vers les principaux centres industriels et militaires du Consortium.
+            </p>
+
+            <p>
+                La situation change progressivement lorsque les forces rovéennes
+                commencent à frapper les principales régions minières du Consortium.
+                Plusieurs planètes et colonies spécialisées dans l'extraction de
+                ressources stratégiques sont détruites ou mises hors service.
+                La production d'Iktyro devient alors essentielle au maintien de
+                l'industrie militaire icariote.
+            </p>
+
+
+            <!-- ASCENSION DE LA FCG -->
+
+            <h3 id="ascension-fcg">Ascension économique de la FCG</h3>
+
+            <p>
+                La demande pour le scandium, le titane, le chrome et les autres
+                minerais extraits sur Iktyro atteint des niveaux sans précédent.
+                La FCG, qui contrôle une part importante des infrastructures
+                minières et du transport des ressources, devient progressivement
+                indispensable au fonctionnement de l'économie de guerre du
+                Consortium.
+            </p>
+
+            <p>
+                Cette situation marque un tournant dans l'histoire de la Fédération
+                Commerciale Galactique. Les revenus générés par les exportations
+                d'Iktyro permettent à la FCG de financer de nouvelles exploitations,
+                d'étendre ses réseaux de transport et d'acquérir ou de construire
+                des infrastructures dans d'autres régions du Consortium.
+                La destruction de nombreuses exploitations concurrentes par les
+                Rovéens renforce encore cette position.
+            </p>
+
+            <p>
+                Au cours de la guerre, la FCG passe ainsi progressivement du statut
+                d'entreprise commerciale régionale de taille moyenne à celui de
+                <strong>puissance économique majeure</strong>. La dépendance croissante
+                du Consortium à l'égard des ressources d'Iktyro donne également à
+                la Fédération une influence commerciale et politique sans précédent.
+                La lune constitue alors l'un des principaux fondements financiers
+                de l'expansion de la FCG.
+            </p>
+
+
+            <!-- DESTRUCTION DE LANTHINE -->
+
+            <h3 id="destruction">Destruction de Lanthine</h3>
+
+            <p>
+                En <strong>9790 AE</strong>, Iktyro est directement touchée par le
+                conflit lorsque les forces rovéennes lancent une
+                <strong>frappe nucléaire contre Lanthine</strong>. La capitale,
+                qui concentre une grande partie des infrastructures administratives,
+                industrielles et logistiques de la lune, subit d'importants dégâts.
+                Une partie considérable des quartiers urbains et des installations
+                de surface est détruite, tandis que les retombées radioactives
+                contaminent plusieurs secteurs de la ville.
+            </p>
+
+            <p>
+                La destruction de Lanthine entraîne une interruption temporaire
+                d'une partie de la production minière et du trafic orbital.
+                Toutefois, les complexes industriels situés à l'extérieur de la
+                capitale ainsi que plusieurs infrastructures souterraines restent
+                opérationnels. La FCG entreprend rapidement de rétablir les
+                communications et la production afin de préserver l'approvisionnement
+                du Consortium.
+            </p>
+
+
+            <!-- RECONSTRUCTION -->
+
+            <h3 id="reconstruction">Reconstruction et période contemporaine</h3>
+
+            <p>
+                Après la fin du conflit, la FCG finance un vaste programme de
+                reconstruction de Lanthine. La nouvelle capitale est construite
+                autour des infrastructures ayant survécu à l'attaque et bénéficie
+                d'importants investissements dans les secteurs minier, industriel
+                et orbital.
+            </p>
+
+            <p>
+                La reconstruction conduit également à une transformation de la
+                structure urbaine de la ville, avec une séparation plus nette entre
+                les zones industrielles, les quartiers résidentiels et les
+                installations administratives de la Fédération.
+            </p>
+
+            <p>
+                La guerre laisse la FCG dans une position économique sans précédent.
+                Les investissements réalisés pendant le conflit, combinés au
+                contrôle de l'approvisionnement en minerais stratégiques, permettent
+                à la Fédération de conserver une influence considérable après la
+                fin des hostilités. Les exportations d'Iktyro, et en particulier
+                celles de scandium, deviennent l'un des principaux piliers financiers
+                de la FCG.
+            </p>
+
+            <p>
+                Iktyro demeure depuis lors profondément intégrée à l'économie de la
+                Fédération Commerciale Galactique et du Consortium Icarien.
+                La lune conserve son rôle de fournisseur majeur de minerais
+                stratégiques, tandis que Lanthine, reconstruite après sa destruction
+                en 9790 AE, devient progressivement l'un des principaux centres
+                administratifs et commerciaux de la FCG.
+            </p>
+
+        </section>
+
+        <!-- ECONOMIE -->
+
+        <section id="economie">
+
+            <h2>Économie</h2>
+
+            <p>
+                Iktyro est l'une des principales lunes minières de la
+                <a href="#">Fédération Commerciale Galactique</a>.
+                Sa surface est particulièrement riche en
+                <strong>chrome, cuivre, titane, terbium, scandium et béryllium</strong>.
+                Parmi ces ressources, le scandium constitue de loin la plus importante
+                sur le plan économique.
+            </p>
+
+            <p>
+                La lune possède d'immenses gisements de scandium, dont la concentration
+                atteint par endroits des niveaux exceptionnellement élevés. Elle constitue
+                ainsi la principale source connue de ce minerai dans un rayon de plusieurs
+                kilo-parsecs. Les alliages de scandium sont largement employés dans l'industrie
+                spatiale, notamment dans la construction des vaisseaux modernes, où ils
+                représentent en moyenne près de <strong>80 % de la masse structurelle</strong>
+                selon les standards industriels de la FCG.
+            </p>
+
+            <p>
+                La production iktyrienne est estimée à
+                <strong>9 milliards de tonnes de scandium par an</strong>, soit environ
+                <strong>23 % de la demande galactique</strong>. Cette production fait
+                d'Iktyro l'une des principales bases économiques de la Fédération
+                Commerciale Galactique.
+            </p>
+
+            <p>
+                Les revenus issus de l'exploitation du scandium ont notamment contribué
+                à l'expansion économique et industrielle de la FCG, puis à son ascension
+                comme principale puissance commerciale de la
+                <a href="#">Voie lactée</a>.
+            </p>
+
+            <p>
+                Iktyro joue également un rôle majeur dans l'économie du
+                <a href="#">Consortium Icarien</a> : environ
+                <strong>60 % du scandium qui y est consommé provient de la lune</strong>.
+            </p>
+
+            <p>
+                Malgré cette activité industrielle considérable, les richesses produites
+                à Iktyro bénéficient relativement peu à sa population. Son
+                <strong>PIB par habitant est estimé à 1,5 milliard de crédits</strong>,
+                mais cet indicateur est fortement influencé par les revenus générés par
+                les exploitations minières et les activités de la FCG.
+            </p>
+
+        </section>
+
+
+        <!-- POPULATION -->
+
+        <section id="population">
+
+            <h2>Population et société</h2>
+
+            <p>
+                Iktyro compte environ <strong>60 000 habitants</strong>. La majorité
+                de sa population appartient aux <strong>Sélènes</strong>, terme
+                désignant les populations ayant vécu la majeure partie de leur vie
+                dans des environnements à très faible gravité, incapables de vivre sous une gravitée normale sans suivi médical continu.
+            </p>
+
+            <p>
+                Cette caractéristique limite fortement la mobilité économique des habitants
+                d'Iktyro. La majorité des Sélènes dépendent donc des industries locales
+                et des infrastructures de la FCG pour leur emploi et leurs revenus.
+                Cette situation a favorisé la constitution d'une population ouvrière
+                relativement captive, dont la mobilité vers d'autres régions de la galaxie
+                demeure limitée par des contraintes physiologiques et économiques.
+            </p>
+
+            <p>
+                La majorité des travailleurs miniers vivent dans des logements anciens
+                et vétustes situés à proximité des zones d'exploitation. Les conditions
+                de travail dans les mines sont particulièrement difficiles en raison
+                de l'exposition aux <strong>poussières industrielles toxiques et radioactives 
+                </strong> générées par les opérations d'extraction.
+                Les problèmes de santé liés à ces conditions sont fréquents parmi les
+                travailleurs. Leur espérence de vie est ainsi estimée à 43 ans.
+            </p>
+
+            <p>
+                À l'inverse, les administrateurs, ingénieurs supérieurs et officiers
+                de la FCG bénéficient d'un niveau de vie nettement supérieur. La plupart
+                sont originaires de mondes à gravité plus
+                élevée et disposent donc de logements et d'infrastructures adaptés à
+                leurs besoins physiologiques.
+            </p>
+
+            <p>
+                La FCG verse notamment d'importantes
+                <strong>primes d'adaptation et de santé liées au séjour en basse gravité</strong>,
+                dont le coût cumulé est estimé à près de
+                <strong>2 milliards de crédits par an</strong>.
+            </p>
+
+            <p>
+                Les cadres et administrateurs de la FCG résident principalement
+                dans une <strong>communauté fermée et fortement sécurisée au centre de
+                Lanthine</strong>, située à environ deux kilomètres de l'astroport
+                principal. L'enclave dispose de ses propres infrastructures résidentielles,
+                médicales et commerciales et est séparée des quartiers ouvriers par
+                plusieurs niveaux de sécurité.
+            </p>
+
+            <p>
+                La proximité entre cette enclave et les quartiers populaires est devenue
+                l'un des symboles les plus visibles des inégalités sociales d'Iktyro.
+                La lune constitue ainsi un exemple particulièrement marqué d'une économie
+                où une population locale fournit une part essentielle des ressources
+                stratégiques de la FCG sans bénéficier d'une part comparable des
+                richesses qu'elle génère.
+            </p>
+
+        </section>
+
+        <!-- CONTROVERSES -->
+
+        <section id="controverses">
+
+            <h2>Controverses</h2>
+
+            <p>
+                Les conditions de travail et de vie sur Iktyro font régulièrement
+                l'objet de controverses, notamment en raison d'accusations d'abus
+                visant la <a href="#">Fédération Commerciale Galactique</a> (FCG).
+                Plusieurs organisations syndicales, associations de défense des
+                travailleurs et journalistes ont dénoncé au fil des années les
+                conditions imposées aux employés des exploitations minières.
+            </p>
+
+            <p>
+                Parmi les principales accusations figurent des
+                <strong>journées de travail particulièrement longues</strong>, des
+                conditions de sécurité insuffisantes dans certaines exploitations,
+                l'exposition prolongée aux poussières et aux minerais toxiques ainsi
+                qu'un accès limité aux soins médicaux pour les travailleurs les plus
+                modestes. Des témoignages font également état de logements
+                insalubres et d'une surveillance importante exercée par les
+                représentants de la FCG dans certains complexes miniers.
+            </p>
+
+            <p>
+                Le recours historique au travail pénitentiaire est également devenu
+                l'un des sujets les plus controversés de l'histoire d'Iktyro.
+                Plusieurs historiens et organisations ont critiqué le système mis
+                en place durant les premières décennies d'exploitation, estimant que
+                les prisonniers transférés sur la lune étaient soumis à des
+                conditions particulièrement dangereuses. La FCG a maintenu que
+                l'administration des détenus relevait principalement des autorités
+                du <a href="#">Consortium Icarien</a> et que ses propres opérations
+                respectaient les réglementations commerciales et industrielles en
+                vigueur.
+            </p>
+
+            <p>
+                Les critiques ont également porté sur la situation des
+                <strong>Sélènes</strong>. Leur dépendance médicale à l'environnement
+                de basse gravité limite leur capacité à quitter Iktyro et à chercher
+                un emploi ailleurs. Des associations de travailleurs ont accusé la
+                FCG d'exploiter cette dépendance en maintenant des salaires bas et en
+                transférant aux travailleurs une partie importante des coûts liés
+                aux soins médicaux et à l'adaptation physiologique.
+            </p>
+
+            <h3>L'affaire du <em>l'Icarien Libre</em></h3>
+
+            <p>
+                En <strong>9963 AE</strong>, le journaliste
+                <strong>Élias Varen</strong>, correspondant d'investigation du
+                journal <em>l'Icarien Libre</em>, se rend à Iktyro afin d'enquêter
+                sur les conditions de travail dans plusieurs exploitations minières
+                appartenant à la FCG. Varen avait auparavant publié plusieurs
+                articles consacrés aux conditions de travail dans les industries
+                du Consortium et était considéré comme l'un des journalistes
+                d'investigation les plus importants de sa génération.
+            </p>
+
+            <p>
+                Au cours de son enquête, Varen aurait recueilli des témoignages de
+                travailleurs concernant des accidents non déclarés, des problèmes
+                de contamination et des pratiques de surveillance au sein de
+                plusieurs complexes miniers. Il aurait également cherché à établir
+                l'existence d'un lien entre certaines dépenses médicales imposées
+                aux travailleurs et les politiques internes de la FCG.
+            </p>
+
+            <p>
+                Quelques semaines après son arrivée sur Iktyro, Varen est retrouvé
+                <strong>mort dans un secteur industriel désaffecté de Lanthine</strong>.
+                Les circonstances exactes de son décès restent controversées.
+                L'enquête officielle conclut à une mort violente, mais ne permet
+                pas d'établir de manière définitive l'identité du ou des responsables.
+            </p>
+
+            <p>
+                Plusieurs collègues de Varen ainsi que des associations de défense
+                de la liberté de la presse ont rapidement évoqué la possibilité
+                que son enquête sur la FCG ait pu jouer un rôle dans sa mort.
+                La FCG a rejeté ces accusations et a déclaré n'avoir joué aucun rôle
+                dans le décès du journaliste.
+            </p>
+
+            <p>
+                Aucun élément rendu public par l'enquête n'a toutefois permis
+                d'établir formellement un lien entre la mort de Varen et la FCG.
+                L'affaire demeure par conséquent officiellement non résolue et
+                constitue encore un sujet de débat parmi les historiens,
+                journalistes et organisations civiles du Consortium.
+            </p>
+
+            <p>
+                L'affaire Varen a néanmoins eu un impact durable sur la perception
+                de la FCG. <em>l'Icarien Libre</em> a poursuivi ses investigations
+                sur Iktyro après sa mort, tandis que plusieurs médias du Consortium
+                ont commencé à s'intéresser davantage aux conditions de travail
+                dans les exploitations minières de la lune.
+            </p>
+
+        </section>
+
+        <!-- SOURCES -->
+
+        <section id="sources">
+
+            <h2>Sources</h2>
+
+            <ol class="references">
+                
+                <li id="source-1">
+                    <a href="#">
+                        Archives historiques de la Fédération Commerciale Galactique
+                    </a>,
+                    <em>Chronologie de l'expansion commerciale de la FCG : 9700–9820 AE</em>.
+                </li>
+
+                <li id="source-2">
+                    <a href="#">
+                        Archives militaires du Consortium Icarien
+                    </a>,
+                    <em>La Troisième Guerre Icario-Rovéenne : mobilisation industrielle
+                    et approvisionnement stratégique</em>.
+                </li>
+
+                <li id="source-3">
+                    <a href="#">
+                        Institut Galactique d'Histoire Contemporaine
+                    </a>,
+                    <em>Iktyro et l'essor de la Fédération Commerciale Galactique</em>.
+                </li>
+                
+                <li id="source-4">
+                    <a href="#">
+                        Archives municipales de Lanthine
+                    </a>,
+                    <em>Chronique de la destruction et de la reconstruction de Lanthine,
+                    9790–9812 AE</em>.
+                </li>
+                
+                <li id="source-5">
+                    <a href="#">
+                        Archives économiques de la Fédération Commerciale Galactique
+                    </a>,
+                    Département des Ressources Stratégiques, rapport sur la production
+                    minière d'Iktyro.
+                </li>
+
+                <li id="source-6">
+                    <a href="#">
+                        Bureau Fédéral des Statistiques
+                    </a>,
+                    <em>Recensement démographique et économique d'Iktyro</em>.
+                </li>
+
+                <li id="source-7">
+                    <a href="#">
+                        Institut Galactique de Géologie
+                    </a>,
+                    <em>Atlas des ressources minérales de la Voie lactée</em>,
+                    volume IV.
+                </li>
+
+                <li id="source-8">
+                    <a href="#">
+                        Autorité médicale de la Fédération Commerciale Galactique
+                    </a>,
+                    <em>Adaptations physiologiques aux environnements hypograves</em>.
+                </li>
+
+                <li id="source-9">
+                    <a href="#">
+                        Consortium Icarien
+                    </a>,
+                    <em>Rapport annuel sur l'approvisionnement en ressources stratégiques</em>.
+                </li>
+
+                <li id="source-10">
+                    <a href="#">
+                        Commission Icarienne des Libertés Civiles
+                    </a>,
+                    <em>Rapport sur les conditions de travail dans les exploitations
+                    minières d'Iktyro</em>.
+                </li>
+
+                <li id="source-11">
+                    <a href="#">
+                        Syndicat général des travailleurs miniers d'Iktyro
+                    </a>,
+                    <em>Enquête sur les conditions de travail et la sécurité dans les
+                    exploitations de la FCG</em>.
+                </li>
+
+                <li id="source-12">
+                    <a href="#">
+                        <em>L'Icarien Libre</em>
+                    </a>,
+                    <em>Dossier Varen : enquête sur la mort d'Élias Varen et les conditions
+                    de travail à Iktyro</em>.
+                </li>
+
+                <li id="source-13">
+                    <a href="#">
+                        Commission d'enquête de Lanthine
+                    </a>,
+                    <em>Rapport final sur le décès du journaliste Élias Varen</em>.
+                </li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- Pied de page -->
+
+        <footer class="footer">
+
+            <p>
+                Dernière modification : 25 septembre 10024 AE
+            </p>
+
+        </footer>
+
+    </div>
+
+</main>
+
+</body>
+</html>
