@@ -1,130 +1,162 @@
 [
-    {
-        "id": "astrophysicien",
-        "name": "Astrophysicien",
-        "category": "intellectual",
-        "skills": [
-            "physique",
-            "biologie",
-            "electronique",
-            "orientation",
-            "histoire",
-            "anthropologie",
-            "langue_etrangere",
-            "ecouter",
-            "trouver_objets_caches"
-        ]
-    },
-    {
-        "id": "ingenieur",
-        "name": "Ingénieur spatial",
-        "category": "intellectual",
-        "skills": [
-            "mecanique",
-            "electronique",
-            "bricolage",
-            "physique",
-            "conduite",
-            "conduite_engins_lourds",
-            "orientation",
-            "langue_etrangere",
-            "trouver_objets_caches"
-        ]
-    },
-    {
-        "id": "medecin",
-        "name": "Médecin",
-        "category": "intellectual",
-        "skills": [
-            "medecine",
-            "premiers_soins",
-            "biologie",
-            "chimie",
-            "ecouter",
-            "anthropologie",
-            "histoire",
-            "langue_etrangere",
-            "trouver_objets_caches"
-        ]
-    },
-    {
-        "id": "mecanicien",
-        "name": "Mécanicien",
-        "category": "manual",
-        "skills": [
-            "mecanique",
-            "bricolage",
-            "electronique",
-            "conduite",
-            "conduite_engins_lourds",
-            "orientation",
-            "esquive",
-            "natation",
-            "premiers_soins"
-        ]
-    },
-    {
-        "id": "pilote",
-        "name": "Pilote",
-        "category": "manual",
-        "skills": [
-            "pilotage",
-            "conduite",
-            "conduite_engins_lourds",
-            "orientation",
-            "esquive",
-            "ecouter",
-            "lancer",
-            "bricolage",
-            "premiers_soins"
-        ]
-    },
-    {
-        "id": "explorateur",
-        "name": "Explorateur",
-        "category": "manual",
-        "skills": [
-            "orientation",
-            "natation",
-            "esquive",
-            "lancer",
-            "ecouter",
-            "trouver_objets_caches",
-            "premiers_soins",
-            "bricolage",
-            "anthropologie"
-        ]
-    },
-    {
-        "id": "diplomate",
-        "name": "Diplomate",
-        "category": "social",
-        "skills": [
-            "charme",
-            "baratin",
-            "droit",
-            "histoire",
-            "anthropologie",
-            "ecouter",
-            "langue_etrangere",
-            "langue_maternelle",
-            "trouver_objets_caches"
-        ]
-    },
-    {
-        "id": "agent_securite",
-        "name": "Agent de sécurité",
-        "category": "social",
-        "skills": [
-            "armes_a_feu",
-            "combat_rapproche",
-            "esquive",
-            "ecouter",
-            "trouver_objets_caches",
-            "droit",
-            "discretion",
-            "lancer",
-            "premiers_soins"
-        ]
-    }
+  {
+    "id":"astrophysicien",
+    "name":"Astrophysicien",
+    "category":"intellectual",
+    "skills":[
+      "physics",
+      "biology",
+      "electronics",
+      "orientation",
+      "history",
+      "foreign_language",
+      "anthropology",
+      "medicine",
+      "listen"
+    ]
+  },
+  {
+    "id":"ingenieur_systemes",
+    "name":"Ingénieur systèmes",
+    "category":"intellectual",
+    "skills":[
+      "mechanics",
+      "electronics",
+      "physics",
+      "craft",
+      "biology",
+      "orientation",
+      "drive",
+      "heavy_drive",
+      "listen"
+    ]
+  },
+  {
+    "id":"medecin",
+    "name":"Médecin de bord",
+    "category":"intellectual",
+    "skills":[
+      "medicine",
+      "first_aid",
+      "biology",
+      "chemistry",
+      "physics",
+      "listen",
+      "anthropology",
+      "foreign_language",
+      "orientation"
+    ]
+  },
+  {
+    "id":"mecanicien_spatial",
+    "name":"Mécanicien spatial",
+    "category":"manual",
+    "skills":[
+      "mechanics",
+      "craft",
+      "electronics",
+      "drive",
+      "heavy_drive",
+      "orientation",
+      "lockpick",
+      "swim",
+      "first_aid"
+    ]
+  },
+  {
+    "id":"pilote",
+    "name":"Pilote spatial",
+    "category":"manual",
+    "skills":[
+      "piloting",
+      "drive",
+      "heavy_drive",
+      "orientation",
+      "firearms",
+      "throw",
+      "dodge",
+      "listen",
+      "electronics"
+    ]
+  },
+  {
+    "id":"technicien_eva",
+    "name":"Technicien EVA",
+    "category":"manual",
+    "skills":[
+      "mechanics",
+      "electronics",
+      "craft",
+      "swim",
+      "orientation",
+      "first_aid",
+      "lockpick",
+      "drive",
+      "dodge"
+    ]
+  },
+  {
+    "id":"diplomate",
+    "name":"Diplomate",
+    "category":"social",
+    "skills":[
+      "charm",
+      "fast_talk",
+      "law",
+      "history",
+      "foreign_language",
+      "listen",
+      "anthropology",
+      "own_language",
+      "orientation"
+    ]
+  },
+  {
+    "id":"enqueteur",
+    "name":"Enquêteur",
+    "category":"social",
+    "skills":[
+      "law",
+      "listen",
+      "spot_hidden",
+      "lockpick",
+      "stealth",
+      "fast_talk",
+      "firearms",
+      "pickpocket",
+      "anthropology"
+    ]
+  },
+  {
+    "id":"agent_securite",
+    "name":"Agent de sécurité",
+    "category":"social",
+    "skills":[
+      "firearms",
+      "melee",
+      "dodge",
+      "listen",
+      "spot_hidden",
+      "stealth",
+      "throw",
+      "first_aid",
+      "orientation"
+    ]
+  },
+  {
+    "id":"negociateur",
+    "name":"Négociateur corporatif",
+    "category":"social",
+    "skills":[
+      "charm",
+      "fast_talk",
+      "law",
+      "history",
+      "foreign_language",
+      "listen",
+      "pickpocket",
+      "anthropology",
+      "own_language"
+    ]
+  }
 ]
