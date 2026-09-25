@@ -88,5 +88,95 @@
     "weight":1,
     "damage":"",
     "range":""
+  },
+  {
+    "id": "arme_futuriste_001",
+    "name": "Pistolet à Arc Ionique",
+    "category": "Arme à feu",
+    "description": "Une arme de poing compacte projetant une décharge ionisée. Fiable et légère, elle est principalement utilisée à courte distance.",
+    "weight": 1.2,
+    "damage": "1d6+1",
+    "range": "30m"
+  },
+  {
+    "id": "arme_futuriste_002",
+    "name": "Carabine à Plasma Helix",
+    "category": "Arme à feu",
+    "description": "Une carabine militaire tirant de petites charges de plasma confinées par un champ magnétique. Son système de refroidissement limite la cadence de tir.",
+    "weight": 4.1,
+    "damage": "2d6",
+    "range": "80m"
+  },
+  {
+    "id": "arme_futuriste_003",
+    "name": "Fusil à Pompe Gravitique",
+    "category": "Arme à feu",
+    "description": "Une arme lourde projetant une gerbe de micro-projectiles accélérés par impulsion gravitationnelle. Dévastatrice à courte portée mais très imprécise au-delà.",
+    "weight": 5.8,
+    "damage": "2d6",
+    "range": "10m"
+  },
+  {
+    "id": "arme_futuriste_004",
+    "name": "Fusil à Particules Solstice",
+    "category": "Arme à feu",
+    "description": "Un fusil de précision utilisant un faisceau de particules accélérées. Sa puissance permet de traverser certaines protections légères, mais son mécanisme est encombrant.",
+    "weight": 7.3,
+    "damage": "1d12+2",
+    "range": "150m"
+  },
+  {
+    "id": "arme_futuriste_005",
+    "name": "Pistolet à Microfaisceaux Nyx",
+    "category": "Arme à feu",
+    "description": "Une arme expérimentale divisant son tir en plusieurs microfaisceaux énergétiques. Elle inflige des dégâts modérés mais reste extrêmement stable et facile à manier.",
+    "weight": 0.9,
+    "damage": "2d4+1",
+    "range": "40m"
+  },
+  {
+    "id": "arme_melee_001",
+    "name": "Lame Monomoléculaire",
+    "category": "Arme de mêlée",
+    "description": "Une lame dont le tranchant est maintenu à une épaisseur quasi moléculaire par un champ énergétique. Extrêmement légère et dangereusement précise.",
+    "weight": 0.8,
+    "damage": "1d8+2",
+    "range": "1m"
+  },
+  {
+    "id": "arme_melee_002",
+    "name": "Marteau Gravitationnel",
+    "category": "Arme de mêlée",
+    "description": "Un marteau massif équipé d'un générateur gravitationnel qui augmente brutalement l'impulsion au moment de l'impact.",
+    "weight": 6.5,
+    "damage": "2d8",
+    "range": "2m"
+  },
+  {
+    "id": "arme_melee_003",
+    "name": "Lance à Arc Quantique",
+    "category": "Arme de mêlée",
+    "description": "Une longue lance dont la pointe est entourée d'un arc énergétique capable de perturber les matériaux au moment du contact.",
+    "weight": 3.2,
+    "damage": "1d10+2",
+    "range": "2m"
+  },
+  {
+    "id": "arme_melee_004",
+    "name": "Gantelet Cinétique",
+    "category": "Arme de mêlée",
+    "description": "Un gantelet renforcé utilisant des actuateurs cinétiques pour amplifier les coups de poing. Compact et particulièrement efficace au corps à corps.",
+    "weight": 2.1,
+    "damage": "1d6+3",
+    "range": "1m"
+  },
+  {
+    "id": "arme_melee_005",
+    "name": "Hache à Plasma",
+    "category": "Arme de mêlée",
+    "description": "Une hache de combat dont le tranchant est constitué d'un arc de plasma confiné. Son générateur est lourd mais produit des impacts extrêmement violents.",
+    "weight": 5.2,
+    "damage": "1d12+1",
+    "range": "1m"
   }
 ]
