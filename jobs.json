@@ -1,182 +1,194 @@
 [
     {
+        "id": "astrophysicien",
         "name": "Astrophysicien",
         "category": "intellectual",
         "skills": [
-            "Astronomie",
-            "Physique",
-            "Science",
-            "Recherche",
-            "Informatique",
-            "Observation",
-            "Navigation",
-            "Langue étrangère",
-            "Mathématiques"
+            "astronomy",
+            "physics",
+            "research",
+            "computer",
+            "sensors",
+            "navigation",
+            "library",
+            "mathematics",
+            "english"
         ]
     },
     {
-        "name": "Ingénieur systèmes",
-        "category": "intellectual",
-        "skills": [
-            "Ingénierie",
-            "Électronique",
-            "Informatique",
-            "Réparation",
-            "Physique",
-            "Recherche",
-            "Science",
-            "Observation",
-            "Mathématiques"
-        ]
-    },
-    {
+        "id": "xenobiologiste",
         "name": "Xénobiologiste",
         "category": "intellectual",
         "skills": [
-            "Biologie",
-            "Science",
-            "Médecine",
-            "Recherche",
-            "Observation",
-            "Psychologie",
-            "Premiers secours",
-            "Survie",
-            "Langue étrangère"
+            "biology",
+            "chemistry",
+            "medicine",
+            "research",
+            "spot_hidden",
+            "library",
+            "psychology",
+            "science",
+            "first_aid"
         ]
     },
     {
+        "id": "ingenieur_systemes",
+        "name": "Ingénieur systèmes",
+        "category": "intellectual",
+        "skills": [
+            "engineering",
+            "electronics",
+            "computer",
+            "repair",
+            "physics",
+            "research",
+            "sensors",
+            "science",
+            "mathematics"
+        ]
+    },
+    {
+        "id": "analyste_donnees",
         "name": "Analyste de données",
         "category": "intellectual",
         "skills": [
-            "Informatique",
-            "Recherche",
-            "Observation",
-            "Comptabilité",
-            "Mathématiques",
-            "Psychologie",
-            "Bibliothèque",
-            "Communication",
-            "Science"
+            "computer",
+            "research",
+            "library",
+            "accounting",
+            "psychology",
+            "mathematics",
+            "english",
+            "spot_hidden",
+            "science"
         ]
     },
     {
-        "name": "Mécanicien orbital",
+        "id": "mecanicien",
+        "name": "Mécanicien spatial",
         "category": "manual",
         "skills": [
-            "Réparation",
-            "Ingénierie",
-            "Électronique",
-            "EVA",
-            "Conduite",
-            "Pilotage",
-            "Athlétisme",
-            "Survie",
-            "Observation"
+            "repair",
+            "engineering",
+            "electronics",
+            "drive",
+            "eva",
+            "athletics",
+            "sensors",
+            "spot_hidden",
+            "survival"
         ]
     },
     {
+        "id": "technicien_eva",
         "name": "Technicien EVA",
         "category": "manual",
         "skills": [
-            "EVA",
-            "Réparation",
-            "Pilotage",
-            "Navigation",
-            "Athlétisme",
-            "Survie",
-            "Observation",
-            "Électronique",
-            "Premiers secours"
+            "eva",
+            "repair",
+            "electronics",
+            "survival",
+            "athletics",
+            "climb",
+            "navigation",
+            "sensors",
+            "first_aid"
         ]
     },
     {
-        "name": "Mineur spatial",
+        "id": "mineur",
+        "name": "Mineur d'astéroïdes",
         "category": "manual",
         "skills": [
-            "Survie",
-            "Athlétisme",
-            "Réparation",
-            "EVA",
-            "Observation",
-            "Navigation",
-            "Ingénierie",
-            "Premiers secours",
-            "Conduite"
+            "survival",
+            "athletics",
+            "repair",
+            "navigation",
+            "spot_hidden",
+            "listen",
+            "drive",
+            "throw",
+            "first_aid"
         ]
     },
     {
-        "name": "Pilote de vaisseau",
+        "id": "pilote",
+        "name": "Pilote spatial",
         "category": "manual",
         "skills": [
-            "Pilotage",
-            "Navigation",
-            "Observation",
-            "Capteurs",
-            "EVA",
-            "Communication",
-            "Conduite",
-            "Réparation",
-            "Orientation"
+            "piloting",
+            "navigation",
+            "sensors",
+            "drive",
+            "eva",
+            "dodge",
+            "listen",
+            "spot_hidden",
+            "repair"
         ]
     },
     {
+        "id": "diplomate",
         "name": "Diplomate",
         "category": "social",
         "skills": [
-            "Persuasion",
-            "Charme",
-            "Baratin",
-            "Psychologie",
-            "Droit",
-            "Langue étrangère",
-            "Communication",
-            "Observation",
-            "Crédit"
+            "charm",
+            "persuade",
+            "fast_talk",
+            "psychology",
+            "foreign_language",
+            "law",
+            "history",
+            "listen",
+            "credit"
         ]
     },
     {
-        "name": "Négociateur commercial",
-        "category": "social",
-        "skills": [
-            "Persuasion",
-            "Charme",
-            "Baratin",
-            "Crédit",
-            "Comptabilité",
-            "Psychologie",
-            "Communication",
-            "Droit",
-            "Observation"
-        ]
-    },
-    {
+        "id": "journaliste",
         "name": "Journaliste",
         "category": "social",
         "skills": [
-            "Recherche",
-            "Observation",
-            "Psychologie",
-            "Persuasion",
-            "Bibliothèque",
-            "Histoire",
-            "Communication",
-            "Langue étrangère",
-            "Informatique"
+            "persuade",
+            "fast_talk",
+            "research",
+            "library",
+            "spot_hidden",
+            "listen",
+            "photography",
+            "history",
+            "foreign_language"
         ]
     },
     {
-        "name": "Agent de sécurité",
-        "category": "manual",
+        "id": "negociateur",
+        "name": "Négociateur corporatif",
+        "category": "social",
         "skills": [
-            "Armes à feu",
-            "Combat rapproché",
-            "Observation",
-            "Athlétisme",
-            "Esquive",
-            "Intimidation",
-            "Survie",
-            "Premiers secours",
-            "Discrétion"
+            "persuade",
+            "charm",
+            "intimidate",
+            "credit",
+            "law",
+            "psychology",
+            "accounting",
+            "fast_talk",
+            "foreign_language"
+        ]
+    },
+    {
+        "id": "agent_securite",
+        "name": "Agent de sécurité",
+        "category": "social",
+        "skills": [
+            "firearms",
+            "melee",
+            "intimidate",
+            "spot_hidden",
+            "listen",
+            "dodge",
+            "athletics",
+            "psychology",
+            "law"
         ]
     }
 ]
