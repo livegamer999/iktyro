@@ -1,5090 +1,996 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXPLORER — Fiche de personnage</title>
-
-<style>
-:root {
-    --bg: #050910;
-    --panel: #0b121c;
-    --panel2: #101b28;
-    --border: #1b6680;
-    --cyan: #35d9ff;
-    --cyan-soft: #74eaff;
-    --green: #58f5ae;
-    --yellow: #ffd65a;
-    --red: #ff5964;
-    --text: #e5f6ff;
-    --muted: #7893a2;
-    --shadow: 0 0 25px rgba(53,217,255,.08);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    background:
-        linear-gradient(rgba(53,217,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(53,217,255,.025) 1px, transparent 1px),
-        radial-gradient(circle at 50% 0%, #102438 0%, var(--bg) 55%);
-    background-size: 32px 32px, 32px 32px, 100% 100%;
-    color: var(--text);
-    font-family: "Courier New", monospace;
-    min-height: 100vh;
-}
-
-button,
-input,
-select,
-textarea {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.app {
-    width: min(1450px, 96%);
-    margin: auto;
-    padding: 20px 0 60px;
-}
-
-/* --------------------------------------------------
-   HEADER
--------------------------------------------------- */
-
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    padding: 18px 22px;
-    margin-bottom: 20px;
-    border: 1px solid var(--border);
-    background: rgba(5,12,20,.9);
-    box-shadow: var(--shadow);
-}
-
-.logo {
-    color: var(--cyan);
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: .15em;
-}
-
-.subtitle {
-    color: var(--muted);
-    font-size: .75rem;
-    margin-top: 4px;
-}
-
-.toolbar {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-/* --------------------------------------------------
-   BUTTONS
--------------------------------------------------- */
-
-.btn {
-    border: 1px solid var(--cyan);
-    background: rgba(53,217,255,.08);
-    color: var(--cyan-soft);
-    padding: 9px 14px;
-    transition: .15s;
-}
-
-.btn:hover {
-    background: rgba(53,217,255,.18);
-    box-shadow: 0 0 12px rgba(53,217,255,.18);
-}
-
-.btn.primary {
-    background: var(--cyan);
-    color: #001018;
-    font-weight: bold;
-}
-
-.btn.green {
-    border-color: var(--green);
-    color: var(--green);
-}
-
-.btn.danger {
-    border-color: var(--red);
-    color: var(--red);
-}
-
-.btn:disabled {
-    opacity: .35;
-    cursor: not-allowed;
-}
-
-/* --------------------------------------------------
-   PANELS
--------------------------------------------------- */
-
-.panel {
-    background: rgba(8,17,27,.94);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 18px;
-    margin-bottom: 18px;
-}
-
-.panel-title {
-    color: var(--cyan);
-    border-bottom: 1px solid rgba(53,217,255,.25);
-    padding-bottom: 9px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-}
-
-.grid {
-    display: grid;
-    gap: 12px;
-}
-
-.grid-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-/* --------------------------------------------------
-   CHARACTER SHEET
--------------------------------------------------- */
-
-.empty-state {
-    padding: 80px 20px;
-    text-align: center;
-    color: var(--muted);
-    border: 1px dashed var(--border);
-}
-
-.empty-state strong {
-    color: var(--cyan);
-    display: block;
-    margin-bottom: 10px;
-}
-
-/* --------------------------------------------------
-   CREATOR MODAL
--------------------------------------------------- */
-
-.modal {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: none;
-    background: rgba(0,0,0,.78);
-    backdrop-filter: blur(5px);
-}
-
-.modal.open {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.creator {
-    width: min(1250px, 96vw);
-    height: min(92vh, 1000px);
-    background: #07101a;
-    border: 1px solid var(--cyan);
-    box-shadow: 0 0 50px rgba(53,217,255,.16);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.creator-header {
-    padding: 15px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.creator-title {
-    color: var(--cyan);
-    font-size: 1.2rem;
-}
-
-.creator-steps {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-}
-
-.step-tab {
-    padding: 10px 14px;
-    border-right: 1px solid var(--border);
-    color: var(--muted);
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.step-tab.active {
-    color: var(--cyan);
-    background: rgba(53,217,255,.08);
-}
-
-.creator-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-}
-
-.creator-footer {
-    padding: 12px 20px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-/* --------------------------------------------------
-   STATISTICS
--------------------------------------------------- */
-
-.stat-card {
-    border: 1px solid var(--border);
-    padding: 12px;
-    background: rgba(10,24,37,.75);
-}
-
-.stat-name {
-    color: var(--cyan);
-    font-weight: bold;
-}
-
-.stat-description {
-    color: var(--muted);
-    font-size: .7rem;
-    margin-bottom: 8px;
-}
-
-.stat-control {
-    display: grid;
-    grid-template-columns: 1fr 65px;
-    gap: 10px;
-    align-items: center;
-}
-
-.stat-control input[type="range"] {
-    width: 100%;
-}
-
-.number-input {
-    width: 100%;
-    background: #050c14;
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 7px;
-    text-align: center;
-}
-
-.stat-values {
-    display: flex;
-    justify-content: space-between;
-    color: var(--muted);
-    font-size: .72rem;
-    margin-top: 7px;
-}
-
-.points-banner {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: rgba(4,12,20,.97);
-    border: 1px solid var(--cyan);
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-.points-banner .value {
-    color: var(--green);
-    font-weight: bold;
-}
-
-.points-banner.invalid .value {
-    color: var(--red);
-}
-
-/* --------------------------------------------------
-   AGE
--------------------------------------------------- */
-
-.age-option {
-    border: 1px solid var(--border);
-    padding: 13px;
-    cursor: pointer;
-}
-
-.age-option.selected {
-    border-color: var(--cyan);
-    background: rgba(53,217,255,.08);
-}
-
-.age-option input {
-    display: none;
-}
-
-.penalty-row {
-    display: grid;
-    grid-template-columns: 1fr 100px;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.penalty-total {
-    padding: 10px;
-    border: 1px solid var(--border);
-    margin-top: 10px;
-}
-
-/* --------------------------------------------------
-   SKILLS
--------------------------------------------------- */
-
-/*
-   La barre suivante est volontairement sticky.
-   Elle reste visible lorsque la liste des compétences
-   est longue et que le joueur fait défiler le créateur.
-*/
-
-.skill-credit-bar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    background: rgba(3,10,17,.98);
-    border: 1px solid var(--cyan);
-    padding: 10px;
-    margin-bottom: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.5);
-}
-
-.credit-box {
-    text-align: center;
-    padding: 8px;
-    border: 1px solid var(--border);
-}
-
-.credit-box span {
-    display: block;
-    font-size: .68rem;
-    color: var(--muted);
-    text-transform: uppercase;
-}
-
-.credit-box strong {
-    color: var(--green);
-    font-size: 1.05rem;
-}
-
-.credit-box.invalid strong {
-    color: var(--red);
-}
-
-.skills-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.skills-table th,
-.skills-table td {
-    border: 1px solid rgba(27,102,128,.45);
-    padding: 6px;
-}
-
-.skills-table th {
-    color: var(--cyan);
-    background: #091722;
-    font-size: .72rem;
-    text-transform: uppercase;
-    position: sticky;
-    top: 83px;
-    z-index: 10;
-}
-
-.skills-table td {
-    font-size: .78rem;
-}
-
-.skill-name {
-    font-weight: bold;
-}
-
-.skill-prof {
-    background: rgba(88,245,174,.07);
-}
-
-.prof-badge {
-    color: var(--green);
-    border: 1px solid var(--green);
-    font-size: .6rem;
-    padding: 2px 4px;
-    margin-left: 5px;
-}
-
-.skill-number {
-    width: 70px;
-    background: #040b12;
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 5px;
-    text-align: center;
-}
-
-.base-value,
-.final-value {
-    text-align: center;
-}
-
-.final-value {
-    color: var(--cyan-soft);
-    font-weight: bold;
-}
-
-.derived-mini {
-    color: var(--muted);
-    font-size: .7rem;
-}
-
-/* --------------------------------------------------
-   FORMULAIRES
--------------------------------------------------- */
-
-label {
-    display: block;
-    color: var(--muted);
-    font-size: .72rem;
-    margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="number"],
-select,
-textarea {
-    width: 100%;
-    background: #050c14;
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 9px;
-    outline: none;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--cyan);
-    box-shadow: 0 0 8px rgba(53,217,255,.1);
-}
-
-textarea {
-    min-height: 110px;
-    resize: vertical;
-}
-
-.required-field.empty-field {
-    border-color: var(--red);
-    box-shadow: 0 0 8px rgba(255,89,100,.13);
-}
-
-.required-field:not(.empty-field) {
-    border-color: var(--green);
-}
-
-/* --------------------------------------------------
-   SHEET SCREEN
--------------------------------------------------- */
-
-.sheet-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 15px;
-    align-items: center;
-}
-
-.sheet-name {
-    font-size: 1.6rem;
-    color: var(--cyan);
-}
-
-.sheet-callsign {
-    color: var(--green);
-}
-
-.stat-sheet-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-}
-
-.sheet-stat {
-    border: 1px solid var(--border);
-    padding: 10px;
-    text-align: center;
-}
-
-.sheet-stat .big {
-    font-size: 1.4rem;
-    color: var(--cyan);
-    font-weight: bold;
-}
-
-.sheet-stat .small {
-    font-size: .65rem;
-    color: var(--muted);
-}
-
-.derived-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-}
-
-.derived-card {
-    border: 1px solid var(--border);
-    padding: 10px;
-    text-align: center;
-}
-
-.derived-card strong {
-    display: block;
-    color: var(--green);
-    font-size: 1.1rem;
-    margin-top: 5px;
-}
-
-.sheet-skills {
-    columns: 2;
-    column-gap: 18px;
-}
-
-.sheet-skill {
-    break-inside: avoid;
-    border-bottom: 1px solid rgba(27,102,128,.35);
-    padding: 5px 2px;
-    display: grid;
-    grid-template-columns: 1fr 45px 45px 45px;
-    gap: 4px;
-}
-
-.sheet-skill.professional {
-    border-left: 3px solid var(--green);
-    padding-left: 6px;
-}
-
-.profile-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.profile-full {
-    grid-column: 1 / -1;
-}
-
-.equipment-row {
-    display: grid;
-    grid-template-columns: 1fr 70px 35px;
-    gap: 7px;
-    margin-bottom: 7px;
-}
-
-.equipment-row button {
-    border: 1px solid var(--border);
-    background: #07131e;
-    color: var(--cyan);
-}
-
-.item-picker {
-    max-height: 55vh;
-    overflow-y: auto;
-}
-
-.item-option {
-    border: 1px solid var(--border);
-    padding: 10px;
-    margin-bottom: 7px;
-    cursor: pointer;
-}
-
-.item-option:hover {
-    border-color: var(--cyan);
-    background: rgba(53,217,255,.08);
-}
-
-.item-option strong {
-    color: var(--cyan);
-}
-
-.item-option small {
-    display: block;
-    color: var(--muted);
-    margin-top: 4px;
-}
-
-/* --------------------------------------------------
-   PRINT
--------------------------------------------------- */
-
-.print-sheet {
-    display: none;
-}
-
-@media print {
-
-    @page {
-        size: A4 portrait;
-        margin: 8mm;
-    }
-
-    body {
-        background: #fff !important;
-        color: #000 !important;
-    }
-
-    .app,
-    .modal {
-        display: none !important;
-    }
-
-    .print-sheet {
-        display: block !important;
-    }
-
-    .print-page {
-        width: 194mm;
-        min-height: 281mm;
-        max-height: 281mm;
-        overflow: hidden;
-        color: #000;
-        background: #fff;
-        page-break-after: always;
-        break-after: page;
-        font-family: Arial, sans-serif;
-        font-size: 8pt;
-    }
-
-    .print-page:last-child {
-        page-break-after: auto;
-        break-after: auto;
-    }
-
-    .print-header {
-        border-bottom: 2px solid #000;
-        padding-bottom: 5px;
-        margin-bottom: 8px;
-    }
-
-    .print-title {
-        font-size: 16pt;
-        font-weight: bold;
-    }
-
-    .print-subtitle {
-        font-size: 8pt;
-    }
-
-    .print-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
-        margin-bottom: 7px;
-    }
-
-    .print-box {
-        border: 1px solid #000;
-        padding: 4px;
-    }
-
-    .print-box strong {
-        display: block;
-    }
-
-    .print-stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 3px;
-    }
-
-    .print-stat {
-        border: 1px solid #000;
-        padding: 4px;
-        text-align: center;
-    }
-
-    .print-stat .value {
-        font-size: 12pt;
-        font-weight: bold;
-    }
-
-    .print-derived {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 3px;
-        margin: 6px 0;
-    }
-
-    .print-skill-columns {
-        columns: 2;
-        column-gap: 10px;
-    }
-
-    .print-skill {
-        break-inside: avoid;
-        display: grid;
-        grid-template-columns: 1fr 25px 25px 25px 25px;
-        border-bottom: 1px solid #bbb;
-        padding: 2px 0;
-    }
-
-    .print-skill.prof {
-        font-weight: bold;
-    }
-
-    .print-section-title {
-        font-size: 9pt;
-        font-weight: bold;
-        border-bottom: 1px solid #000;
-        margin: 7px 0 4px;
-        padding-bottom: 2px;
-    }
-
-    .print-profile-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 7px;
-    }
-
-    .print-profile-box {
-        border: 1px solid #000;
-        min-height: 38mm;
-        padding: 4px;
-    }
-
-    .print-profile-box.full {
-        grid-column: 1 / -1;
-    }
-
-    .print-equipment {
-        display: grid;
-        grid-template-columns: 1fr 35px;
-        border: 1px solid #000;
-    }
-
-    .print-equipment div {
-        border-bottom: 1px solid #aaa;
-        padding: 4px;
-        min-height: 7mm;
-    }
-
-    .print-note {
-        border: 1px solid #000;
-        min-height: 35mm;
-        padding: 5px;
-    }
-}
-
-/* --------------------------------------------------
-   RESPONSIVE
--------------------------------------------------- */
-
-@media (max-width: 900px) {
-    .grid-3,
-    .grid-4,
-    .stat-sheet-grid,
-    .derived-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .profile-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-full {
-        grid-column: auto;
-    }
-
-    .sheet-skills {
-        columns: 1;
-    }
-
-    .skills-table {
-        min-width: 850px;
-    }
-
-    .skills-scroll {
-        overflow-x: auto;
-    }
-}
-
-@media (max-width: 600px) {
-    .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .grid-2,
-    .grid-3,
-    .grid-4,
-    .stat-sheet-grid,
-    .derived-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .skill-credit-bar {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iktyro — Encyclopedia Galactica</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f8f9fa;
+            color: #202122;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #36c;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Barre supérieure */
+
+        .topbar {
+            height: 50px;
+            background: #ffffff;
+            border-bottom: 1px solid #a2a9b1;
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 25px;
+            color: #202122;
+            font-weight: normal;
+        }
+
+        .logo span {
+            font-size: 12px;
+            display: block;
+            margin-top: -7px;
+            text-align: center;
+            color: #54595d;
+        }
+
+        .search {
+            margin-left: auto;
+            display: flex;
+            height: 32px;
+        }
+
+        .search input {
+            width: 240px;
+            border: 1px solid #a2a9b1;
+            padding: 6px 10px;
+            font-size: 13px;
+        }
+
+        .search button {
+            border: 1px solid #a2a9b1;
+            border-left: none;
+            background: #f8f9fa;
+            padding: 0 14px;
+            cursor: pointer;
+        }
+
+        /* Structure */
+
+        .page {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 25px 35px 60px;
+            background: #fff;
+            min-height: calc(100vh - 50px);
+        }
+
+        .page-header {
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 34px;
+            font-weight: normal;
+            margin: 0 0 8px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        .tabs-left,
+        .tabs-right {
+            display: flex;
+            gap: 18px;
+        }
+
+        .active {
+            font-weight: bold;
+            border-bottom: 2px solid #202122;
+            padding-bottom: 7px;
+        }
+
+        /* Infobox */
+
+        .infobox {
+            float: right;
+            width: 310px;
+            margin: 0 0 20px 25px;
+            border: 1px solid #a2a9b1;
+            background: #f8f9fa;
+            font-size: 13px;
+        }
+
+        .infobox-title {
+            background: #eaecf0;
+            text-align: center;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 21px;
+            font-weight: bold;
+            padding: 8px;
+            border-bottom: 1px solid #a2a9b1;
+        }
+
+        .infobox-subtitle {
+            text-align: center;
+            font-style: italic;
+            padding: 7px 8px;
+            border-bottom: 1px solid #a2a9b1;
+        }
+
+        .infobox table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .infobox th,
+        .infobox td {
+            padding: 7px 9px;
+            vertical-align: top;
+            border-bottom: 1px solid #eaecf0;
+        }
+
+        .infobox th {
+            width: 43%;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .infobox td {
+            background: #fff;
+        }
+
+        /* Contenu */
+
+        .content {
+            max-width: 1050px;
+        }
+
+        .intro {
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 24px;
+            font-weight: normal;
+            border-bottom: 1px solid #a2a9b1;
+            margin: 30px 0 12px;
+            padding-bottom: 3px;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        .lead {
+            font-weight: normal;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #54595d;
+        }
+
+        sup {
+            font-size: 10px;
+        }
+
+        /* Sommaire */
+
+        .toc {
+            display: inline-block;
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 10px 25px 12px 15px;
+            margin: 5px 0 20px;
+            min-width: 220px;
+        }
+
+        .toc-title {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 22px;
+        }
+
+        .toc li {
+            margin: 2px 0;
+        }
+
+        /* Encadré */
+
+        .quote-box {
+            border-left: 4px solid #a2a9b1;
+            padding: 10px 15px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            color: #54595d;
+        }
+        
+        .references {
+            padding-left: 30px;
+            font-size: 13px;
+        }
+
+        .references li {
+            margin-bottom: 8px;
+        }
+
+        .references li:target {
+            background: #eaecf0;
+        }
+
+        /* Footer */
+
+        .footer {
+            clear: both;
+            border-top: 1px solid #a2a9b1;
+            margin-top: 50px;
+            padding-top: 15px;
+            font-size: 12px;
+            color: #54595d;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 750px) {
+            .page {
+                padding: 20px;
+            }
+
+            .infobox {
+                float: none;
+                width: 100%;
+                margin: 0 0 20px;
+            }
+
+            .search input {
+                width: 140px;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .tabs {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="app">
+<!-- Barre supérieure -->
+<header class="topbar">
 
-    <header class="topbar">
-        <div>
-            <div class="logo">EXPLORER // PERSONNAGE</div>
-            <div class="subtitle">
-                Système d'aventure scientifique et spatiale
-            </div>
-        </div>
+    <div class="logo">
+        Encyclopedia
+        <span>GALACTICA</span>
+    </div>
 
-        <div class="toolbar">
-            <button class="btn primary" id="createCharacterBtn">
-                Créer un personnage
-            </button>
+    <div class="search">
+        <input type="text" placeholder="Rechercher dans l'encyclopédie">
+        <button>Rechercher</button>
+    </div>
 
-            <button class="btn" id="exportBtn">
-                Télécharger JSON
-            </button>
-
-            <button class="btn" id="importBtn">
-                Charger JSON
-            </button>
-
-            <button class="btn green" id="printBtn">
-                Imprimer
-            </button>
-
-            <input
-                type="file"
-                id="importFile"
-                accept=".json,application/json"
-                hidden
-            >
-        </div>
-    </header>
-
-    <main id="characterSheet">
-
-        <div class="empty-state">
-            <strong>AUCUN PERSONNAGE CHARGÉ</strong>
-            Créez un nouveau personnage ou chargez une fiche JSON existante.
-        </div>
-
-    </main>
-
-</div>
+</header>
 
 
-<!-- ==================================================
-     MODALE DE CRÉATION
-================================================== -->
+<!-- Page -->
+<main class="page">
 
-<div class="modal" id="creatorModal">
+    <!-- En-tête -->
+    <div class="page-header">
 
-    <div class="creator">
+        <h1>Iktyro</h1>
 
-        <div class="creator-header">
-            <div class="creator-title">
-                CRÉATION DU PERSONNAGE
+        <div class="tabs">
+            <div class="tabs-left">
+                <span class="active">Article</span>
+                <a href="#">Discussion</a>
             </div>
 
-            <button class="btn danger" id="closeCreatorBtn">
-                Fermer
-            </button>
-        </div>
-
-        <div class="creator-steps" id="stepTabs">
-
-            <div class="step-tab active" data-step="1">
-                1. Caractéristiques
+            <div class="tabs-right">
+                <a href="#">Lire</a>
+                <a href="#">Modifier</a>
+                <a href="#">Historique</a>
             </div>
-
-            <div class="step-tab" data-step="2">
-                2. Âge
-            </div>
-
-            <div class="step-tab" data-step="3">
-                3. Chance & dérivés
-            </div>
-
-            <div class="step-tab" data-step="4">
-                4. Métier
-            </div>
-
-            <div class="step-tab" data-step="5">
-                5. Compétences
-            </div>
-
-            <div class="step-tab" data-step="6">
-                6. Validation
-            </div>
-
-        </div>
-
-        <div class="creator-body" id="creatorBody"></div>
-
-        <div class="creator-footer">
-
-            <button class="btn" id="previousStepBtn">
-                ← Retour
-            </button>
-
-            <button class="btn primary" id="nextStepBtn">
-                Suivant →
-            </button>
-
         </div>
 
     </div>
 
-</div>
 
+    <div class="content">
 
-<!-- ==================================================
-     MODALE ÉQUIPEMENT
-================================================== -->
+        <!-- Infobox -->
+        <aside class="infobox">
 
-<div class="modal" id="equipmentModal">
-
-    <div class="creator" style="height:min(75vh,800px)">
-
-        <div class="creator-header">
-            <div class="creator-title">
-                AJOUTER UN OBJET
+            <div class="infobox-title">
+                Iktyro
             </div>
 
-            <button class="btn danger" id="closeEquipmentBtn">
-                Fermer
-            </button>
-        </div>
-
-        <div class="creator-body">
-            <div id="equipmentPicker" class="item-picker"></div>
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- ==================================================
-     FICHE IMPRIMABLE
-================================================== -->
-
-<div class="print-sheet" id="printSheet"></div>
-
-
-<script>
-"use strict";
-
-/* =====================================================
-   DONNÉES PAR DÉFAUT
-===================================================== */
-
-const STAT_DEFINITIONS = {
-    STR: {
-        label: "Force",
-        description: "Puissance physique"
-    },
-    CON: {
-        label: "Constitution",
-        description: "Résistance physique"
-    },
-    DEX: {
-        label: "Dextérité",
-        description: "Agilité et réflexes"
-    },
-    INT: {
-        label: "Intelligence",
-        description: "Analyse et raisonnement"
-    },
-    POW: {
-        label: "Pouvoir",
-        description: "Volonté et présence mentale"
-    },
-    EDU: {
-        label: "Éducation",
-        description: "Connaissances acquises"
-    },
-    APP: {
-        label: "Apparence",
-        description: "Présence et impact social"
-    },
-    SIZ: {
-        label: "Taille",
-        description: "Masse et stature"
-    }
-};
-
-
-/*
-    Les caractéristiques par défaut totalisent exactement 460.
-
-    Elles servent uniquement de point de départ.
-*/
-const DEFAULT_BASE_STATS = {
-    STR: 55,
-    CON: 55,
-    DEX: 55,
-    INT: 55,
-    POW: 55,
-    EDU: 65,
-    APP: 40,
-    SIZ: 80
-};
-
-
-const DEFAULT_PROFILE = {
-    name: "",
-    callsign: "",
-    pronouns: "",
-    origin: "",
-    background: "",
-    personality: "",
-    motivations: "",
-    relationships: "",
-    appearance: "",
-    currentSituation: "",
-    notes: ""
-};
-
-
-function blankEquipment(count = 10) {
-    return Array.from(
-        { length: count },
-        () => ({
-            name: "",
-            quantity: "",
-            notes: ""
-        })
-    );
-}
-
-
-function createInitialCharacter() {
-
-    return {
-        version: 1,
-
-        baseStats: { ...DEFAULT_BASE_STATS },
-
-        stats: { ...DEFAULT_BASE_STATS },
-
-        age: 20,
-
-        agePenalties: {
-            STR: 0,
-            CON: 0,
-            DEX: 0,
-            SIZ: 0
-        },
-
-        educationRollUsed: false,
-
-        educationRoll: null,
-
-        luck: null,
-
-        luckRollUsed: false,
-
-        occupationId: "",
-
-        skillAllocations: {},
-
-        profile: { ...DEFAULT_PROFILE },
-
-        equipment: blankEquipment(),
-
-        derived: {},
-
-        created: false
-    };
-}
-
-
-/*
-    IMPORTANT :
-    character est l'état unique de toute la création.
-
-    On ne recrée jamais cet objet lorsque l'utilisateur
-    change d'étape.
-*/
-let character = createInitialCharacter();
-
-let jobs = [];
-let skills = {};
-let equipmentItems = [];
-
-let currentStep = 1;
-
-
-/* =====================================================
-   DONNÉES DE SECOURS
-   Utilisées si les JSON ne sont pas disponibles.
-===================================================== */
-
-const FALLBACK_SKILLS = [
-    { id:"anthropologie", name:"Anthropologie", base:"1" },
-    { id:"histoire", name:"Histoire", base:"10" },
-    { id:"bricolage", name:"Bricolage", base:"10" },
-    { id:"mecanique", name:"Mécanique", base:"1" },
-    { id:"baratin", name:"Baratin", base:"5" },
-    { id:"charme", name:"Charme", base:"15" },
-    { id:"armes_a_feu", name:"Armes à feu", base:"DEX/4" },
-    { id:"lancer", name:"Lancer", base:"DEX/2" },
-    { id:"combat_rapproche", name:"Combat rapproché", base:"FOR/2" },
-    { id:"pilotage", name:"Pilotage", base:"10" },
-    { id:"conduite", name:"Conduite", base:"20" },
-    { id:"conduite_engins_lourds", name:"Conduite engins lourds", base:"1" },
-    { id:"crochetage", name:"Crochetage", base:"1" },
-    { id:"discretion", name:"Discrétion", base:"20" },
-    { id:"droit", name:"Droit", base:"20" },
-    { id:"ecouter", name:"Écouter", base:"20" },
-    { id:"physique", name:"Physique", base:"5" },
-    { id:"biologie", name:"Biologie", base:"5" },
-    { id:"chimie", name:"Chimie", base:"5" },
-    { id:"electronique", name:"Électronique", base:"5" },
-    { id:"medecine", name:"Médecine", base:"5" },
-    { id:"natation", name:"Natation", base:"20" },
-    { id:"orientation", name:"Orientation", base:"10" },
-    { id:"pick_pocket", name:"Pick pocket", base:"10" },
-    { id:"premiers_soins", name:"Premiers soins", base:"30" },
-    { id:"trouver_objets_caches", name:"Trouver objet cachés", base:"25" },
-    { id:"langue_maternelle", name:"Langue maternelle", base:"EDU" },
-    { id:"langue_etrangere", name:"Langue étrangère", base:"1" },
-    { id:"esquive", name:"Esquive", base:"DEX/2" }
-];
-
-
-const FALLBACK_JOBS = [
-    {
-        id: "astrophysicien",
-        name: "Astrophysicien",
-        category: "intellectual",
-        skills: [
-            "physique",
-            "biologie",
-            "electronique",
-            "orientation",
-            "histoire",
-            "anthropologie",
-            "langue_etrangere",
-            "ecouter",
-            "trouver_objets_caches"
-        ]
-    },
-    {
-        id: "ingenieur",
-        name: "Ingénieur spatial",
-        category: "intellectual",
-        skills: [
-            "mecanique",
-            "electronique",
-            "bricolage",
-            "physique",
-            "conduite",
-            "conduite_engins_lourds",
-            "orientation",
-            "langue_etrangere",
-            "trouver_objets_caches"
-        ]
-    },
-    {
-        id: "medecin",
-        name: "Médecin",
-        category: "intellectual",
-        skills: [
-            "medecine",
-            "premiers_soins",
-            "biologie",
-            "chimie",
-            "ecouter",
-            "anthropologie",
-            "histoire",
-            "langue_etrangere",
-            "psychologie"
-        ]
-    },
-    {
-        id: "mecanicien",
-        name: "Mécanicien",
-        category: "manual",
-        skills: [
-            "mecanique",
-            "bricolage",
-            "electronique",
-            "conduite",
-            "conduite_engins_lourds",
-            "orientation",
-            "esquive",
-            "natation",
-            "premiers_soins"
-        ]
-    },
-    {
-        id: "pilote",
-        name: "Pilote",
-        category: "manual",
-        skills: [
-            "pilotage",
-            "conduite",
-            "conduite_engins_lourds",
-            "orientation",
-            "esquive",
-            "ecouter",
-            "lancer",
-            "bricolage",
-            "premiers_soins"
-        ]
-    },
-    {
-        id: "explorateur",
-        name: "Explorateur",
-        category: "manual",
-        skills: [
-            "orientation",
-            "natation",
-            "esquive",
-            "lancer",
-            "ecouter",
-            "trouver_objets_caches",
-            "premiers_soins",
-            "bricolage",
-            "anthropologie"
-        ]
-    },
-    {
-        id: "diplomate",
-        name: "Diplomate",
-        category: "social",
-        skills: [
-            "charme",
-            "baratin",
-            "droit",
-            "histoire",
-            "anthropologie",
-            "ecouter",
-            "langue_etrangere",
-            "langue_maternelle",
-            "trouver_objets_caches"
-        ]
-    },
-    {
-        id: "agent_securite",
-        name: "Agent de sécurité",
-        category: "social",
-        skills: [
-            "armes_a_feu",
-            "combat_rapproche",
-            "esquive",
-            "ecouter",
-            "trouver_objets_caches",
-            "droit",
-            "discretion",
-            "lancer",
-            "premiers_soins"
-        ]
-    }
-];
-
-
-const FALLBACK_EQUIPMENT = [
-    {
-        id: "kit_outils",
-        name: "Kit d'outils",
-        category: "Outils",
-        description: "Outillage technique polyvalent."
-    },
-    {
-        id: "lampe",
-        name: "Lampe tactique",
-        category: "Survie",
-        description: "Lampe robuste à longue autonomie."
-    },
-    {
-        id: "ordinateur",
-        name: "Ordinateur portable",
-        category: "Électronique",
-        description: "Terminal informatique portable."
-    },
-    {
-        id: "radio",
-        name: "Radio longue portée",
-        category: "Communication",
-        description: "Système de communication longue distance."
-    },
-    {
-        id: "scanner",
-        name: "Scanner portatif",
-        category: "Capteurs",
-        description: "Scanner généraliste."
-    },
-    {
-        id: "trousse_medicale",
-        name: "Trousse médicale",
-        category: "Médical",
-        description: "Matériel de premiers soins."
-    },
-    {
-        id: "combinaison_eva",
-        name: "Combinaison EVA",
-        category: "EVA",
-        description: "Combinaison pour activité extravéhiculaire."
-    },
-    {
-        id: "cable",
-        name: "Câble multifonction",
-        category: "Outils",
-        description: "Câble technique polyvalent."
-    }
-];
-
-
-/* =====================================================
-   CHARGEMENT DES JSON
-===================================================== */
-
-async function loadSkills() {
-
-    try {
-
-        const response = await fetch("skills.json", {
-            cache: "no-store"
-        });
-
-        if (!response.ok) {
-            throw new Error("skills.json introuvable");
-        }
-
-        const data = await response.json();
-
-        skills = normalizeSkills(data);
-
-    } catch (error) {
-
-        console.warn(error);
-
-        skills = normalizeSkills(FALLBACK_SKILLS);
-    }
-
-    ensureSkillAllocations();
-}
-
-
-async function loadJobs() {
-
-    try {
-
-        const response = await fetch("jobs.json", {
-            cache: "no-store"
-        });
-
-        if (!response.ok) {
-            throw new Error("jobs.json introuvable");
-        }
-
-        jobs = await response.json();
-
-    } catch (error) {
-
-        console.warn(error);
-
-        jobs = FALLBACK_JOBS;
-    }
-
-    populateJobSelect();
-}
-
-
-async function loadEquipment() {
-
-    try {
-
-        const response = await fetch("equipment.json", {
-            cache: "no-store"
-        });
-
-        if (!response.ok) {
-            throw new Error("equipment.json introuvable");
-        }
-
-        equipmentItems = await response.json();
-
-    } catch (error) {
-
-        console.warn(error);
-
-        equipmentItems = FALLBACK_EQUIPMENT;
-    }
-}
-
-
-function normalizeSkills(data) {
-
-    const result = {};
-
-    if (!Array.isArray(data)) {
-        return result;
-    }
-
-    data.forEach(skill => {
-
-        if (!skill.id) {
-            return;
-        }
-
-        result[skill.id] = {
-            id: skill.id,
-            name: skill.name || skill.nom || skill.id,
-            base: skill.base ?? skill.valeur ?? "1"
-        };
-    });
-
-    return result;
-}
-
-
-/* =====================================================
-   INITIALISATION
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-    await Promise.all([
-        loadSkills(),
-        loadJobs(),
-        loadEquipment()
-    ]);
-
-    bindGlobalEvents();
-
-    renderCharacterSheet();
-});
-
-
-function bindGlobalEvents() {
-
-    document
-        .getElementById("createCharacterBtn")
-        .addEventListener("click", openCreator);
-
-    document
-        .getElementById("closeCreatorBtn")
-        .addEventListener("click", closeCreator);
-
-    document
-        .getElementById("previousStepBtn")
-        .addEventListener("click", previousStep);
-
-    document
-        .getElementById("nextStepBtn")
-        .addEventListener("click", nextStep);
-
-    document
-        .getElementById("exportBtn")
-        .addEventListener("click", exportCharacter);
-
-    document
-        .getElementById("importBtn")
-        .addEventListener("click", () => {
-            document.getElementById("importFile").click();
-        });
-
-    document
-        .getElementById("importFile")
-        .addEventListener("change", importCharacter);
-
-    document
-        .getElementById("printBtn")
-        .addEventListener("click", printCharacter);
-
-    document
-        .getElementById("closeEquipmentBtn")
-        .addEventListener("click", closeEquipmentModal);
-
-    document.querySelectorAll(".step-tab").forEach(tab => {
-
-        tab.addEventListener("click", () => {
-
-            const target = Number(tab.dataset.step);
-
-            if (target <= currentStep || validateStepsUntil(target)) {
-
-                currentStep = target;
-
-                renderCreator();
-            }
-        });
-    });
-}
-
-
-/* =====================================================
-   UTILITAIRES
-===================================================== */
-
-function clamp(value, min, max) {
-
-    value = Number(value);
-
-    if (!Number.isFinite(value)) {
-        value = min;
-    }
-
-    return Math.max(min, Math.min(max, Math.round(value)));
-}
-
-
-function rollDie(sides) {
-
-    return Math.floor(Math.random() * sides) + 1;
-}
-
-
-function rollDice(count, sides) {
-
-    const results = [];
-
-    for (let i = 0; i < count; i++) {
-        results.push(rollDie(sides));
-    }
-
-    return results;
-}
-
-
-function sumBaseStats() {
-
-    return Object.values(character.baseStats)
-        .reduce((sum, value) => sum + Number(value), 0);
-}
-
-
-function agePenaltyRequirement() {
-
-    const age = Number(character.age);
-
-    if (age >= 80) {
-        return {
-            total: 80,
-            stats: ["STR", "CON", "DEX"],
-            app: 25
-        };
-    }
-
-    if (age >= 70) {
-        return {
-            total: 40,
-            stats: ["STR", "CON", "DEX"],
-            app: 20
-        };
-    }
-
-    if (age >= 60) {
-        return {
-            total: 20,
-            stats: ["STR", "CON", "DEX"],
-            app: 15
-        };
-    }
-
-    if (age >= 50) {
-        return {
-            total: 10,
-            stats: ["STR", "CON", "DEX"],
-            app: 10
-        };
-    }
-
-    if (age >= 40) {
-        return {
-            total: 5,
-            stats: ["STR", "CON", "DEX"],
-            app: 5
-        };
-    }
-
-    if (age >= 15) {
-        return {
-            total: 5,
-            stats: ["STR", "SIZ"],
-            app: 0
-        };
-    }
-
-    return {
-        total: 0,
-        stats: [],
-        app: 0
-    };
-}
-
-
-function recomputeStats() {
-
-    const result = { ...character.baseStats };
-
-    const requirement = agePenaltyRequirement();
-
-    Object.keys(character.agePenalties).forEach(stat => {
-
-        result[stat] = Math.max(
-            1,
-            Number(result[stat]) -
-            Number(character.agePenalties[stat] || 0)
-        );
-    });
-
-    if (character.age >= 15 && character.age <= 19) {
-        result.EDU = Math.max(1, result.EDU - 5);
-    }
-
-    if (requirement.app > 0) {
-        result.APP = Math.max(
-            1,
-            result.APP - requirement.app
-        );
-    }
-
-    if (
-        character.educationRollUsed &&
-        character.educationRoll &&
-        character.educationRoll.success
-    ) {
-
-        result.EDU = Math.min(
-            99,
-            result.EDU + character.educationRoll.bonus
-        );
-    }
-
-    character.stats = result;
-
-    computeDerived();
-}
-
-
-function computeDerived() {
-
-    const s = character.stats;
-
-    const hp = Math.floor(
-        (Number(s.CON) + Number(s.SIZ)) / 10
-    );
-
-    const total = Number(s.STR) + Number(s.SIZ);
-
-    let damageBonus = "0";
-    let build = 0;
-
-    if (total <= 64) {
-        damageBonus = "-2";
-        build = -2;
-    } else if (total <= 84) {
-        damageBonus = "-1";
-        build = -1;
-    } else if (total <= 124) {
-        damageBonus = "0";
-        build = 0;
-    } else if (total <= 164) {
-        damageBonus = "+1d4";
-        build = 1;
-    } else {
-        damageBonus = "+1d6";
-        build = 2;
-    }
-
-    let movement;
-
-    if (
-        Number(s.STR) > Number(s.SIZ) &&
-        Number(s.DEX) > Number(s.SIZ)
-    ) {
-
-        movement = 9;
-
-    } else if (
-        Number(s.STR) >= Number(s.SIZ) ||
-        Number(s.DEX) >= Number(s.SIZ)
-    ) {
-
-        movement = 8;
-
-    } else {
-
-        movement = 7;
-    }
-
-
-    if (character.age >= 40) movement -= 1;
-    if (character.age >= 50) movement -= 1;
-    if (character.age >= 60) movement -= 1;
-    if (character.age >= 70) movement -= 1;
-    if (character.age >= 80) movement -= 1;
-
-    movement = Math.max(1, movement);
-
-    character.derived = {
-        hp,
-        damageBonus,
-        build,
-        movement,
-        dodgeBase: Math.floor(Number(s.DEX) / 2)
-    };
-}
-
-
-function half(value) {
-
-    return Math.floor(Number(value) / 2);
-}
-
-
-function fifth(value) {
-
-    return Math.floor(Number(value) / 5);
-}
-
-
-/* =====================================================
-   COMPÉTENCES
-===================================================== */
-
-function ensureSkillAllocations() {
-
-    Object.keys(skills).forEach(id => {
-
-        if (!character.skillAllocations[id]) {
-
-            character.skillAllocations[id] = {
-                professional: 0,
-                personal: 0
-            };
-        }
-    });
-}
-
-
-function getSkillBase(id) {
-
-    const skill = skills[id];
-
-    if (!skill) {
-        return 0;
-    }
-
-    const base = String(skill.base)
-        .trim()
-        .toUpperCase();
-
-    if (base === "EDU") {
-        return Math.floor(Number(character.stats.EDU));
-    }
-
-    if (base === "DEX/2") {
-        return Math.floor(Number(character.stats.DEX) / 2);
-    }
-
-    if (base === "DEX/4") {
-        return Math.floor(Number(character.stats.DEX) / 4);
-    }
-
-    if (base === "FOR/2" || base === "STR/2") {
-        return Math.floor(Number(character.stats.STR) / 2);
-    }
-
-    const parsed = Number(base);
-
-    return Number.isFinite(parsed) ? parsed : 0;
-}
-
-
-function getSelectedJob() {
-
-    return jobs.find(
-        job => job.id === character.occupationId
-    ) || null;
-}
-
-
-function isProfessionalSkill(id) {
-
-    const job = getSelectedJob();
-
-    if (!job || !Array.isArray(job.skills)) {
-        return false;
-    }
-
-    return job.skills.includes(id);
-}
-
-
-function getProfessionalPoints() {
-
-    const job = getSelectedJob();
-
-    if (!job) {
-        return 0;
-    }
-
-    const edu = Number(character.stats.EDU);
-    const str = Number(character.stats.STR);
-    const dex = Number(character.stats.DEX);
-    const app = Number(character.stats.APP);
-
-    switch (job.category) {
-
-        case "intellectual":
-            return 4 * edu;
-
-        case "manual":
-            return 2 * edu + 2 * Math.max(str, dex);
-
-        case "social":
-            return 2 * edu + 2 * app;
-
-        default:
-            return 0;
-    }
-}
-
-
-function getPersonalPoints() {
-
-    return Number(character.stats.INT) * 2;
-}
-
-
-function getProfessionalSpent() {
-
-    return Object.entries(character.skillAllocations)
-        .reduce((sum, [id, allocation]) => {
-
-            /*
-                IMPORTANT :
-                seules les compétences du métier
-                peuvent consommer les crédits professionnels.
-            */
-
-            if (!isProfessionalSkill(id)) {
-                return sum;
-            }
-
-            return sum + Number(
-                allocation.professional || 0
-            );
-
-        }, 0);
-}
-
-
-function getPersonalSpent() {
-
-    return Object.values(character.skillAllocations)
-        .reduce(
-            (sum, allocation) =>
-                sum + Number(allocation.personal || 0),
-            0
-        );
-}
-
-
-function getSkillFinal(id) {
-
-    const base = getSkillBase(id);
-
-    const allocation =
-        character.skillAllocations[id] || {
-            professional: 0,
-            personal: 0
-        };
-
-    /*
-        Protection supplémentaire :
-        une éventuelle valeur professionnelle
-        présente dans un JSON chargé pour une
-        compétence hors métier est ignorée.
-    */
-
-    const professional = isProfessionalSkill(id)
-        ? Number(allocation.professional || 0)
-        : 0;
-
-    const personal =
-        Number(allocation.personal || 0);
-
-    return Math.min(
-        99,
-        base + professional + personal
-    );
-}
-
-
-function skillMaxAdditional(id, pool) {
-
-    const base = getSkillBase(id);
-
-    const allocation =
-        character.skillAllocations[id] || {
-            professional: 0,
-            personal: 0
-        };
-
-    if (pool === "professional") {
-
-        const personal =
-            Number(allocation.personal || 0);
-
-        return Math.max(
-            0,
-            99 - base - personal
-        );
-    }
-
-    const professional =
-        isProfessionalSkill(id)
-            ? Number(allocation.professional || 0)
-            : 0;
-
-    return Math.max(
-        0,
-        99 - base - professional
-    );
-}
-
-
-/* =====================================================
-   OUVERTURE DU CRÉATEUR
-===================================================== */
-
-function openCreator() {
-
-    const alreadyCreated =
-        character.created ||
-        character.profile.name ||
-        character.occupationId;
-
-    if (alreadyCreated) {
-
-        const confirmed = confirm(
-            "Un personnage existe déjà.\n\n" +
-            "Créer un nouveau personnage effacera la création actuelle.\n\n" +
-            "Continuer ?"
-        );
-
-        if (!confirmed) {
-            return;
-        }
-
-        character = createInitialCharacter();
-
-        ensureSkillAllocations();
-    }
-
-    currentStep = 1;
-
-    document
-        .getElementById("creatorModal")
-        .classList.add("open");
-
-    renderCreator();
-}
-
-
-function closeCreator() {
-
-    document
-        .getElementById("creatorModal")
-        .classList.remove("open");
-}
-
-
-/* =====================================================
-   RENDU DU CRÉATEUR
-===================================================== */
-
-function renderCreator() {
-
-    recomputeStats();
-
-    const body =
-        document.getElementById("creatorBody");
-
-    switch (currentStep) {
-
-        case 1:
-            renderStep1(body);
-            break;
-
-        case 2:
-            renderStep2(body);
-            break;
-
-        case 3:
-            renderStep3(body);
-            break;
-
-        case 4:
-            renderStep4(body);
-            break;
-
-        case 5:
-            renderStep5(body);
-            break;
-
-        case 6:
-            renderStep6(body);
-            break;
-    }
-
-    document
-        .querySelectorAll(".step-tab")
-        .forEach(tab => {
-
-            tab.classList.toggle(
-                "active",
-                Number(tab.dataset.step) === currentStep
-            );
-        });
-
-    document.getElementById(
-        "previousStepBtn"
-    ).disabled = currentStep === 1;
-
-    document.getElementById(
-        "nextStepBtn"
-    ).textContent =
-        currentStep === 6
-            ? "Valider le personnage"
-            : "Suivant →";
-}
-
-
-/* =====================================================
-   ÉTAPE 1 — CARACTÉRISTIQUES
-===================================================== */
-
-function renderStep1(container) {
-
-    const total = sumBaseStats();
-    const remaining = 460 - total;
-
-    container.innerHTML = `
-        <div class="points-banner ${total !== 460 ? "invalid" : ""}">
-            <div>
-                POINTS DE CARACTÉRISTIQUES
+            <div class="infobox-subtitle">
+                <img src="iktyro.jpg" />
+                Lune minière
             </div>
 
-            <div>
-                Total :
-                <span class="value">${total} / 460</span>
-                &nbsp; | &nbsp;
-                Restants :
-                <span class="value">${remaining}</span>
-            </div>
-        </div>
-
-        <div class="panel">
-            <div class="panel-title">
-                Répartition des caractéristiques
-            </div>
-
-            <p class="derived-mini">
-                Répartissez exactement 460 points.
-                Minimum : 15. Maximum : 90.
-            </p>
-
-            <div class="grid grid-2">
-                ${Object.keys(STAT_DEFINITIONS)
-                    .map(stat => renderStatControl(stat))
-                    .join("")}
-            </div>
-        </div>
-    `;
-
-    bindStep1Events();
-}
-
-
-function renderStatControl(stat) {
-
-    const definition = STAT_DEFINITIONS[stat];
-    const value = character.baseStats[stat];
-
-    return `
-        <div class="stat-card">
-
-            <div class="stat-name">
-                ${stat} — ${definition.label}
-            </div>
-
-            <div class="stat-description">
-                ${definition.description}
-            </div>
-
-            <div class="stat-control">
-
-                <input
-                    type="range"
-                    min="15"
-                    max="90"
-                    value="${value}"
-                    data-stat-range="${stat}"
-                >
-
-                <input
-                    type="number"
-                    min="15"
-                    max="90"
-                    value="${value}"
-                    class="number-input"
-                    data-stat-number="${stat}"
-                >
-
-            </div>
-
-            <div class="stat-values">
-                <span>½ : ${half(value)}</span>
-                <span>⅕ : ${fifth(value)}</span>
-            </div>
-
-        </div>
-    `;
-}
-
-
-function bindStep1Events() {
-
-    document
-        .querySelectorAll("[data-stat-range]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const stat =
-                    event.target.dataset.statRange;
-
-                character.baseStats[stat] =
-                    clamp(event.target.value, 15, 90);
-
-                renderStep1(
-                    document.getElementById("creatorBody")
-                );
-            });
-        });
-
-
-    document
-        .querySelectorAll("[data-stat-number]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const stat =
-                    event.target.dataset.statNumber;
-
-                character.baseStats[stat] =
-                    clamp(event.target.value, 15, 90);
-
-                renderStep1(
-                    document.getElementById("creatorBody")
-                );
-            });
-        });
-}
-
-
-/* =====================================================
-   ÉTAPE 2 — ÂGE
-===================================================== */
-
-function renderStep2(container) {
-
-    recomputeStats();
-
-    const requirement = agePenaltyRequirement();
-
-    const penaltyTotal =
-        Object.values(character.agePenalties)
-            .reduce((sum, value) =>
-                sum + Number(value || 0), 0);
-
-    const age = Number(character.age);
-
-    let educationDescription;
-
-    if (age <= 19) {
-        educationDescription =
-            "Aucune amélioration d'Éducation liée à l'âge. EDU -5.";
-    } else if (age <= 39) {
-        educationDescription =
-            "Le personnage peut effectuer son unique jet de bonus d'Éducation.";
-    } else if (age <= 59) {
-        educationDescription =
-            "Le personnage peut effectuer son unique jet de bonus d'Éducation.";
-    } else {
-        educationDescription =
-            "Le personnage peut effectuer son unique jet de bonus d'Éducation.";
-    }
-
-    container.innerHTML = `
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Âge
-            </div>
-
-            <div class="grid grid-3">
-
-                ${renderAgeOption(15, 19, "15–19 ans")}
-                ${renderAgeOption(20, 39, "20–39 ans")}
-                ${renderAgeOption(40, 49, "40–49 ans")}
-                ${renderAgeOption(50, 59, "50–59 ans")}
-                ${renderAgeOption(60, 69, "60–69 ans")}
-                ${renderAgeOption(70, 79, "70–79 ans")}
-                ${renderAgeOption(80, 89, "80–89 ans")}
-
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Pénalités liées à l'âge
-            </div>
-
-            <p>
-                ${getAgePenaltyDescription(requirement)}
-            </p>
-
-            ${
-                requirement.total > 0
-                    ? renderPenaltyControls(requirement)
-                    : `
-                        <div class="penalty-total">
-                            Aucune pénalité à répartir.
-                        </div>
-                    `
-            }
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Bonus d'Éducation
-            </div>
-
-            <p>${educationDescription}</p>
-
-            <p class="derived-mini">
-                Un seul jet d'Éducation est autorisé pendant toute
-                cette création, même si la tranche d'âge indique
-                normalement plusieurs jets.
-            </p>
-
-            <button
-                class="btn green"
-                id="educationRollBtn"
-                ${character.educationRollUsed ? "disabled" : ""}
-            >
-                ${
-                    character.educationRollUsed
-                        ? "Jet d'Éducation déjà effectué"
-                        : "Lancer le d100 d'Éducation"
-                }
-            </button>
-
-            <div id="educationRollResult">
-                ${renderEducationResult()}
-            </div>
-
-        </div>
-    `;
-
-    bindStep2Events();
-}
-
-
-function renderAgeOption(min, max, label) {
-
-    const selected =
-        character.age >= min &&
-        character.age <= max;
-
-    return `
-        <label class="age-option ${selected ? "selected" : ""}">
-
-            <input
-                type="radio"
-                name="age"
-                value="${min}"
-                ${selected ? "checked" : ""}
-                data-age-min="${min}"
-                data-age-max="${max}"
-            >
-
-            <strong>${label}</strong>
-
-        </label>
-    `;
-}
-
-
-function getAgePenaltyDescription(requirement) {
-
-    if (character.age <= 19) {
-
-        return `
-            Répartissez exactement <strong>5 points</strong>
-            entre Force et Taille.
-            L'Éducation perd automatiquement 5 points.
-        `;
-    }
-
-    if (requirement.total > 0) {
-
-        return `
-            Répartissez exactement
-            <strong>${requirement.total} points</strong>
-            entre Force, Constitution et Dextérité.
-            Apparence perd automatiquement
-            <strong>${requirement.app}</strong> points.
-        `;
-    }
-
-    return "Aucune pénalité de caractéristiques.";
-}
-
-
-function renderPenaltyControls(requirement) {
-
-    return `
-        ${requirement.stats.map(stat => {
-
-            const label =
-                STAT_DEFINITIONS[stat].label;
-
-            const value =
-                character.agePenalties[stat] || 0;
-
-            return `
-                <div class="penalty-row">
-
-                    <label>
-                        ${stat} — ${label}
-                    </label>
-
-                    <input
-                        type="number"
-                        min="0"
-                        max="${requirement.total}"
-                        value="${value}"
-                        class="number-input"
-                        data-penalty-stat="${stat}"
-                    >
-
-                </div>
-            `;
-
-        }).join("")}
-
-        <div class="penalty-total">
-            Total réparti :
-            <strong>
-                ${Object.values(character.agePenalties)
-                    .reduce((a,b) => a + Number(b || 0), 0)}
-                / ${requirement.total}
-            </strong>
-        </div>
-    `;
-}
-
-
-function renderEducationResult() {
-
-    if (!character.educationRoll) {
-        return "";
-    }
-
-    const r = character.educationRoll;
-
-    return `
-        <div class="panel" style="margin-top:12px">
-
-            Jet d100 :
-            <strong>${r.d100}</strong>
-
-            &nbsp; — &nbsp;
-
-            EDU avant le jet :
-            <strong>${r.baseEdu}</strong>
-
-            <br><br>
-
-            ${
-                r.success
-                    ? `
-                        Réussite.
-                        Jet d10 :
-                        <strong>${r.d10}</strong>.
-                        Bonus :
-                        <strong>+${r.bonus} EDU</strong>.
-                    `
-                    : `
-                        Échec.
-                        Aucun bonus d'Éducation.
-                    `
-            }
-
-            <br><br>
-
-            EDU actuelle :
-            <strong>${character.stats.EDU}</strong>
-
-        </div>
-    `;
-}
-
-
-function bindStep2Events() {
-
-    document
-        .querySelectorAll("[data-age-min]")
-        .forEach(input => {
-
-            input.addEventListener("change", event => {
-
-                const min =
-                    Number(event.target.dataset.ageMin);
-
-                character.age = min;
-
-                character.agePenalties = {
-                    STR: 0,
-                    CON: 0,
-                    DEX: 0,
-                    SIZ: 0
-                };
-
-                recomputeStats();
-
-                renderStep2(
-                    document.getElementById("creatorBody")
-                );
-            });
-        });
-
-
-    document
-        .querySelectorAll("[data-penalty-stat]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const stat =
-                    event.target.dataset.penaltyStat;
-
-                const requirement =
-                    agePenaltyRequirement();
-
-                let value =
-                    clamp(
-                        event.target.value,
-                        0,
-                        requirement.total
-                    );
-
-                character.agePenalties[stat] =
-                    value;
-
-                recomputeStats();
-
-                renderStep2(
-                    document.getElementById("creatorBody")
-                );
-            });
-        });
-
-
-    const educationButton =
-        document.getElementById("educationRollBtn");
-
-    if (educationButton) {
-
-        educationButton.addEventListener(
-            "click",
-            rollEducation
-        );
-    }
-}
-
-
-function rollEducation() {
-
-    if (character.educationRollUsed) {
-        return;
-    }
-
-    recomputeStats();
-
-    const baseEdu =
-        Number(character.stats.EDU);
-
-    const d100 = rollDie(100);
-
-    let d10 = null;
-    let bonus = 0;
-    let success = false;
-
-    if (d100 > baseEdu) {
-
-        success = true;
-
-        d10 = rollDie(10);
-
-        bonus = d10;
-    }
-
-    character.educationRollUsed = true;
-
-    character.educationRoll = {
-        d100,
-        d10,
-        bonus,
-        success,
-        baseEdu
-    };
-
-    recomputeStats();
-
-    renderStep2(
-        document.getElementById("creatorBody")
-    );
-}
-
-
-/* =====================================================
-   ÉTAPE 3 — CHANCE & DÉRIVÉS
-===================================================== */
-
-function renderStep3(container) {
-
-    recomputeStats();
-
-    const d = character.derived;
-
-    container.innerHTML = `
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Chance
-            </div>
-
-            <p>
-                Lancez <strong>3d6 × 5</strong>.
-                Un seul jet de Chance est autorisé.
-            </p>
-
-            <button
-                class="btn green"
-                id="luckRollBtn"
-                ${character.luckRollUsed ? "disabled" : ""}
-            >
-                ${
-                    character.luckRollUsed
-                        ? "Jet de Chance déjà effectué"
-                        : "Lancer la Chance"
-                }
-            </button>
-
-            ${
-                character.luck
-                    ? `
-                        <div class="panel" style="margin-top:12px">
-                            Dés :
-                            <strong>
-                                ${character.luck.dice.join(" + ")}
-                            </strong>
-
-                            =
-                            <strong>${character.luck.sum}</strong>
-
-                            × 5 =
-
-                            <strong>${character.luck.value}</strong>
-                        </div>
-                    `
-                    : ""
-            }
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Caractéristiques actuelles
-            </div>
-
-            <div class="stat-sheet-grid">
-
-                ${Object.keys(STAT_DEFINITIONS)
-                    .map(stat => `
-
-                        <div class="sheet-stat">
-
-                            <div>
-                                ${stat}
-                            </div>
-
-                            <div class="big">
-                                ${character.stats[stat]}
-                            </div>
-
-                            <div class="small">
-                                ½ ${half(character.stats[stat])}
-                                &nbsp; | &nbsp;
-                                ⅕ ${fifth(character.stats[stat])}
-                            </div>
-
-                        </div>
-
-                    `)
-                    .join("")}
-
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Valeurs dérivées
-            </div>
-
-            <div class="derived-grid">
-
-                <div class="derived-card">
-                    PV maximum
-                    <strong>${d.hp}</strong>
-                </div>
-
-                <div class="derived-card">
-                    Bonus dégâts
-                    <strong>${d.damageBonus}</strong>
-                </div>
-
-                <div class="derived-card">
-                    Construction
-                    <strong>${d.build}</strong>
-                </div>
-
-                <div class="derived-card">
-                    Mouvement
-                    <strong>${d.movement}</strong>
-                </div>
-
-                <div class="derived-card">
-                    Esquive de base
-                    <strong>${d.dodgeBase}</strong>
-                </div>
-
-            </div>
-
-        </div>
-    `;
-
-    const button =
-        document.getElementById("luckRollBtn");
-
-    if (button) {
-
-        button.addEventListener(
-            "click",
-            rollLuck
-        );
-    }
-}
-
-
-function rollLuck() {
-
-    if (character.luckRollUsed) {
-        return;
-    }
-
-    const dice = rollDice(3, 6);
-
-    const sum =
-        dice.reduce((a,b) => a + b, 0);
-
-    character.luck = {
-        dice,
-        sum,
-        value: sum * 5
-    };
-
-    character.luckRollUsed = true;
-
-    renderStep3(
-        document.getElementById("creatorBody")
-    );
-}
-
-
-/* =====================================================
-   ÉTAPE 4 — MÉTIER
-===================================================== */
-
-function populateJobSelect() {
-
-    const select =
-        document.getElementById("jobSelect");
-
-    if (!select) {
-        return;
-    }
-
-    select.innerHTML = `
-        <option value="">
-            — Sélectionner un métier —
-        </option>
-
-        ${jobs.map(job => `
-
-            <option
-                value="${escapeHtml(job.id)}"
-                ${
-                    character.occupationId === job.id
-                        ? "selected"
-                        : ""
-                }
-            >
-                ${escapeHtml(job.name)}
-            </option>
-
-        `).join("")}
-    `;
-}
-
-
-function renderStep4(container) {
-
-    const job = getSelectedJob();
-
-    const categoryLabels = {
-        intellectual: "Intellectuel",
-        manual: "Manuel",
-        social: "Social"
-    };
-
-    container.innerHTML = `
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Métier
-            </div>
-
-            <label>
-                Métier principal
-            </label>
-
-            <select id="jobSelect">
-                <option value="">
-                    — Sélectionner un métier —
-                </option>
-
-                ${jobs.map(j => `
-
-                    <option
-                        value="${escapeHtml(j.id)}"
-                        ${j.id === character.occupationId ? "selected" : ""}
-                    >
-                        ${escapeHtml(j.name)}
-                    </option>
-
-                `).join("")}
-
-            </select>
-
-            <p class="derived-mini">
-                La liste est chargée depuis <strong>jobs.json</strong>.
-                Chaque métier possède exactement 9 compétences
-                professionnelles.
-            </p>
-
-        </div>
-
-
-        ${
-            job
-                ? `
-                    <div class="panel">
-
-                        <div class="panel-title">
-                            Détails du métier
-                        </div>
-
-                        <p>
-                            Catégorie :
-                            <strong>
-                                ${categoryLabels[job.category] || job.category}
-                            </strong>
-                        </p>
-
-                        <p>
-                            Crédits professionnels :
-                            <strong>
-                                ${getProfessionalPoints()}
-                            </strong>
-                        </p>
-
-                        <div class="grid grid-3">
-
-                            ${job.skills.map(id => {
-
-                                const skill = skills[id];
-
-                                return `
-                                    <div class="stat-card">
-
-                                        <div class="stat-name">
-                                            ${skill
-                                                ? escapeHtml(skill.name)
-                                                : id}
-                                        </div>
-
-                                        <div class="stat-description">
-                                            Compétence professionnelle
-                                        </div>
-
-                                    </div>
-                                `;
-
-                            }).join("")}
-
-                        </div>
-
-                    </div>
-                `
-                : `
-                    <div class="empty-state">
-                        <strong>AUCUN MÉTIER SÉLECTIONNÉ</strong>
-                        Sélectionnez un métier pour débloquer
-                        ses compétences professionnelles.
-                    </div>
-                `
-        }
-    `;
-
-    document
-        .getElementById("jobSelect")
-        .addEventListener("change", event => {
-
-            const newJob =
-                jobs.find(
-                    j => j.id === event.target.value
-                );
-
-            /*
-                Changer de métier invalide les dépenses
-                professionnelles de l'ancien métier.
-                Les crédits personnels sont conservés.
-            */
-
-            if (
-                character.occupationId &&
-                character.occupationId !== event.target.value
-            ) {
-
-                Object.values(
-                    character.skillAllocations
-                ).forEach(allocation => {
-                    allocation.professional = 0;
-                });
-            }
-
-            character.occupationId =
-                event.target.value;
-
-            renderStep4(
-                document.getElementById("creatorBody")
-            );
-        });
-}
-
-
-/* =====================================================
-   ÉTAPE 5 — COMPÉTENCES
-===================================================== */
-
-function renderStep5(container) {
-
-    recomputeStats();
-    ensureSkillAllocations();
-
-    const professionalPoints =
-        getProfessionalPoints();
-
-    const personalPoints =
-        getPersonalPoints();
-
-    const professionalSpent =
-        getProfessionalSpent();
-
-    const personalSpent =
-        getPersonalSpent();
-
-    const professionalRemaining =
-        professionalPoints - professionalSpent;
-
-    const personalRemaining =
-        personalPoints - personalSpent;
-
-    const job = getSelectedJob();
-
-    container.innerHTML = `
-
-        <div class="skill-credit-bar">
-
-            <div class="credit-box ${
-                professionalRemaining < 0
-                    ? "invalid"
-                    : ""
-            }">
-
-                <span>
-                    Crédits professionnels
-                </span>
-
-                <strong>
-                    ${professionalRemaining}
-                </strong>
-
-            </div>
-
-
-            <div class="credit-box ${
-                personalRemaining < 0
-                    ? "invalid"
-                    : ""
-            }">
-
-                <span>
-                    Crédits personnels
-                </span>
-
-                <strong>
-                    ${personalRemaining}
-                </strong>
-
-            </div>
-
-
-            <div class="credit-box">
-
-                <span>
-                    Métier
-                </span>
-
-                <strong>
-                    ${
-                        job
-                            ? escapeHtml(job.name)
-                            : "Aucun"
-                    }
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Répartition des compétences
-            </div>
-
-            <p class="derived-mini">
-
-                <strong>Base</strong> =
-                valeur donnée par skills.json.
-
-                <br>
-
-                <strong>Finale</strong> =
-                Base + crédits professionnels + crédits personnels.
-
-                <br>
-
-                Les crédits professionnels peuvent uniquement être
-                attribués aux 9 compétences liées au métier choisi.
-
-                <br>
-
-                Les valeurs finales sont limitées à 99.
-
-            </p>
-
-        </div>
-
-
-        ${
-            !job
-                ? `
-                    <div class="empty-state">
-                        <strong>MÉTIER REQUIS</strong>
-                        Retournez à l'étape 4 et sélectionnez
-                        un métier avant d'attribuer les crédits
-                        professionnels.
-                    </div>
-                `
-                : ""
-        }
-
-
-        <div class="skills-scroll">
-
-            <table class="skills-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Compétence
-                        </th>
-
-                        <th>
-                            Base
-                        </th>
-
-                        <th>
-                            Finale
-                        </th>
-
-                        <th>
-                            ½
-                        </th>
-
-                        <th>
-                            ⅕
-                        </th>
-
-                        <th>
-                            Professionnel
-                        </th>
-
-                        <th>
-                            Personnel
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    ${Object.keys(skills)
-                        .map(id =>
-                            renderCreatorSkillRow(id)
-                        )
-                        .join("")}
-
-                </tbody>
+            <table>
+
+                <tr>
+                    <th>Pays</th>
+                    <td>
+                        <a href="#">Consortium Icarien</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Population</th>
+                    <td>60 000 habitants</td>
+                </tr>
+
+                <tr>
+                    <th>Diamètre</th>
+                    <td>2 900 km</td>
+                </tr>
+
+                <tr>
+                    <th>Gravité</th>
+                    <td>0,094 g</td>
+                </tr>
+
+                <tr>
+                    <th>Capitale</th>
+                    <td>
+                        <a href="#">Lanthine</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Statut</th>
+                    <td>Lune minière</td>
+                </tr>
+
+                <tr>
+                    <th>Affiliation</th>
+                    <td>
+                        <a href="#">Fédération Commerciale Galactique</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Découverte</th>
+                    <td>9723 AE</td>
+                </tr>
 
             </table>
 
-        </div>
-    `;
+        </aside>
 
-    bindSkillInputs();
-}
 
+        <!-- Introduction -->
 
-function renderCreatorSkillRow(id) {
+        <p class="intro">
+            <strong>Iktyro</strong> est une lune minière de la
+            <a href="#">Fédération Commerciale Galactique</a> (FCG).
+            Riche en ressources minérales et en terres rares, elle constitue
+            l'un des principaux centres d'extraction de scandium de la galaxie.
+            Malgré l'importance stratégique et économique de ses ressources,
+            la majeure partie de sa population vit dans des conditions précaires.
+        </p>
 
-    const skill = skills[id];
 
-    if (!skill) {
-        return "";
-    }
+        <!-- Sommaire -->
 
-    const allocation =
-        character.skillAllocations[id] || {
-            professional: 0,
-            personal: 0
-        };
+        <div class="toc">
 
-    const professional =
-        isProfessionalSkill(id);
+            <div class="toc-title">Sommaire</div>
 
-    const base =
-        getSkillBase(id);
+            <ol>
+                <li>
+                    <a href="#histoire">histoire</a>
+                </li>
 
-    const final =
-        getSkillFinal(id);
+                <li>
+                    <a href="#economie">Économie</a>
+                </li>
 
-    const maxProfessional =
-        professional
-            ? skillMaxAdditional(
-                id,
-                "professional"
-            )
-            : 0;
+                <li>
+                    <a href="#population">Population et société</a>
+                </li>
 
-    const professionalValue =
-        professional
-            ? Number(allocation.professional || 0)
-            : 0;
+                <li>
+                    <a href="#controverses">controverses</a>
+                </li>
 
-    const personalValue =
-        Number(allocation.personal || 0);
+                <li>
+                    <a href="#sources">Sources</a>
+                </li>
 
-    return `
-        <tr class="${
-            professional
-                ? "skill-prof"
-                : ""
-        }">
+                
+                
+            </ol>
 
-            <td class="skill-name">
-
-                ${escapeHtml(skill.name)}
-
-                ${
-                    professional
-                        ? `
-                            <span class="prof-badge">
-                                MÉTIER
-                            </span>
-                        `
-                        : ""
-                }
-
-            </td>
-
-            <td class="base-value">
-                ${base}
-            </td>
-
-            <td class="final-value">
-                ${final}
-            </td>
-
-            <td class="base-value">
-                ${half(final)}
-            </td>
-
-            <td class="base-value">
-                ${fifth(final)}
-            </td>
-
-            <td>
-
-                <input
-                    type="number"
-                    class="skill-number"
-                    min="0"
-                    max="${maxProfessional}"
-                    value="${professionalValue}"
-                    data-skill-prof="${id}"
-                    ${professional ? "" : "disabled"}
-                    title="${
-                        professional
-                            ? "Crédits professionnels du métier"
-                            : "Cette compétence ne fait pas partie du métier"
-                    }"
-                >
-
-            </td>
-
-            <td>
-
-                <input
-                    type="number"
-                    class="skill-number"
-                    min="0"
-                    max="${skillMaxAdditional(id, "personal")}"
-                    value="${personalValue}"
-                    data-skill-personal="${id}"
-                >
-
-            </td>
-
-        </tr>
-    `;
-}
-
-
-function bindSkillInputs() {
-
-    document
-        .querySelectorAll("[data-skill-prof]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const id =
-                    event.target.dataset.skillProf;
-
-                /*
-                    Sécurité :
-                    même si le HTML est manipulé,
-                    une compétence hors métier ne peut
-                    jamais recevoir de crédits professionnels.
-                */
-
-                if (!isProfessionalSkill(id)) {
-
-                    character.skillAllocations[id]
-                        .professional = 0;
-
-                    renderStep5(
-                        document.getElementById("creatorBody")
-                    );
-
-                    return;
-                }
-
-                const max =
-                    skillMaxAdditional(
-                        id,
-                        "professional"
-                    );
-
-                character.skillAllocations[id]
-                    .professional =
-                    clamp(
-                        event.target.value,
-                        0,
-                        max
-                    );
-
-                renderStep5(
-                    document.getElementById("creatorBody")
-                );
-            });
-        });
-
-
-    document
-        .querySelectorAll("[data-skill-personal]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const id =
-                    event.target.dataset.skillPersonal;
-
-                const max =
-                    skillMaxAdditional(
-                        id,
-                        "personal"
-                    );
-
-                character.skillAllocations[id]
-                    .personal =
-                    clamp(
-                        event.target.value,
-                        0,
-                        max
-                    );
-
-                renderStep5(
-                    document.getElementById("creatorBody")
-                );
-            });
-        });
-}
-
-
-/* =====================================================
-   ÉTAPE 6 — VALIDATION
-===================================================== */
-
-function renderStep6(container) {
-
-    recomputeStats();
-
-    const errors =
-        getValidationErrors();
-
-    const job =
-        getSelectedJob();
-
-    container.innerHTML = `
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Validation
-            </div>
-
-            ${
-                errors.length === 0
-                    ? `
-                        <div class="panel"
-                             style="border-color:var(--green)">
-
-                            <strong style="color:var(--green)">
-                                PERSONNAGE PRÊT
-                            </strong>
-
-                            <p>
-                                Toutes les conditions nécessaires
-                                sont satisfaites.
-                            </p>
-
-                        </div>
-                    `
-                    : `
-                        <div class="panel"
-                             style="border-color:var(--red)">
-
-                            <strong style="color:var(--red)">
-                                CORRECTIONS NÉCESSAIRES
-                            </strong>
-
-                            <ul>
-                                ${errors.map(error =>
-                                    `<li>${escapeHtml(error)}</li>`
-                                ).join("")}
-                            </ul>
-
-                        </div>
-                    `
-            }
+            
 
         </div>
 
-
-        <div class="panel">
-
-            <div class="panel-title">
-                Résumé
-            </div>
-
-            <div class="grid grid-3">
-
-                <div>
-                    <label>Âge</label>
-                    <strong>${character.age}</strong>
-                </div>
-
-                <div>
-                    <label>Métier</label>
-                    <strong>
-                        ${
-                            job
-                                ? escapeHtml(job.name)
-                                : "—"
-                        }
-                    </strong>
-                </div>
-
-                <div>
-                    <label>Chance</label>
-                    <strong>
-                        ${
-                            character.luck
-                                ? character.luck.value
-                                : "—"
-                        }
-                    </strong>
-                </div>
-
-            </div>
-
-        </div>
-    `;
-}
-
-
-function getValidationErrors() {
-
-    const errors = [];
-
-    recomputeStats();
-
-    if (sumBaseStats() !== 460) {
-        errors.push(
-            "Les caractéristiques doivent totaliser exactement 460 points."
-        );
-    }
-
-    const requirement =
-        agePenaltyRequirement();
-
-    const penaltyTotal =
-        Object.values(character.agePenalties)
-            .reduce(
-                (sum, value) =>
-                    sum + Number(value || 0),
-                0
-            );
-
-    if (penaltyTotal !== requirement.total) {
-
-        errors.push(
-            `La répartition des pénalités doit totaliser ${requirement.total} points.`
-        );
-    }
-
-    if (!character.educationRollUsed) {
-
-        errors.push(
-            "Le jet unique d'Éducation doit être effectué."
-        );
-    }
-
-    if (!character.luckRollUsed) {
-
-        errors.push(
-            "Le jet unique de Chance doit être effectué."
-        );
-    }
-
-    if (!character.occupationId) {
-
-        errors.push(
-            "Un métier doit être sélectionné."
-        );
-    }
-
-    const professionalRemaining =
-        getProfessionalPoints() -
-        getProfessionalSpent();
-
-    if (professionalRemaining < 0) {
-
-        errors.push(
-            "Les crédits professionnels dépensés dépassent le total disponible."
-        );
-    }
-
-    const personalRemaining =
-        getPersonalPoints() -
-        getPersonalSpent();
-
-    if (personalRemaining < 0) {
-
-        errors.push(
-            "Les crédits personnels dépensés dépassent le total disponible."
-        );
-    }
-
-
-    Object.keys(skills).forEach(id => {
-
-        const allocation =
-            character.skillAllocations[id];
-
-        if (!allocation) {
-            return;
-        }
-
-        /*
-            Nettoyage logique :
-            les crédits professionnels hors métier
-            sont considérés comme invalides.
-        */
-
-        if (
-            Number(allocation.professional || 0) > 0 &&
-            !isProfessionalSkill(id)
-        ) {
-
-            errors.push(
-                `La compétence "${skills[id].name}" ne peut pas recevoir de crédits professionnels avec ce métier.`
-            );
-        }
-
-        if (getSkillFinal(id) > 99) {
-
-            errors.push(
-                `La compétence "${skills[id].name}" dépasse 99.`
-            );
-        }
-    });
-
-    return errors;
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function validateStepsUntil(target) {
-
-    /*
-        Les étapes précédentes sont vérifiées uniquement
-        pour empêcher de sauter une étape sans données
-        essentielles.
-    */
-
-    if (target >= 2 && sumBaseStats() !== 460) {
-
-        alert(
-            "Les caractéristiques doivent totaliser exactement 460 points."
-        );
-
-        return false;
-    }
-
-    if (target >= 4 && !character.luckRollUsed) {
-
-        /*
-            On ne bloque pas ici pour permettre de revenir
-            librement. La validation finale bloquera.
-        */
-    }
-
-    return true;
-}
-
-
-function nextStep() {
-
-    if (currentStep < 6) {
-
-        if (!validateCurrentStep()) {
-            return;
-        }
-
-        currentStep++;
-
-        renderCreator();
-
-        return;
-    }
-
-    const errors =
-        getValidationErrors();
-
-    if (errors.length > 0) {
-
-        alert(
-            "Le personnage ne peut pas encore être validé.\n\n" +
-            errors.map(e => "• " + e).join("\n")
-        );
-
-        return;
-    }
-
-    character.created = true;
-
-    saveProfileFromScreen();
-
-    closeCreator();
-
-    renderCharacterSheet();
-}
-
-
-function previousStep() {
-
-    if (currentStep <= 1) {
-        return;
-    }
-
-    currentStep--;
-
-    renderCreator();
-}
-
-
-function validateCurrentStep() {
-
-    if (currentStep === 1) {
-
-        if (sumBaseStats() !== 460) {
-
-            alert(
-                "Répartissez exactement 460 points avant de continuer."
-            );
-
-            return false;
-        }
-    }
-
-    if (currentStep === 2) {
-
-        const requirement =
-            agePenaltyRequirement();
-
-        const total =
-            Object.values(character.agePenalties)
-                .reduce(
-                    (sum, value) =>
-                        sum + Number(value || 0),
-                    0
-                );
-
-        if (total !== requirement.total) {
-
-            alert(
-                `La répartition des pénalités doit totaliser ${requirement.total} points.`
-            );
-
-            return false;
-        }
-    }
-
-    if (currentStep === 4) {
-
-        if (!character.occupationId) {
-
-            alert(
-                "Sélectionnez un métier."
-            );
-
-            return false;
-        }
-    }
-
-    if (currentStep === 5) {
-
-        const profRemaining =
-            getProfessionalPoints() -
-            getProfessionalSpent();
-
-        const personalRemaining =
-            getPersonalPoints() -
-            getPersonalSpent();
-
-        if (profRemaining < 0) {
-
-            alert(
-                "Vous avez dépensé trop de crédits professionnels."
-            );
-
-            return false;
-        }
-
-        if (personalRemaining < 0) {
-
-            alert(
-                "Vous avez dépensé trop de crédits personnels."
-            );
-
-            return false;
-        }
-    }
-
-    return true;
-}
-
-
-/* =====================================================
-   FICHE PERSONNAGE
-===================================================== */
-
-function renderCharacterSheet() {
-
-    recomputeStats();
-
-    const sheet =
-        document.getElementById("characterSheet");
-
-    if (!character.created) {
-
-        sheet.innerHTML = `
-            <div class="empty-state">
-                <strong>AUCUN PERSONNAGE CHARGÉ</strong>
-                Créez un nouveau personnage ou chargez une fiche JSON existante.
-            </div>
-        `;
-
-        return;
-    }
-
-    const job =
-        getSelectedJob();
-
-    sheet.innerHTML = `
-
-        <section class="panel">
-
-            <div class="sheet-header">
-
-                <div>
-
-                    <div class="sheet-name">
-                        ${escapeHtml(
-                            character.profile.name ||
-                            "PERSONNAGE SANS NOM"
-                        )}
-                    </div>
-
-                    <div class="sheet-callsign">
-                        ${
-                            character.profile.callsign
-                                ? escapeHtml(
-                                    character.profile.callsign
-                                )
-                                : "INDICATIF —"
-                        }
-                    </div>
-
-                </div>
-
-                <div>
-                    <strong>
-                        ${
-                            job
-                                ? escapeHtml(job.name)
-                                : "Sans métier"
-                        }
-                    </strong>
-
-                    <br>
-
-                    Âge :
-                    ${character.age}
-
-                </div>
-
-            </div>
+        <!-- HISTOIRE -->
+
+        <section id="histoire">
+
+            <h2>Histoire</h2>
+
+            <!-- DÉCOUVERTE ET PREMIÈRES EXPLOITATIONS -->
+
+            <h3 id="decouverte">Découverte et premières exploitations</h3>
+
+            <p>
+                Iktyro est découverte par la
+                <a href="#">Fédération Commerciale Galactique</a> (FCG) en
+                <strong>9723 AE</strong> (<em>Après l'Expansion</em>), au cours
+                d'une campagne d'exploration et de prospection menée dans les
+                régions périphériques du <a href="#">Consortium Icarien</a>.
+                Les premières analyses géologiques révèlent rapidement l'existence
+                d'importants gisements de chrome, de cuivre et de titane, ainsi que
+                de vastes concentrations de terres rares, notamment de scandium,
+                de terbium et de béryllium.
+            </p>
+
+            <p>
+                La découverte des gisements de scandium transforme rapidement
+                l'importance d'Iktyro. La FCG établit les premières installations
+                minières permanentes et entreprend l'exploitation industrielle de
+                la lune. Sa faible gravité facilite notamment l'extraction, la
+                manutention et l'acheminement de grandes quantités de minerai vers
+                l'orbite, rendant les opérations particulièrement rentables.
+            </p>
+
+            <p>
+                Les premières installations restent toutefois limitées et la
+                population permanente d'Iktyro demeure faible. Pour accélérer le
+                développement des exploitations, le
+                <a href="#">Consortium Icarien</a> commence à transférer sur la lune
+                des <strong>prisonniers condamnés aux travaux forcés</strong>.
+                Ceux-ci sont employés dans les mines, les raffineries ainsi que dans
+                la construction des infrastructures nécessaires au développement
+                de la colonie.
+            </p>
+
+
+            <!-- TROISIÈME GUERRE ICARIO-ROVÉENNE -->
+
+            <h3 id="guerre">La Troisième Guerre Icario-Rovéenne</h3>
+
+            <p>
+                Le recours massif au travail pénitentiaire prend une importance
+                particulière avec le déclenchement de la
+                <strong>Troisième Guerre Icario-Rovéenne</strong>. Face à
+                l'augmentation rapide de la demande en matériaux destinés à
+                l'industrie militaire, le Consortium accroît considérablement
+                la production d'Iktyro.
+            </p>
+
+            <p>
+                Les prisonniers constituent alors une part importante de la
+                main-d'œuvre affectée aux exploitations minières et aux
+                infrastructures industrielles de la lune. Les installations
+                d'Iktyro sont progressivement agrandies afin de répondre aux
+                besoins croissants de l'industrie militaire icariote.
+            </p>
+
+            <p>
+                Au début du conflit, Iktyro n'est pas considérée comme l'un des
+                principaux théâtres d'opérations militaires. Sa position éloignée
+                des fronts permet aux exploitations de fonctionner relativement
+                normalement, tandis que les ressources extraites sont acheminées
+                vers les principaux centres industriels et militaires du Consortium.
+            </p>
+
+            <p>
+                La situation change progressivement lorsque les forces rovéennes
+                commencent à frapper les principales régions minières du Consortium.
+                Plusieurs planètes et colonies spécialisées dans l'extraction de
+                ressources stratégiques sont détruites ou mises hors service.
+                La production d'Iktyro devient alors essentielle au maintien de
+                l'industrie militaire icariote.
+            </p>
+
+
+            <!-- ASCENSION DE LA FCG -->
+
+            <h3 id="ascension-fcg">Ascension économique de la FCG</h3>
+
+            <p>
+                La demande pour le scandium, le titane, le chrome et les autres
+                minerais extraits sur Iktyro atteint des niveaux sans précédent.
+                La FCG, qui contrôle une part importante des infrastructures
+                minières et du transport des ressources, devient progressivement
+                indispensable au fonctionnement de l'économie de guerre du
+                Consortium.
+            </p>
+
+            <p>
+                Cette situation marque un tournant dans l'histoire de la Fédération
+                Commerciale Galactique. Les revenus générés par les exportations
+                d'Iktyro permettent à la FCG de financer de nouvelles exploitations,
+                d'étendre ses réseaux de transport et d'acquérir ou de construire
+                des infrastructures dans d'autres régions du Consortium.
+                La destruction de nombreuses exploitations concurrentes par les
+                Rovéens renforce encore cette position.
+            </p>
+
+            <p>
+                Au cours de la guerre, la FCG passe ainsi progressivement du statut
+                d'entreprise commerciale régionale de taille moyenne à celui de
+                <strong>puissance économique majeure</strong>. La dépendance croissante
+                du Consortium à l'égard des ressources d'Iktyro donne également à
+                la Fédération une influence commerciale et politique sans précédent.
+                La lune constitue alors l'un des principaux fondements financiers
+                de l'expansion de la FCG.
+            </p>
+
+
+            <!-- DESTRUCTION DE LANTHINE -->
+
+            <h3 id="destruction">Destruction de Lanthine</h3>
+
+            <p>
+                En <strong>9790 AE</strong>, Iktyro est directement touchée par le
+                conflit lorsque les forces rovéennes lancent une
+                <strong>frappe nucléaire contre Lanthine</strong>. La capitale,
+                qui concentre une grande partie des infrastructures administratives,
+                industrielles et logistiques de la lune, subit d'importants dégâts.
+                Une partie considérable des quartiers urbains et des installations
+                de surface est détruite, tandis que les retombées radioactives
+                contaminent plusieurs secteurs de la ville.
+            </p>
+
+            <p>
+                La destruction de Lanthine entraîne une interruption temporaire
+                d'une partie de la production minière et du trafic orbital.
+                Toutefois, les complexes industriels situés à l'extérieur de la
+                capitale ainsi que plusieurs infrastructures souterraines restent
+                opérationnels. La FCG entreprend rapidement de rétablir les
+                communications et la production afin de préserver l'approvisionnement
+                du Consortium.
+            </p>
+
+
+            <!-- RECONSTRUCTION -->
+
+            <h3 id="reconstruction">Reconstruction et période contemporaine</h3>
+
+            <p>
+                Après la fin du conflit, la FCG finance un vaste programme de
+                reconstruction de Lanthine. La nouvelle capitale est construite
+                autour des infrastructures ayant survécu à l'attaque et bénéficie
+                d'importants investissements dans les secteurs minier, industriel
+                et orbital.
+            </p>
+
+            <p>
+                La reconstruction conduit également à une transformation de la
+                structure urbaine de la ville, avec une séparation plus nette entre
+                les zones industrielles, les quartiers résidentiels et les
+                installations administratives de la Fédération.
+            </p>
+
+            <p>
+                La guerre laisse la FCG dans une position économique sans précédent.
+                Les investissements réalisés pendant le conflit, combinés au
+                contrôle de l'approvisionnement en minerais stratégiques, permettent
+                à la Fédération de conserver une influence considérable après la
+                fin des hostilités. Les exportations d'Iktyro, et en particulier
+                celles de scandium, deviennent l'un des principaux piliers financiers
+                de la FCG.
+            </p>
+
+            <p>
+                Iktyro demeure depuis lors profondément intégrée à l'économie de la
+                Fédération Commerciale Galactique et du Consortium Icarien.
+                La lune conserve son rôle de fournisseur majeur de minerais
+                stratégiques, tandis que Lanthine, reconstruite après sa destruction
+                en 9790 AE, devient progressivement l'un des principaux centres
+                administratifs et commerciaux de la FCG.
+            </p>
+
+        </section>
+
+        <!-- ECONOMIE -->
+
+        <section id="economie">
+
+            <h2>Économie</h2>
+
+            <p>
+                Iktyro est l'une des principales lunes minières de la
+                <a href="#">Fédération Commerciale Galactique</a>.
+                Sa surface est particulièrement riche en
+                <strong>chrome, cuivre, titane, terbium, scandium et béryllium</strong>.
+                Parmi ces ressources, le scandium constitue de loin la plus importante
+                sur le plan économique.
+            </p>
+
+            <p>
+                La lune possède d'immenses gisements de scandium, dont la concentration
+                atteint par endroits des niveaux exceptionnellement élevés. Elle constitue
+                ainsi la principale source connue de ce minerai dans un rayon de plusieurs
+                kilo-parsecs. Les alliages de scandium sont largement employés dans l'industrie
+                spatiale, notamment dans la construction des vaisseaux modernes, où ils
+                représentent en moyenne près de <strong>80 % de la masse structurelle</strong>
+                selon les standards industriels de la FCG.
+            </p>
+
+            <p>
+                La production iktyrienne est estimée à
+                <strong>9 milliards de tonnes de scandium par an</strong>, soit environ
+                <strong>23 % de la demande galactique</strong>. Cette production fait
+                d'Iktyro l'une des principales bases économiques de la Fédération
+                Commerciale Galactique.
+            </p>
+
+            <p>
+                Les revenus issus de l'exploitation du scandium ont notamment contribué
+                à l'expansion économique et industrielle de la FCG, puis à son ascension
+                comme principale puissance commerciale de la
+                <a href="#">Voie lactée</a>.
+            </p>
+
+            <p>
+                Iktyro joue également un rôle majeur dans l'économie du
+                <a href="#">Consortium Icarien</a> : environ
+                <strong>60 % du scandium qui y est consommé provient de la lune</strong>.
+            </p>
+
+            <p>
+                Malgré cette activité industrielle considérable, les richesses produites
+                à Iktyro bénéficient relativement peu à sa population. Son
+                <strong>PIB par habitant est estimé à 1,5 milliard de crédits</strong>,
+                mais cet indicateur est fortement influencé par les revenus générés par
+                les exploitations minières et les activités de la FCG.
+            </p>
 
         </section>
 
 
-        <section class="panel">
+        <!-- POPULATION -->
 
-            <div class="panel-title">
-                Caractéristiques
-            </div>
+        <section id="population">
 
-            <div class="stat-sheet-grid">
+            <h2>Population et société</h2>
 
-                ${Object.keys(STAT_DEFINITIONS)
-                    .map(stat => `
+            <p>
+                Iktyro compte environ <strong>60 000 habitants</strong>. La majorité
+                de sa population appartient aux <strong>Sélènes</strong>, terme
+                désignant les populations ayant vécu la majeure partie de leur vie
+                dans des environnements à très faible gravité, incapables de vivre sous une gravitée normale sans suivi médical continu.
+            </p>
 
-                        <div class="sheet-stat">
+            <p>
+                Cette caractéristique limite fortement la mobilité économique des habitants
+                d'Iktyro. La majorité des Sélènes dépendent donc des industries locales
+                et des infrastructures de la FCG pour leur emploi et leurs revenus.
+                Cette situation a favorisé la constitution d'une population ouvrière
+                relativement captive, dont la mobilité vers d'autres régions de la galaxie
+                demeure limitée par des contraintes physiologiques et économiques.
+            </p>
 
-                            <div>
-                                ${stat}
-                            </div>
+            <p>
+                La majorité des travailleurs miniers vivent dans des logements anciens
+                et vétustes situés à proximité des zones d'exploitation. Les conditions
+                de travail dans les mines sont particulièrement difficiles en raison
+                de l'exposition aux <strong>poussières industrielles toxiques et radioactives 
+                </strong> générées par les opérations d'extraction.
+                Les problèmes de santé liés à ces conditions sont fréquents parmi les
+                travailleurs. Leur espérence de vie est ainsi estimée à 43 ans.
+            </p>
 
-                            <div class="big">
-                                ${character.stats[stat]}
-                            </div>
+            <p>
+                À l'inverse, les administrateurs, ingénieurs supérieurs et officiers
+                de la FCG bénéficient d'un niveau de vie nettement supérieur. La plupart
+                sont originaires de mondes à gravité plus
+                élevée et disposent donc de logements et d'infrastructures adaptés à
+                leurs besoins physiologiques.
+            </p>
 
-                            <div class="small">
-                                ${STAT_DEFINITIONS[stat].label}
-                            </div>
+            <p>
+                La FCG verse notamment d'importantes
+                <strong>primes d'adaptation et de santé liées au séjour en basse gravité</strong>,
+                dont le coût cumulé est estimé à près de
+                <strong>2 milliards de crédits par an</strong>.
+            </p>
 
-                            <div class="small">
-                                ½ ${half(character.stats[stat])}
-                                |
-                                ⅕ ${fifth(character.stats[stat])}
-                            </div>
+            <p>
+                Les cadres et administrateurs de la FCG résident principalement
+                dans une <strong>communauté fermée et fortement sécurisée au centre de
+                Lanthine</strong>, située à environ deux kilomètres de l'astroport
+                principal. L'enclave dispose de ses propres infrastructures résidentielles,
+                médicales et commerciales et est séparée des quartiers ouvriers par
+                plusieurs niveaux de sécurité.
+            </p>
 
-                        </div>
+            <p>
+                La proximité entre cette enclave et les quartiers populaires est devenue
+                l'un des symboles les plus visibles des inégalités sociales d'Iktyro.
+                La lune constitue ainsi un exemple particulièrement marqué d'une économie
+                où une population locale fournit une part essentielle des ressources
+                stratégiques de la FCG sans bénéficier d'une part comparable des
+                richesses qu'elle génère.
+            </p>
 
-                    `)
-                    .join("")}
+        </section>
 
-            </div>
+        <!-- CONTROVERSES -->
+
+        <section id="controverses">
+
+            <h2>Controverses</h2>
+
+            <p>
+                Les conditions de travail et de vie sur Iktyro font régulièrement
+                l'objet de controverses, notamment en raison d'accusations d'abus
+                visant la <a href="#">Fédération Commerciale Galactique</a> (FCG).
+                Plusieurs organisations syndicales, associations de défense des
+                travailleurs et journalistes ont dénoncé au fil des années les
+                conditions imposées aux employés des exploitations minières.
+            </p>
+
+            <p>
+                Parmi les principales accusations figurent des
+                <strong>journées de travail particulièrement longues</strong>, des
+                conditions de sécurité insuffisantes dans certaines exploitations,
+                l'exposition prolongée aux poussières et aux minerais toxiques ainsi
+                qu'un accès limité aux soins médicaux pour les travailleurs les plus
+                modestes. Des témoignages font également état de logements
+                insalubres et d'une surveillance importante exercée par les
+                représentants de la FCG dans certains complexes miniers.
+            </p>
+
+            <p>
+                Le recours historique au travail pénitentiaire est également devenu
+                l'un des sujets les plus controversés de l'histoire d'Iktyro.
+                Plusieurs historiens et organisations ont critiqué le système mis
+                en place durant les premières décennies d'exploitation, estimant que
+                les prisonniers transférés sur la lune étaient soumis à des
+                conditions particulièrement dangereuses. La FCG a maintenu que
+                l'administration des détenus relevait principalement des autorités
+                du <a href="#">Consortium Icarien</a> et que ses propres opérations
+                respectaient les réglementations commerciales et industrielles en
+                vigueur.
+            </p>
+
+            <p>
+                Les critiques ont également porté sur la situation des
+                <strong>Sélènes</strong>. Leur dépendance médicale à l'environnement
+                de basse gravité limite leur capacité à quitter Iktyro et à chercher
+                un emploi ailleurs. Des associations de travailleurs ont accusé la
+                FCG d'exploiter cette dépendance en maintenant des salaires bas et en
+                transférant aux travailleurs une partie importante des coûts liés
+                aux soins médicaux et à l'adaptation physiologique.
+            </p>
+
+            <h3>L'affaire du <em>l'Icarien Libre</em></h3>
+
+            <p>
+                En <strong>9963 AE</strong>, le journaliste
+                <strong>Élias Varen</strong>, correspondant d'investigation du
+                journal <em>l'Icarien Libre</em>, se rend à Iktyro afin d'enquêter
+                sur les conditions de travail dans plusieurs exploitations minières
+                appartenant à la FCG. Varen avait auparavant publié plusieurs
+                articles consacrés aux conditions de travail dans les industries
+                du Consortium et était considéré comme l'un des journalistes
+                d'investigation les plus importants de sa génération.
+            </p>
+
+            <p>
+                Au cours de son enquête, Varen aurait recueilli des témoignages de
+                travailleurs concernant des accidents non déclarés, des problèmes
+                de contamination et des pratiques de surveillance au sein de
+                plusieurs complexes miniers. Il aurait également cherché à établir
+                l'existence d'un lien entre certaines dépenses médicales imposées
+                aux travailleurs et les politiques internes de la FCG.
+            </p>
+
+            <p>
+                Quelques semaines après son arrivée sur Iktyro, Varen est retrouvé
+                <strong>mort dans un secteur industriel désaffecté de Lanthine</strong>.
+                Les circonstances exactes de son décès restent controversées.
+                L'enquête officielle conclut à une mort violente, mais ne permet
+                pas d'établir de manière définitive l'identité du ou des responsables.
+            </p>
+
+            <p>
+                Plusieurs collègues de Varen ainsi que des associations de défense
+                de la liberté de la presse ont rapidement évoqué la possibilité
+                que son enquête sur la FCG ait pu jouer un rôle dans sa mort.
+                La FCG a rejeté ces accusations et a déclaré n'avoir joué aucun rôle
+                dans le décès du journaliste.
+            </p>
+
+            <p>
+                Aucun élément rendu public par l'enquête n'a toutefois permis
+                d'établir formellement un lien entre la mort de Varen et la FCG.
+                L'affaire demeure par conséquent officiellement non résolue et
+                constitue encore un sujet de débat parmi les historiens,
+                journalistes et organisations civiles du Consortium.
+            </p>
+
+            <p>
+                L'affaire Varen a néanmoins eu un impact durable sur la perception
+                de la FCG. <em>l'Icarien Libre</em> a poursuivi ses investigations
+                sur Iktyro après sa mort, tandis que plusieurs médias du Consortium
+                ont commencé à s'intéresser davantage aux conditions de travail
+                dans les exploitations minières de la lune.
+            </p>
+
+        </section>
+
+        <!-- SOURCES -->
+
+        <section id="sources">
+
+            <h2>Sources</h2>
+
+            <ol class="references">
+                
+                <li id="source-1">
+                    <a href="#">
+                        Archives historiques de la Fédération Commerciale Galactique
+                    </a>,
+                    <em>Chronologie de l'expansion commerciale de la FCG : 9700–9820 AE</em>.
+                </li>
+
+                <li id="source-2">
+                    <a href="#">
+                        Archives militaires du Consortium Icarien
+                    </a>,
+                    <em>La Troisième Guerre Icario-Rovéenne : mobilisation industrielle
+                    et approvisionnement stratégique</em>.
+                </li>
+
+                <li id="source-3">
+                    <a href="#">
+                        Institut Galactique d'Histoire Contemporaine
+                    </a>,
+                    <em>Iktyro et l'essor de la Fédération Commerciale Galactique</em>.
+                </li>
+                
+                <li id="source-4">
+                    <a href="#">
+                        Archives municipales de Lanthine
+                    </a>,
+                    <em>Chronique de la destruction et de la reconstruction de Lanthine,
+                    9790–9812 AE</em>.
+                </li>
+                
+                <li id="source-5">
+                    <a href="#">
+                        Archives économiques de la Fédération Commerciale Galactique
+                    </a>,
+                    Département des Ressources Stratégiques, rapport sur la production
+                    minière d'Iktyro.
+                </li>
+
+                <li id="source-6">
+                    <a href="#">
+                        Bureau Fédéral des Statistiques
+                    </a>,
+                    <em>Recensement démographique et économique d'Iktyro</em>.
+                </li>
+
+                <li id="source-7">
+                    <a href="#">
+                        Institut Galactique de Géologie
+                    </a>,
+                    <em>Atlas des ressources minérales de la Voie lactée</em>,
+                    volume IV.
+                </li>
+
+                <li id="source-8">
+                    <a href="#">
+                        Autorité médicale de la Fédération Commerciale Galactique
+                    </a>,
+                    <em>Adaptations physiologiques aux environnements hypograves</em>.
+                </li>
+
+                <li id="source-9">
+                    <a href="#">
+                        Consortium Icarien
+                    </a>,
+                    <em>Rapport annuel sur l'approvisionnement en ressources stratégiques</em>.
+                </li>
+
+                <li id="source-10">
+                    <a href="#">
+                        Commission Icarienne des Libertés Civiles
+                    </a>,
+                    <em>Rapport sur les conditions de travail dans les exploitations
+                    minières d'Iktyro</em>.
+                </li>
+
+                <li id="source-11">
+                    <a href="#">
+                        Syndicat général des travailleurs miniers d'Iktyro
+                    </a>,
+                    <em>Enquête sur les conditions de travail et la sécurité dans les
+                    exploitations de la FCG</em>.
+                </li>
+
+                <li id="source-12">
+                    <a href="#">
+                        <em>L'Icarien Libre</em>
+                    </a>,
+                    <em>Dossier Varen : enquête sur la mort d'Élias Varen et les conditions
+                    de travail à Iktyro</em>.
+                </li>
+
+                <li id="source-13">
+                    <a href="#">
+                        Commission d'enquête de Lanthine
+                    </a>,
+                    <em>Rapport final sur le décès du journaliste Élias Varen</em>.
+                </li>
+
+            </ol>
 
         </section>
 
 
-        <section class="panel">
+        <!-- Pied de page -->
 
-            <div class="panel-title">
-                Valeurs dérivées
-            </div>
+        <footer class="footer">
 
-            <div class="derived-grid">
+            <p>
+                Dernière modification : 25 septembre 10024 AE
+            </p>
 
-                <div class="derived-card">
-                    PV maximum
-                    <strong>${character.derived.hp}</strong>
-                </div>
+        </footer>
 
-                <div class="derived-card">
-                    PV actuels
-                    <strong>&nbsp;</strong>
-                </div>
+    </div>
 
-                <div class="derived-card">
-                    Chance
-                    <strong>
-                        ${character.luck?.value ?? ""}
-                    </strong>
-                </div>
-
-                <div class="derived-card">
-                    Bonus dégâts
-                    <strong>
-                        ${character.derived.damageBonus}
-                    </strong>
-                </div>
-
-                <div class="derived-card">
-                    Mouvement
-                    <strong>
-                        ${character.derived.movement}
-                    </strong>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <section class="panel">
-
-            <div class="panel-title">
-                Compétences
-            </div>
-
-            <div class="sheet-skills">
-
-                ${Object.keys(skills)
-                    .map(id =>
-                        renderSheetSkill(id)
-                    )
-                    .join("")}
-
-            </div>
-
-        </section>
-
-
-        <section class="panel">
-
-            <div class="panel-title">
-                Profil
-            </div>
-
-            <div class="profile-grid">
-
-                ${profileInput(
-                    "Nom",
-                    "name",
-                    character.profile.name
-                )}
-
-                ${profileInput(
-                    "Indicatif",
-                    "callsign",
-                    character.profile.callsign
-                )}
-
-                ${profileInput(
-                    "Pronoms",
-                    "pronouns",
-                    character.profile.pronouns
-                )}
-
-                ${profileInput(
-                    "Origine",
-                    "origin",
-                    character.profile.origin
-                )}
-
-                ${profileTextarea(
-                    "Histoire / Background",
-                    "background",
-                    character.profile.background,
-                    true
-                )}
-
-                ${profileTextarea(
-                    "Personnalité",
-                    "personality",
-                    character.profile.personality
-                )}
-
-                ${profileTextarea(
-                    "Motivations",
-                    "motivations",
-                    character.profile.motivations
-                )}
-
-                ${profileTextarea(
-                    "Relations",
-                    "relationships",
-                    character.profile.relationships
-                )}
-
-                ${profileTextarea(
-                    "Apparence",
-                    "appearance",
-                    character.profile.appearance
-                )}
-
-                ${profileTextarea(
-                    "Situation actuelle",
-                    "currentSituation",
-                    character.profile.currentSituation
-                )}
-
-                ${profileTextarea(
-                    "Notes",
-                    "notes",
-                    character.profile.notes,
-                    true
-                )}
-
-            </div>
-
-        </section>
-
-
-        <section class="panel">
-
-            <div class="panel-title">
-                Équipement / Charge
-            </div>
-
-            <button
-                class="btn green"
-                id="addEquipmentBtn"
-            >
-                + Ajouter un objet
-            </button>
-
-            <div style="margin-top:12px">
-
-                ${character.equipment
-                    .map((item, index) =>
-                        renderEquipmentRow(item, index)
-                    )
-                    .join("")}
-
-            </div>
-
-        </section>
-    `;
-
-    bindCharacterSheetEvents();
-    renderPrintSheet();
-}
-
-
-function renderSheetSkill(id) {
-
-    const skill = skills[id];
-
-    if (!skill) {
-        return "";
-    }
-
-    const final =
-        getSkillFinal(id);
-
-    const professional =
-        isProfessionalSkill(id);
-
-    return `
-        <div class="sheet-skill ${
-            professional
-                ? "professional"
-                : ""
-        }">
-
-            <div>
-                ${escapeHtml(skill.name)}
-
-                ${
-                    professional
-                        ? `
-                            <span class="prof-badge">
-                                MÉTIER
-                            </span>
-                        `
-                        : ""
-                }
-            </div>
-
-            <div>
-                ${final}
-            </div>
-
-            <div>
-                ${half(final)}
-            </div>
-
-            <div>
-                ${fifth(final)}
-            </div>
-
-        </div>
-    `;
-}
-
-
-/* =====================================================
-   PROFIL
-===================================================== */
-
-function profileInput(label, key, value) {
-
-    const empty =
-        !String(value || "").trim();
-
-    return `
-        <div>
-
-            <label>${label}</label>
-
-            <input
-                type="text"
-                class="required-field ${empty ? "empty-field" : ""}"
-                data-profile="${key}"
-                value="${escapeAttribute(value || "")}"
-            >
-
-        </div>
-    `;
-}
-
-
-function profileTextarea(label, key, value, full = false) {
-
-    const empty =
-        !String(value || "").trim();
-
-    return `
-        <div class="${full ? "profile-full" : ""}">
-
-            <label>${label}</label>
-
-            <textarea
-                class="required-field ${empty ? "empty-field" : ""}"
-                data-profile="${key}"
-            >${escapeHtml(value || "")}</textarea>
-
-        </div>
-    `;
-}
-
-
-function bindCharacterSheetEvents() {
-
-    document
-        .querySelectorAll("[data-profile]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const key =
-                    event.target.dataset.profile;
-
-                character.profile[key] =
-                    event.target.value;
-
-                event.target.classList.toggle(
-                    "empty-field",
-                    !event.target.value.trim()
-                );
-
-                renderPrintSheet();
-            });
-        });
-
-
-    document
-        .querySelectorAll("[data-equipment-name]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const index =
-                    Number(
-                        event.target.dataset.equipmentName
-                    );
-
-                character.equipment[index].name =
-                    event.target.value;
-
-                renderPrintSheet();
-            });
-        });
-
-
-    document
-        .querySelectorAll("[data-equipment-quantity]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const index =
-                    Number(
-                        event.target.dataset.equipmentQuantity
-                    );
-
-                character.equipment[index].quantity =
-                    event.target.value;
-
-                renderPrintSheet();
-            });
-        });
-
-
-    document
-        .querySelectorAll("[data-equipment-notes]")
-        .forEach(input => {
-
-            input.addEventListener("input", event => {
-
-                const index =
-                    Number(
-                        event.target.dataset.equipmentNotes
-                    );
-
-                character.equipment[index].notes =
-                    event.target.value;
-
-                renderPrintSheet();
-            });
-        });
-
-
-    document
-        .querySelectorAll("[data-equipment-focus]")
-        .forEach(button => {
-
-            button.addEventListener("click", event => {
-
-                const index =
-                    Number(
-                        event.target.dataset.equipmentFocus
-                    );
-
-                const input =
-                    document.querySelector(
-                        `[data-equipment-name="${index}"]`
-                    );
-
-                if (input) {
-                    input.focus();
-                }
-            });
-        });
-
-
-    document
-        .getElementById("addEquipmentBtn")
-        .addEventListener(
-            "click",
-            openEquipmentModal
-        );
-}
-
-
-function renderEquipmentRow(item, index) {
-
-    return `
-        <div class="equipment-row">
-
-            <input
-                type="text"
-                placeholder="Ligne d'équipement..."
-                value="${escapeAttribute(item.name || "")}"
-                data-equipment-name="${index}"
-            >
-
-            <input
-                type="text"
-                placeholder="Qté"
-                value="${escapeAttribute(item.quantity || "")}"
-                data-equipment-quantity="${index}"
-            >
-
-            <button
-                type="button"
-                title="Modifier"
-                data-equipment-focus="${index}"
-            >
-                ✎
-            </button>
-
-        </div>
-    `;
-}
-
-
-function saveProfileFromScreen() {
-
-    document
-        .querySelectorAll("[data-profile]")
-        .forEach(input => {
-
-            const key =
-                input.dataset.profile;
-
-            character.profile[key] =
-                input.value;
-        });
-}
-
-
-/* =====================================================
-   ÉQUIPEMENT
-===================================================== */
-
-function openEquipmentModal() {
-
-    const modal =
-        document.getElementById("equipmentModal");
-
-    const picker =
-        document.getElementById("equipmentPicker");
-
-    picker.innerHTML =
-        equipmentItems.map(item => `
-
-            <div
-                class="item-option"
-                data-equipment-id="${escapeAttribute(item.id)}"
-            >
-
-                <strong>
-                    ${escapeHtml(item.name)}
-                </strong>
-
-                <small>
-                    ${escapeHtml(item.category || "")}
-                </small>
-
-                <small>
-                    ${escapeHtml(item.description || "")}
-                </small>
-
-            </div>
-
-        `).join("");
-
-    picker
-        .querySelectorAll("[data-equipment-id]")
-        .forEach(element => {
-
-            element.addEventListener(
-                "click",
-                () => {
-
-                    const id =
-                        element.dataset.equipmentId;
-
-                    const item =
-                        equipmentItems.find(
-                            e => e.id === id
-                        );
-
-                    if (item) {
-                        addEquipmentItem(item);
-                    }
-                }
-            );
-        });
-
-    modal.classList.add("open");
-}
-
-
-function closeEquipmentModal() {
-
-    document
-        .getElementById("equipmentModal")
-        .classList.remove("open");
-}
-
-
-function addEquipmentItem(item) {
-
-    let index =
-        character.equipment.findIndex(
-            equipment =>
-                !String(equipment.name || "").trim()
-        );
-
-    if (index === -1) {
-
-        character.equipment.push({
-            name: "",
-            quantity: "",
-            notes: ""
-        });
-
-        index =
-            character.equipment.length - 1;
-    }
-
-    character.equipment[index] = {
-        name: item.name,
-        quantity: "1",
-        notes: ""
-    };
-
-    closeEquipmentModal();
-
-    renderCharacterSheet();
-}
-
-
-/* =====================================================
-   EXPORT JSON
-===================================================== */
-
-function exportCharacter() {
-
-    saveProfileFromScreen();
-
-    character.created = true;
-
-    const exportData = {
-        format: "explorer-character",
-        version: 1,
-        exportedAt: new Date().toISOString(),
-
-        character: character
-    };
-
-    const json =
-        JSON.stringify(
-            exportData,
-            null,
-            2
-        );
-
-    const blob =
-        new Blob(
-            [json],
-            {
-                type: "application/json"
-            }
-        );
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const link =
-        document.createElement("a");
-
-    const safeName =
-        (
-            character.profile.name ||
-            "personnage"
-        )
-            .replace(/[^a-z0-9À-ÿ_-]/gi, "_")
-            .toLowerCase();
-
-    link.href = url;
-    link.download =
-        `${safeName}_personnage.json`;
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-    URL.revokeObjectURL(url);
-}
-
-
-/* =====================================================
-   IMPORT JSON
-===================================================== */
-
-async function importCharacter(event) {
-
-    const file =
-        event.target.files[0];
-
-    if (!file) {
-        return;
-    }
-
-    try {
-
-        const text =
-            await file.text();
-
-        const data =
-            JSON.parse(text);
-
-        const imported =
-            data.character || data;
-
-        validateImportedCharacter(imported);
-
-        character =
-            normalizeImportedCharacter(imported);
-
-        ensureSkillAllocations();
-
-        recomputeStats();
-
-        renderCharacterSheet();
-
-        alert(
-            "Personnage chargé avec succès."
-        );
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Impossible de charger ce fichier JSON.\n\n" +
-            error.message
-        );
-
-    } finally {
-
-        event.target.value = "";
-    }
-}
-
-
-function validateImportedCharacter(data) {
-
-    if (
-        !data ||
-        typeof data !== "object"
-    ) {
-
-        throw new Error(
-            "Le fichier ne contient pas un personnage valide."
-        );
-    }
-
-    if (!data.baseStats) {
-
-        throw new Error(
-            "Les caractéristiques de base sont absentes."
-        );
-    }
-
-    for (const stat of Object.keys(STAT_DEFINITIONS)) {
-
-        if (
-            !Number.isFinite(
-                Number(data.baseStats[stat])
-            )
-        ) {
-
-            throw new Error(
-                `La caractéristique ${stat} est invalide.`
-            );
-        }
-    }
-}
-
-
-function normalizeImportedCharacter(data) {
-
-    const fresh =
-        createInitialCharacter();
-
-    fresh.version =
-        data.version || 1;
-
-    fresh.baseStats = {
-        ...fresh.baseStats,
-        ...data.baseStats
-    };
-
-    fresh.stats = {
-        ...fresh.stats,
-        ...data.stats
-    };
-
-    fresh.age =
-        Number(data.age) || 20;
-
-    fresh.agePenalties = {
-        ...fresh.agePenalties,
-        ...(data.agePenalties || {})
-    };
-
-    fresh.educationRollUsed =
-        Boolean(data.educationRollUsed);
-
-    fresh.educationRoll =
-        data.educationRoll || null;
-
-    fresh.luck =
-        data.luck || null;
-
-    fresh.luckRollUsed =
-        Boolean(data.luckRollUsed);
-
-    fresh.occupationId =
-        data.occupationId || "";
-
-    fresh.skillAllocations =
-        data.skillAllocations || {};
-
-    fresh.profile = {
-        ...fresh.profile,
-        ...(data.profile || {})
-    };
-
-    fresh.equipment =
-        Array.isArray(data.equipment)
-            ? data.equipment
-            : blankEquipment();
-
-    fresh.created =
-        Boolean(data.created ?? true);
-
-    /*
-        Sécurité importante :
-        on supprime toute attribution professionnelle
-        aux compétences qui ne sont pas celles du métier
-        actuel.
-    */
-
-    Object.entries(
-        fresh.skillAllocations
-    ).forEach(([id, allocation]) => {
-
-        if (!isProfessionalSkillImported(
-            id,
-            fresh.occupationId
-        )) {
-
-            allocation.professional = 0;
-        }
-
-        allocation.personal =
-            Math.max(
-                0,
-                Number(allocation.personal || 0)
-            );
-
-        allocation.professional =
-            Math.max(
-                0,
-                Number(allocation.professional || 0)
-            );
-    });
-
-    return fresh;
-}
-
-
-function isProfessionalSkillImported(
-    id,
-    occupationId
-) {
-
-    const job =
-        jobs.find(
-            j => j.id === occupationId
-        );
-
-    return Boolean(
-        job &&
-        Array.isArray(job.skills) &&
-        job.skills.includes(id)
-    );
-}
-
-
-/* =====================================================
-   IMPRESSION
-===================================================== */
-
-function renderPrintSheet() {
-
-    recomputeStats();
-
-    const printSheet =
-        document.getElementById("printSheet");
-
-    const job =
-        getSelectedJob();
-
-    const profile =
-        character.profile;
-
-    const page1Skills =
-        Object.keys(skills)
-            .map(id => {
-
-                const skill =
-                    skills[id];
-
-                const final =
-                    getSkillFinal(id);
-
-                return `
-                    <div class="print-skill ${
-                        isProfessionalSkill(id)
-                            ? "prof"
-                            : ""
-                    }">
-
-                        <span>
-                            ${escapeHtml(skill.name)}
-                            ${
-                                isProfessionalSkill(id)
-                                    ? " • MÉTIER"
-                                    : ""
-                            }
-                        </span>
-
-                        <span>
-                            ${getSkillBase(id)}
-                        </span>
-
-                        <span>
-                            ${final}
-                        </span>
-
-                        <span>
-                            ${half(final)}
-                        </span>
-
-                        <span>
-                            ${fifth(final)}
-                        </span>
-
-                    </div>
-                `;
-            })
-            .join("");
-
-
-    const equipmentRows =
-        character.equipment
-            .map(item => `
-                <div>
-                    ${escapeHtml(item.name || "")}
-                </div>
-
-                <div>
-                    ${escapeHtml(item.quantity || "")}
-                </div>
-            `)
-            .join("");
-
-
-    printSheet.innerHTML = `
-
-        <!-- ================= PAGE 1 ================= -->
-
-        <div class="print-page">
-
-            <div class="print-header">
-
-                <div class="print-title">
-                    EXPLORER — FICHE DE PERSONNAGE
-                </div>
-
-                <div class="print-subtitle">
-                    ${
-                        escapeHtml(
-                            profile.name ||
-                            "PERSONNAGE SANS NOM"
-                        )
-                    }
-
-                    |
-
-                    ${
-                        escapeHtml(
-                            profile.callsign ||
-                            "INDICATIF —"
-                        )
-                    }
-
-                    |
-
-                    Âge ${character.age}
-
-                    |
-
-                    ${
-                        job
-                            ? escapeHtml(job.name)
-                            : "Sans métier"
-                    }
-                </div>
-
-            </div>
-
-
-            <div class="print-section-title">
-                CARACTÉRISTIQUES
-            </div>
-
-            <div class="print-stats">
-
-                ${Object.keys(STAT_DEFINITIONS)
-                    .map(stat => `
-
-                        <div class="print-stat">
-
-                            <strong>
-                                ${stat}
-                            </strong>
-
-                            <div class="value">
-                                ${character.stats[stat]}
-                            </div>
-
-                            <div>
-                                ½ ${half(character.stats[stat])}
-                                |
-                                ⅕ ${fifth(character.stats[stat])}
-                            </div>
-
-                        </div>
-
-                    `)
-                    .join("")}
-
-            </div>
-
-
-            <div class="print-section-title">
-                VALEURS DÉRIVÉES
-            </div>
-
-            <div class="print-derived">
-
-                <div class="print-box">
-                    PV max :
-                    <strong>
-                        ${character.derived.hp}
-                    </strong>
-                </div>
-
-                <div class="print-box">
-                    PV actuels :
-                    <strong>&nbsp;</strong>
-                </div>
-
-                <div class="print-box">
-                    Chance :
-                    <strong>
-                        ${character.luck?.value || ""}
-                    </strong>
-                </div>
-
-                <div class="print-box">
-                    DB :
-                    <strong>
-                        ${character.derived.damageBonus}
-                    </strong>
-                </div>
-
-                <div class="print-box">
-                    Mouvement :
-                    <strong>
-                        ${character.derived.movement}
-                    </strong>
-                </div>
-
-            </div>
-
-
-            <div class="print-section-title">
-                COMPÉTENCES
-            </div>
-
-            <div class="print-skill-columns">
-
-                <div class="print-skill"
-                     style="font-weight:bold">
-
-                    <span>Compétence</span>
-                    <span>Base</span>
-                    <span>Finale</span>
-                    <span>½</span>
-                    <span>⅕</span>
-
-                </div>
-
-                ${page1Skills}
-
-            </div>
-
-        </div>
-
-
-        <!-- ================= PAGE 2 ================= -->
-
-        <div class="print-page">
-
-            <div class="print-header">
-
-                <div class="print-title">
-                    PROFIL & ÉQUIPEMENT
-                </div>
-
-                <div class="print-subtitle">
-                    ${
-                        escapeHtml(
-                            profile.name ||
-                            "PERSONNAGE SANS NOM"
-                        )
-                    }
-                </div>
-
-            </div>
-
-
-            <div class="print-section-title">
-                IDENTITÉ
-            </div>
-
-            <div class="print-grid">
-
-                <div class="print-box">
-                    Nom :
-                    <strong>
-                        ${escapeHtml(profile.name)}
-                    </strong>
-                </div>
-
-                <div class="print-box">
-                    Indicatif :
-                    <strong>
-                        ${escapeHtml(profile.callsign)}
-                    </strong>
-                </div>
-
-                <div class="print-box">
-                    Pronoms :
-                    <strong>
-                        ${escapeHtml(profile.pronouns)}
-                    </strong>
-                </div>
-
-                <div class="print-box">
-                    Origine :
-                    <strong>
-                        ${escapeHtml(profile.origin)}
-                    </strong>
-                </div>
-
-            </div>
-
-
-            <div class="print-section-title">
-                PROFIL
-            </div>
-
-            <div class="print-profile-grid">
-
-                <div class="print-profile-box full">
-
-                    <strong>
-                        HISTOIRE / BACKGROUND
-                    </strong>
-
-                    <br><br>
-
-                    ${escapeHtml(profile.background)}
-
-                </div>
-
-
-                <div class="print-profile-box">
-
-                    <strong>
-                        PERSONNALITÉ
-                    </strong>
-
-                    <br><br>
-
-                    ${escapeHtml(profile.personality)}
-
-                </div>
-
-
-                <div class="print-profile-box">
-
-                    <strong>
-                        MOTIVATIONS
-                    </strong>
-
-                    <br><br>
-
-                    ${escapeHtml(profile.motivations)}
-
-                </div>
-
-
-                <div class="print-profile-box">
-
-                    <strong>
-                        RELATIONS
-                    </strong>
-
-                    <br><br>
-
-                    ${escapeHtml(profile.relationships)}
-
-                </div>
-
-
-                <div class="print-profile-box">
-
-                    <strong>
-                        APPARENCE
-                    </strong>
-
-                    <br><br>
-
-                    ${escapeHtml(profile.appearance)}
-
-                </div>
-
-
-                <div class="print-profile-box full">
-
-                    <strong>
-                        SITUATION ACTUELLE
-                    </strong>
-
-                    <br><br>
-
-                    ${escapeHtml(profile.currentSituation)}
-
-                </div>
-
-            </div>
-
-
-            <div class="print-section-title">
-                ÉQUIPEMENT
-            </div>
-
-            <div class="print-equipment">
-
-                ${
-                    equipmentRows ||
-                    Array.from(
-                        {length: 10},
-                        () => `
-                            <div></div>
-                            <div></div>
-                        `
-                    ).join("")
-                }
-
-            </div>
-
-
-            <div class="print-section-title">
-                NOTES
-            </div>
-
-            <div class="print-note">
-                ${escapeHtml(profile.notes)}
-            </div>
-
-        </div>
-    `;
-}
-
-
-function printCharacter() {
-
-    if (!character.created) {
-
-        alert(
-            "Créez ou chargez d'abord un personnage."
-        );
-
-        return;
-    }
-
-    saveProfileFromScreen();
-
-    renderPrintSheet();
-
-    setTimeout(() => {
-        window.print();
-    }, 100);
-}
-
-
-/* =====================================================
-   ÉCHAPPEMENT HTML
-===================================================== */
-
-function escapeHtml(value) {
-
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-function escapeAttribute(value) {
-
-    return escapeHtml(value);
-}
-
-</script>
+</main>
 
 </body>
 </html>
