@@ -4,7 +4,7 @@
   {"id":"craft","name":"Bricolage","base":10},
   {"id":"mechanics","name":"Mécanique","base":1},
   {"id":"fast_talk","name":"Baratin","base":5},
-  {"id":"charm","name":"Charme","base":"APP/2"},
+  {"id":"charm","name":"Charme","base":15},
   {"id":"firearms","name":"Armes à feu","base":"DEX/4"},
   {"id":"throw","name":"Lancer","base":"DEX/2"},
   {"id":"melee","name":"Combat rapproché","base":"STR/2"},
