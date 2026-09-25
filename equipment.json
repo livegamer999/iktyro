@@ -1,102 +1,62 @@
 [
     {
+        "id": "kit-outils",
+        "name": "Kit d'outils",
+        "category": "Outils",
+        "description": "Kit polyvalent de maintenance et réparation."
+    },
+    {
+        "id": "lampe",
         "name": "Lampe tactique",
-        "category": "Outils",
-        "description": "Lampe portable à forte autonomie."
+        "category": "Survie",
+        "description": "Lampe compacte à forte autonomie."
     },
     {
-        "name": "Kit de premiers secours",
-        "category": "Médical",
-        "description": "Trousse médicale de terrain."
-    },
-    {
+        "id": "combinaison-eva",
         "name": "Combinaison EVA",
-        "category": "Survie",
-        "description": "Combinaison pressurisée pour opérations extravéhiculaires."
+        "category": "EVA",
+        "description": "Combinaison spatiale pour activité extravéhiculaire."
     },
     {
-        "name": "Casque EVA",
-        "category": "Survie",
-        "description": "Casque pressurisé avec communications intégrées."
-    },
-    {
-        "name": "Kit de réparation",
-        "category": "Outils",
-        "description": "Outils mécaniques et électroniques de dépannage."
-    },
-    {
-        "name": "Multimètre",
+        "id": "ordinateur",
+        "name": "Ordinateur portable",
         "category": "Électronique",
-        "description": "Appareil portable de mesure électrique."
-    },
-    {
-        "name": "Terminal portable",
-        "category": "Informatique",
         "description": "Terminal informatique personnel."
     },
     {
-        "name": "Tablette de données",
-        "category": "Informatique",
-        "description": "Tablette robuste pour consultation et stockage de données."
-    },
-    {
-        "name": "Comlink",
+        "id": "radio",
+        "name": "Radio longue portée",
         "category": "Communication",
-        "description": "Appareil de communication longue portée."
+        "description": "Émetteur-récepteur longue portée."
     },
     {
-        "name": "Balise de détresse",
-        "category": "Communication",
-        "description": "Émetteur d'urgence avec positionnement."
-    },
-    {
-        "name": "Scanner portable",
+        "id": "scanner",
+        "name": "Scanner portatif",
         "category": "Capteurs",
-        "description": "Scanner généraliste pour analyse de l'environnement."
+        "description": "Scanner polyvalent pour environnement et matériel."
     },
     {
-        "name": "Kit de navigation",
-        "category": "Navigation",
-        "description": "Instruments et cartes numériques de navigation."
+        "id": "medkit",
+        "name": "Trousse médicale",
+        "category": "Médical",
+        "description": "Matériel médical de terrain."
     },
     {
+        "id": "cable",
+        "name": "Câble multifonction",
+        "category": "Outils",
+        "description": "Câble renforcé avec connecteurs universels."
+    },
+    {
+        "id": "protection",
+        "name": "Combinaison de protection",
+        "category": "Protection",
+        "description": "Protection légère contre les environnements hostiles."
+    },
+    {
+        "id": "rations",
         "name": "Rations de survie",
         "category": "Survie",
         "description": "Rations compactes longue conservation."
-    },
-    {
-        "name": "Gourde filtrante",
-        "category": "Survie",
-        "description": "Système portable de filtration d'eau."
-    },
-    {
-        "name": "Corde synthétique",
-        "category": "Survie",
-        "description": "Corde légère haute résistance."
-    },
-    {
-        "name": "Lampe frontale",
-        "category": "Outils",
-        "description": "Éclairage mains libres."
-    },
-    {
-        "name": "Outil multifonction",
-        "category": "Outils",
-        "description": "Petit outil polyvalent."
-    },
-    {
-        "name": "Combinaison de travail",
-        "category": "Vêtement",
-        "description": "Tenue robuste adaptée au travail technique."
-    },
-    {
-        "name": "Badge d'accès",
-        "category": "Administration",
-        "description": "Badge d'identification et d'accès."
-    },
-    {
-        "name": "Carnet de notes",
-        "category": "Divers",
-        "description": "Carnet papier pour notes manuscrites."
     }
 ]
