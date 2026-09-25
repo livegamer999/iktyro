@@ -1,50 +1,92 @@
 [
-    {
-        "id": "kit_outils",
-        "name": "Kit d'outils",
-        "category": "Outils",
-        "description": "Outillage technique polyvalent."
-    },
-    {
-        "id": "lampe",
-        "name": "Lampe tactique",
-        "category": "Survie",
-        "description": "Lampe robuste à longue autonomie."
-    },
-    {
-        "id": "ordinateur",
-        "name": "Ordinateur portable",
-        "category": "Électronique",
-        "description": "Terminal informatique portable."
-    },
-    {
-        "id": "radio",
-        "name": "Radio longue portée",
-        "category": "Communication",
-        "description": "Système de communication longue distance."
-    },
-    {
-        "id": "scanner",
-        "name": "Scanner portatif",
-        "category": "Capteurs",
-        "description": "Scanner généraliste."
-    },
-    {
-        "id": "trousse_medicale",
-        "name": "Trousse médicale",
-        "category": "Médical",
-        "description": "Matériel de premiers soins."
-    },
-    {
-        "id": "combinaison_eva",
-        "name": "Combinaison EVA",
-        "category": "EVA",
-        "description": "Combinaison pour activité extravéhiculaire."
-    },
-    {
-        "id": "cable",
-        "name": "Câble multifonction",
-        "category": "Outils",
-        "description": "Câble technique polyvalent."
-    }
+  {
+    "id":"toolkit",
+    "name":"Kit d’outils",
+    "category":"Outils",
+    "description":"Kit technique polyvalent",
+    "weight":3,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"lamp",
+    "name":"Lampe tactique",
+    "category":"Survie",
+    "description":"Éclairage portable",
+    "weight":1,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"eva_suit",
+    "name":"Combinaison EVA",
+    "category":"EVA",
+    "description":"Combinaison pour sorties extravéhiculaires",
+    "weight":8,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"computer",
+    "name":"Ordinateur portable",
+    "category":"Électronique",
+    "description":"Terminal informatique",
+    "weight":2,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"radio",
+    "name":"Radio longue portée",
+    "category":"Communication",
+    "description":"Communication à distance",
+    "weight":2,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"scanner",
+    "name":"Scanner portatif",
+    "category":"Capteurs",
+    "description":"Analyse environnementale",
+    "weight":1,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"medkit",
+    "name":"Trousse médicale",
+    "category":"Médical",
+    "description":"Premiers soins",
+    "weight":2,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"cable",
+    "name":"Câble multifonction",
+    "category":"Outils",
+    "description":"Câble technique polyvalent",
+    "weight":2,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"protective_suit",
+    "name":"Combinaison de protection",
+    "category":"Protection",
+    "description":"Protection environnementale",
+    "weight":5,
+    "damage":"",
+    "range":""
+  },
+  {
+    "id":"rations",
+    "name":"Rations de survie",
+    "category":"Survie",
+    "description":"Rations longue conservation",
+    "weight":1,
+    "damage":"",
+    "range":""
+  }
 ]
