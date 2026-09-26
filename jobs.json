@@ -9,9 +9,9 @@
       "electronics",
       "orientation",
       "history",
-      "foreign_language",
+      "chelmistry",
       "anthropology",
-      "medicine",
+      "spot_hidden",
       "listen"
     ]
   },
@@ -40,11 +40,11 @@
       "first_aid",
       "biology",
       "chemistry",
-      "physics",
+      "own_language",
       "listen",
       "anthropology",
       "foreign_language",
-      "orientation"
+      "fast_talk"
     ]
   },
   {
@@ -70,29 +70,13 @@
     "skills":[
       "piloting",
       "drive",
-      "heavy_drive",
+      "mechanics",
       "orientation",
       "firearms",
-      "throw",
+      "first_aid",
       "dodge",
       "listen",
       "electronics"
-    ]
-  },
-  {
-    "id":"technicien_eva",
-    "name":"Technicien EVA",
-    "category":"manual",
-    "skills":[
-      "mechanics",
-      "electronics",
-      "craft",
-      "swim",
-      "orientation",
-      "first_aid",
-      "lockpick",
-      "drive",
-      "dodge"
     ]
   },
   {
@@ -141,6 +125,22 @@
       "throw",
       "first_aid",
       "orientation"
+    ]
+  },
+  {
+    "id":"agent_force_de_lordre",
+    "name":"Agent des forces de l'ordre",
+    "category":"social",
+    "skills":[
+      "firearms",
+      "melee",
+      "drive",
+      "listen",
+      "spot_hidden",
+      "stealth",
+      "throw",
+      "first_aid",
+      "law"
     ]
   },
   {
