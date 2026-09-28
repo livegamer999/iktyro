@@ -9,7 +9,7 @@
       "electronics",
       "orientation",
       "history",
-      "chelmistry",
+      "chemistry",
       "anthropology",
       "spot_hidden",
       "listen"
@@ -24,7 +24,7 @@
       "electronics",
       "physics",
       "craft",
-      "biology",
+      "chemistry",
       "orientation",
       "drive",
       "heavy_drive",
@@ -33,7 +33,7 @@
   },
   {
     "id":"medecin",
-    "name":"Médecin de bord",
+    "name":"Médecin",
     "category":"intellectual",
     "skills":[
       "medicine",
@@ -49,7 +49,7 @@
   },
   {
     "id":"mecanicien_spatial",
-    "name":"Mécanicien spatial",
+    "name":"Mécanicien",
     "category":"manual",
     "skills":[
       "mechanics",
@@ -65,7 +65,7 @@
   },
   {
     "id":"pilote",
-    "name":"Pilote spatial",
+    "name":"Pilote",
     "category":"manual",
     "skills":[
       "piloting",
@@ -120,6 +120,22 @@
       "melee",
       "dodge",
       "listen",
+      "spot_hidden",
+      "stealth",
+      "throw",
+      "first_aid",
+      "orientation"
+    ]
+  },
+  {
+    "id":"soldat",
+    "name":"soldat",
+    "category":"manual",
+    "skills":[
+      "firearms",
+      "melee",
+      "dodge",
+      "craft",
       "spot_hidden",
       "stealth",
       "throw",
