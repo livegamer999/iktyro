@@ -19,6 +19,7 @@
   {"id":"biology","name":"Biologie","base":5},
   {"id":"chemistry","name":"Chimie","base":5},
   {"id":"electronics","name":"Électronique","base":5},
+  {"id":"computers","name":"informatique","base":20},
   {"id":"medicine","name":"Médecine","base":5},
   {"id":"swim","name":"Natation","base":20},
   {"id":"orientation","name":"Orientation","base":10},
