@@ -32,6 +32,38 @@
     ]
   },
   {
+    "id":"mineur",
+    "name":"mineur",
+    "category":"manual",
+    "skills":[
+      "heavy_drive",
+      "mechanics",
+      "electronics",
+      "craft",
+      "orientation",
+      "spot_hidden",
+      "first_aid",
+      "physics",
+      "drive"
+    ]
+  },
+  {
+    "id":"refinery_worker",
+    "name":"Ouvrier de raffinerie",
+    "category":"manual",
+    "skills":[
+      "mechanics",
+      "electronics",
+      "chemistry",
+      "physics",
+      "craft",
+      "first_aid",
+      "heavy_drive",
+      "spot_hidden",
+      "listen"
+    ]
+  },
+  {
     "id":"medecin",
     "name":"Médecin",
     "category":"intellectual",
@@ -59,7 +91,7 @@
       "heavy_drive",
       "orientation",
       "lockpick",
-      "swim",
+      "computers",
       "first_aid"
     ]
   },
