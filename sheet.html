@@ -787,7 +787,7 @@ button{
         border-bottom:1px solid #aaa;
         padding:1.5mm;
         overflow-wrap: break-word;
-        min-height:3em;
+        min-height:9mm;
         font-size:8pt;
     }
 
@@ -795,6 +795,10 @@ button{
         display:block;
         font-size:6.5pt;
         color:#555;
+    }
+
+    .print-lore .print-field {
+        line-height:1.5em;
     }
 
     .print-stats{
@@ -858,7 +862,7 @@ button{
             <button class="btn primary" id="createBtn">Créer un personnage</button>
             <button class="btn hidden" id="printBtn">Imprimer</button>
             <button class="btn hidden" id="exportBtn">Télécharger la fiche JSON</button>
-            <button class="btn hidden" id="importBtn">Charger une fiche JSON</button>
+            <button class="btn" id="importBtn">Charger une fiche JSON</button>
         </div>
     </header>
 
@@ -1101,7 +1105,7 @@ button{
         <div class="print-section">
             <h2>PROFIL</h2>
             <div class="print-section-body">
-                <div class="print-grid">
+                <div class="print-grid print-lore">
 
                     <div class="print-field">
                         <strong>HISTOIRE / BACKGROUND</strong>
