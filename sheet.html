@@ -2747,7 +2747,7 @@ function getCreationErrors(){
 function bindStepEvents(){
 
     document.querySelectorAll("[data-stat-range]").forEach(input=>{
-        input.addEventListener("input",()=>{
+        input.addEventListener("change",()=>{
             const key = input.dataset.statRange;
 
             character.baseStats[key] =
@@ -2758,7 +2758,7 @@ function bindStepEvents(){
     });
 
     document.querySelectorAll("[data-stat-number]").forEach(input=>{
-        input.addEventListener("input",()=>{
+        input.addEventListener("change",()=>{
             const key = input.dataset.statNumber;
 
             character.baseStats[key] =
@@ -2771,7 +2771,7 @@ function bindStepEvents(){
     const ageInput = document.getElementById("ageInput");
 
     if(ageInput){
-        ageInput.addEventListener("input",()=>{
+        ageInput.addEventListener("change",()=>{
             character.age =
                 clamp(
                     Math.round(number(ageInput.value,20)),
@@ -2786,7 +2786,7 @@ function bindStepEvents(){
     }
 
     document.querySelectorAll("[data-age-penalty]").forEach(input=>{
-        input.addEventListener("input",()=>{
+        input.addEventListener("change",()=>{
             const key = input.dataset.agePenalty;
 
             character.agePenalties[key] =
@@ -2838,7 +2838,7 @@ function bindStepEvents(){
     }
 
     document.querySelectorAll("[data-skill-allocation]").forEach(input=>{
-        input.addEventListener("input",()=>{
+        input.addEventListener("change",()=>{
             const id = input.dataset.skill;
             const pool = input.dataset.skillAllocation;
 
